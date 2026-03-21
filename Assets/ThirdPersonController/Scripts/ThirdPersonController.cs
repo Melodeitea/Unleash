@@ -3,8 +3,8 @@
 using UnityEngine.InputSystem;
 #endif
 
-/* Note: animations are called via the controller for both the character and capsule using animator null checks
- */
+// Note: animations are called via the controller for both the character and capsule using animator null checks
+// This is a third person character controller with movement, jumping, and camera controls.
 
 namespace StarterAssets
 {

@@ -5,6 +5,9 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(Rigidbody))]
 
+// This script defines a trigger volume that switches the active Cinemachine camera when the player enters it.
+// It uses a BoxCollider set as a trigger to detect when the player enters the volume,
+// and then it calls the CameraSwitcher to switch to the specified camera.
 public class CameraTriggerVolume : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera cam;

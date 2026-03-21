@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// This script defines a light switch that can be toggled by the player when they are in range.
 public class LightSwitch : MonoBehaviour
 {
     [Header("Interaction")]

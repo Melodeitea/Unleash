@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections;
 using Unity.Cinemachine;
 
+// This script manages the switching between different Cinemachine cameras in the scene.
+// It keeps track of all registered cameras and allows switching between them by setting their priority.
 public static class CameraSwitcher
 {
 	static List<CinemachineCamera> cameras = new List<CinemachineCamera>();
