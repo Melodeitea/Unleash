@@ -39,4 +39,12 @@ public static class SaveSystem
             return null;
         }
 	}
+
+	// Returns true when a save file exists and is accessible.
+	// for main menu load button to only show when a save exists
+	public static bool HasSave()
+	{
+		string path = Application.persistentDataPath + "/player.save";
+		return File.Exists(path);
+	}
 }
