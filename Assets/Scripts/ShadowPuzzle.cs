@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Puzzle))]
-public class ShadowPuzzle : MonoBehaviour
+public class ShadowPuzzle : PuzzleEvaluator
 {
 	[Header("Target surface (must have MeshFilter + MeshRenderer)")]
 	public MeshRenderer targetRenderer;
@@ -22,15 +22,9 @@ public class ShadowPuzzle : MonoBehaviour
 	[Header("Occluder")]
 	public LayerMask occluderMask = ~0; // default: everything
 
-	[Header("Sampling timing")]
-	[Tooltip("How often (seconds) to evaluate the pattern. 0 = evaluate only when requested.")]
-	public float checkInterval = 0.5f;
-
 	[Header("Flashlight (optional, will try to find one)")]
 	public Flashlight flashlight;
 
-	// internal
-	float _timer;
 	Puzzle _puzzle;
 
 	void Reset()
@@ -39,7 +33,8 @@ public class ShadowPuzzle : MonoBehaviour
 		targetMeshFilter = targetRenderer ? targetRenderer.GetComponent<MeshFilter>() : null;
 	}
 
-	void Awake()
+    [System.Obsolete]
+    void Awake()
 	{
 		_puzzle = GetComponent<Puzzle>();
 		if (flashlight == null)
@@ -50,17 +45,8 @@ public class ShadowPuzzle : MonoBehaviour
 			Debug.LogWarning($"{nameof(ShadowPuzzle)} on '{name}' has no referencePattern set.");
 	}
 
-	void Update()
-	{
-		if (checkInterval <= 0f) return;
-
-		_timer += Time.unscaledDeltaTime;
-		if (_timer >= checkInterval)
-		{
-			_timer = 0f;
-			EvaluateAndSolveIfMatch();
-		}
-	}
+	// Derived from PuzzleEvaluator: timer/registration handled by base.
+	// Implement only the evaluation logic below.
 
 	// Public API: evaluate the current shadow pattern and return match ratio
 	public float EvaluatePattern()
@@ -132,8 +118,8 @@ public class ShadowPuzzle : MonoBehaviour
 		return (float)matches / total;
 	}
 
-	// Evaluate and call Puzzle.Solve() when pattern matches threshold
-	public bool EvaluateAndSolveIfMatch()
+	// Called by base timer; return true if solved now.
+	public override bool EvaluateAndSolveIfMatch()
 	{
 		if (_puzzle == null || _puzzle.isSolved) return false;
 		float ratio = EvaluatePattern();

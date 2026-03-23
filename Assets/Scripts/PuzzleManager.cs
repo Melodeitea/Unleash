@@ -8,6 +8,9 @@ public class PuzzleManager : MonoBehaviour
 
 	readonly HashSet<string> _solved = new HashSet<string>();
 
+	// Registered evaluators (modular like CameraSwitcher)
+	static readonly List<PuzzleEvaluator> _evaluators = new List<PuzzleEvaluator>();
+
 	void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -49,5 +52,23 @@ public class PuzzleManager : MonoBehaviour
 			if (!string.IsNullOrEmpty(id))
 				_solved.Add(id);
 		}
+	}
+
+	// --- Evaluator registration (modular system) ---
+	public static void RegisterEvaluator(PuzzleEvaluator evaluator)
+	{
+		if (evaluator == null) return;
+		if (!_evaluators.Contains(evaluator)) _evaluators.Add(evaluator);
+	}
+
+	public static void UnregisterEvaluator(PuzzleEvaluator evaluator)
+	{
+		if (evaluator == null) return;
+		_evaluators.Remove(evaluator);
+	}
+
+	public static IReadOnlyList<PuzzleEvaluator> GetRegisteredEvaluators()
+	{
+		return _evaluators;
 	}
 }

@@ -16,6 +16,8 @@ public static class SaveSystem
         PlayerData data = new PlayerData(player);
 
         formatter.Serialize(stream, data);
+        Debug.Log("project saved");
+        Debug.Log("progress was saved at" + path);
         stream.Close();
     }
     
@@ -29,6 +31,7 @@ public static class SaveSystem
 
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
             stream.Close();
+            
 
             return data;
         }
