@@ -4,7 +4,7 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour
 {
 	[Header("Input")]
-	public KeyCode toggleKey = KeyCode.E;
+	public KeyCode toggleKey = KeyCode.A;
 
 	[Header("Light")]
 	public Light spotLight;
