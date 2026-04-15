@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -70,7 +70,7 @@ public class WallComponent : MonoBehaviour
             Destroy(cube.GetComponent<Collider>());
 #endif
 
-            cube.transform.position = mid;
+            cube.transform.position = mid + Vector3.up * (height * 0.5f);
             cube.transform.rotation = Quaternion.LookRotation(dir);
             cube.transform.localScale = new Vector3(thickness, height, length);
 
@@ -78,6 +78,7 @@ public class WallComponent : MonoBehaviour
         }
 
         ApplyBottomLeftPivot();
+        AddCollider();
     }
 
     void ClearSegments()
@@ -102,17 +103,16 @@ public class WallComponent : MonoBehaviour
             return transform.position;
 
         float minX = float.MaxValue;
-        float minY = float.MaxValue;
         float minZ = float.MaxValue;
 
         foreach (var p in worldPoints)
         {
             if (p.x < minX) minX = p.x;
-            if (p.y < minY) minY = p.y;
             if (p.z < minZ) minZ = p.z;
         }
 
-        return new Vector3(minX, minY, minZ);
+        // 🔥 Force Y to ground level (0)
+        return new Vector3(minX, 0f, minZ);
     }
 
     void ApplyBottomLeftPivot()
@@ -133,4 +133,27 @@ public class WallComponent : MonoBehaviour
     {
         Rebuild();
     }
+
+    void AddCollider()
+    {
+        var col = GetComponent<BoxCollider>();
+        if (col == null)
+            col = gameObject.AddComponent<BoxCollider>();
+
+        if (spawnedSegments.Count == 0) return;
+
+        Bounds bounds = new Bounds(spawnedSegments[0].transform.position, Vector3.zero);
+
+        foreach (var seg in spawnedSegments)
+        {
+            var renderer = seg.GetComponent<Renderer>();
+            if (renderer != null)
+                bounds.Encapsulate(renderer.bounds);
+        }
+
+        col.center = bounds.center - transform.position;
+        col.size = bounds.size;
+    }
+
+
 }
