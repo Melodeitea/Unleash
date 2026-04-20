@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -119,27 +120,28 @@ public class LevelDesignerWindow : EditorWindow
 				EditorGUIUtility.PingObject(go);
 			}
 
-			// mark / unmark solved if Puzzle exists
-			var puzzle = go.GetComponentInChildren<Puzzle>();
-			if (puzzle != null)
+			// detect a component that exposes puzzleId/isSolved (legacy Puzzle component removed)
+			if (TryGetPuzzleInfo(go, out Component puzzleComp, out FieldInfo idField, out FieldInfo solvedField, out string existingId, out bool existingSolved))
 			{
-				bool solved = puzzle.isSolved;
-				bool newSolved = GUILayout.Toggle(solved, "Solved", "Button", GUILayout.Width(60));
-				if (newSolved != solved)
+				bool newSolved = GUILayout.Toggle(existingSolved, "Solved", "Button", GUILayout.Width(60));
+				if (newSolved != existingSolved)
 				{
-					if (newSolved)
+					Undo.RecordObject(puzzleComp, "Toggle Solved");
+					// set field if available
+					if (solvedField != null && solvedField.FieldType == typeof(bool))
+						solvedField.SetValue(puzzleComp, newSolved);
+
+					// invoke apply visuals if any
+					puzzleComp.gameObject.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
+
+					// If made solved, inform central PuzzleSystem (so saves and systems can pick it up)
+					if (newSolved && !string.IsNullOrEmpty(existingId))
 					{
-						puzzle.isSolved = true;
-						// call method to apply visuals if present
-						puzzle.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
-						if (!string.IsNullOrEmpty(puzzle.puzzleId) && PuzzleManager.Instance != null)
-							PuzzleManager.Instance.MarkSolved(puzzle.puzzleId);
+						var ps = UnityEngine.Object.FindObjectOfType<PuzzleSystem>();
+						if (ps != null)
+							ps.ApplySolvedIds(new[] { existingId });
 					}
-					else
-					{
-						puzzle.isSolved = false;
-						// no standard Unsolve flow; rely on component implementation
-					}
+					EditorUtility.SetDirty(puzzleComp);
 				}
 			}
 			else
@@ -225,14 +227,21 @@ public class LevelDesignerWindow : EditorWindow
 
 	void PlacedInstancePostProcess(GameObject go)
 	{
-		// If object has a Puzzle component with a puzzleId, and the PuzzleManager has it solved, apply visuals
-		var puzzle = go.GetComponentInChildren<Puzzle>();
-		if (puzzle != null && !string.IsNullOrEmpty(puzzle.puzzleId) && PuzzleManager.Instance != null)
+		// If object exposes a puzzleId and PuzzleSystem knows it's solved, apply visuals
+		if (TryGetPuzzleInfo(go, out Component puzzleComp, out FieldInfo idField, out FieldInfo solvedField, out string puzzleId, out bool isSolved))
 		{
-			if (PuzzleManager.Instance.IsSolved(puzzle.puzzleId))
+			var ps = UnityEngine.Object.FindObjectOfType<PuzzleSystem>();
+			if (ps != null && !string.IsNullOrEmpty(puzzleId))
 			{
-				puzzle.isSolved = true;
-				puzzle.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
+				var solvedList = ps.GetSolvedPuzzleIds();
+				if (solvedList != null && solvedList.Contains(puzzleId))
+				{
+					// set component solved flag and apply visuals
+					if (solvedField != null && solvedField.FieldType == typeof(bool))
+						solvedField.SetValue(puzzleComp, true);
+					puzzleComp.gameObject.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
+					EditorUtility.SetDirty(puzzleComp);
+				}
 			}
 		}
 	}
@@ -251,17 +260,8 @@ public class LevelDesignerWindow : EditorWindow
 	void RefreshPlacedInstances()
 	{
 		_placedInstances.Clear();
-		// Heuristic: treat objects with PrefabAssetType != NotAPrefab or that contain a component called 'PlacedByLevelDesigner' as ours.
-		// Simpler approach: find all root objects and add those that have a tag "LevelDesignerPlaced" or name match — but since we don't require tag, we'll keep runtime tracking.
-		// On enable we only track existing selected objects that have a Puzzle (best-effort)
-		var all = UnityEngine.Object.FindObjectsOfType<GameObject>();
-		foreach (var go in all)
-		{
-			if (PrefabUtility.IsPartOfAnyPrefab(go))
-			{
-				// do not auto-populate to avoid duplicating editor actions
-			}
-		}
+		// We track instances created via this window only (runtime tracking).
+		// Nothing else to do on enable.
 	}
 
 	void SaveLayout()
@@ -284,12 +284,14 @@ public class LevelDesignerWindow : EditorWindow
 				euler = go.transform.eulerAngles,
 				scale = go.transform.localScale
 			};
-			var puzzle = go.GetComponentInChildren<Puzzle>();
-			if (puzzle != null)
+
+			// detect puzzle id & solved flag via reflection
+			if (TryGetPuzzleInfo(go, out Component puzzleComp, out FieldInfo idField, out FieldInfo solvedField, out string puzzleId, out bool isSolved))
 			{
-				pd.puzzleId = puzzle.puzzleId;
-				pd.isSolved = puzzle.isSolved;
+				pd.puzzleId = puzzleId ?? "";
+				pd.isSolved = isSolved;
 			}
+
 			layout.objects.Add(pd);
 		}
 
@@ -352,18 +354,33 @@ public class LevelDesignerWindow : EditorWindow
 				instance.transform.eulerAngles = pd.euler;
 				instance.transform.localScale = pd.scale;
 
-				// apply puzzle solved state if present
-				var puzzle = instance.GetComponentInChildren<Puzzle>();
-				if (puzzle != null)
+				// apply puzzle solved state if present (use PuzzleSystem)
+				if (!string.IsNullOrEmpty(pd.puzzleId))
 				{
-					if (!string.IsNullOrEmpty(pd.puzzleId))
-						puzzle.puzzleId = pd.puzzleId;
-					puzzle.isSolved = pd.isSolved;
+					// Set puzzleId on component if possible, and set solved flag
+					if (TryGetPuzzleInfo(instance, out Component puzzleComp, out FieldInfo idField, out FieldInfo solvedField, out string existingId, out bool existingSolved))
+					{
+						// set id if field exists
+						if (idField != null && idField.FieldType == typeof(string))
+							idField.SetValue(puzzleComp, pd.puzzleId);
+
+						// set solved flag on component instance
+						if (pd.isSolved && solvedField != null && solvedField.FieldType == typeof(bool))
+							solvedField.SetValue(puzzleComp, true);
+
+						// apply visuals
+						if (pd.isSolved)
+							puzzleComp.gameObject.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
+
+						EditorUtility.SetDirty(puzzleComp);
+					}
+
+					// inform PuzzleSystem about solved id so global state and saving include it
 					if (pd.isSolved)
 					{
-						puzzle.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
-						if (PuzzleManager.Instance != null && !string.IsNullOrEmpty(puzzle.puzzleId))
-							PuzzleManager.Instance.MarkSolved(puzzle.puzzleId);
+						var ps = UnityEngine.Object.FindObjectOfType<PuzzleSystem>();
+						if (ps != null)
+							ps.ApplySolvedIds(new[] { pd.puzzleId });
 					}
 				}
 
@@ -373,5 +390,72 @@ public class LevelDesignerWindow : EditorWindow
 
 		EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
 		EditorUtility.DisplayDialog("Layout loaded", $"Loaded layout '{layout.name}'", "OK");
+	}
+
+	// Helper: find any component in children that exposes 'puzzleId' (string) and 'isSolved' (bool) fields.
+	static bool TryGetPuzzleInfo(GameObject root, out Component compOut, out FieldInfo idField, out FieldInfo solvedField, out string puzzleId, out bool isSolved)
+	{
+		compOut = null;
+		idField = null;
+		solvedField = null;
+		puzzleId = null;
+		isSolved = false;
+
+		if (root == null) return false;
+
+		var comps = root.GetComponentsInChildren<Component>(true);
+		foreach (var c in comps)
+		{
+			if (c == null) continue;
+			var t = c.GetType();
+			// look for a field named 'puzzleId' and optionally 'isSolved'
+			var fId = t.GetField("puzzleId", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			if (fId != null && fId.FieldType == typeof(string))
+			{
+				compOut = c;
+				idField = fId;
+				var fSolved = t.GetField("isSolved", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+				if (fSolved != null && fSolved.FieldType == typeof(bool))
+					solvedField = fSolved;
+
+			 // read values
+				try
+				{
+					puzzleId = (string)idField.GetValue(c);
+					if (solvedField != null) isSolved = (bool)solvedField.GetValue(c);
+				}
+				catch
+				{
+					puzzleId = null;
+					isSolved = false;
+				}
+				return true;
+			}
+
+			// also allow a property named PuzzleId (optional)
+			var propId = t.GetProperty("PuzzleId", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			if (propId != null && propId.PropertyType == typeof(string) && propId.CanRead)
+			{
+				compOut = c;
+				idField = null; // property used instead of field
+				var fSolved = t.GetField("isSolved", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+				if (fSolved != null && fSolved.FieldType == typeof(bool))
+					solvedField = fSolved;
+
+				try
+				{
+					puzzleId = (string)propId.GetValue(c, null);
+					if (solvedField != null) isSolved = (bool)solvedField.GetValue(c);
+				}
+				catch
+				{
+					puzzleId = null;
+					isSolved = false;
+				}
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

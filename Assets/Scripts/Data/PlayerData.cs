@@ -36,11 +36,14 @@ public class PlayerData
 			flashlightEuler = new float[2] { 0f, 0f };
 		}
 
-		// puzzles
-		if (PuzzleManager.Instance != null)
-			solvedPuzzles = PuzzleManager.Instance.GetSolvedPuzzleIds();
-		else
-			solvedPuzzles = new List<string>();
+		// puzzles: read from PuzzleSystem (no PuzzleManager fallback)
+		solvedPuzzles = new List<string>();
+		var ps = UnityEngine.Object.FindObjectOfType<PuzzleSystem>();
+		if (ps != null)
+		{
+			var list = ps.GetSolvedPuzzleIds();
+			if (list != null) solvedPuzzles = list;
+		}
 	}
 }
 

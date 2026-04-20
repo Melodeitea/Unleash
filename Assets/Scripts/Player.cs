@@ -37,23 +37,11 @@ public class Player : MonoBehaviour
 			}
 		}
 
-		// apply puzzles
-		if (PuzzleManager.Instance != null && data.solvedPuzzles != null)
+		// apply puzzles via PuzzleSystem (replaces previous Puzzle / PuzzleManager direct calls)
+		var puzzleSystem = FindObjectOfType<PuzzleSystem>();
+		if (puzzleSystem != null && data.solvedPuzzles != null)
 		{
-			PuzzleManager.Instance.SetSolvedList(data.solvedPuzzles);
-			// notify existing Puzzle components so they can update visuals
-			var allPuzzles = FindObjectsOfType<Puzzle>();
-			foreach (var p in allPuzzles)
-			{
-				if (!string.IsNullOrEmpty(p.puzzleId) && PuzzleManager.Instance.IsSolved(p.puzzleId))
-				{
-					// ensure internal flag and apply visuals
-					p.isSolved = true;
-					// call protected method by using Solve replacement? call its OnApplySolvedState via Solve would also mark manager again.
-					// Instead, invoke Solve's effects by calling virtual handler via reflection or a public method - here we call SolveSafe:
-					p.SendMessage("OnApplySolvedState", SendMessageOptions.DontRequireReceiver);
-				}
-			}
+			puzzleSystem.ApplySolvedIds(data.solvedPuzzles);
 		}
 	}
 }
