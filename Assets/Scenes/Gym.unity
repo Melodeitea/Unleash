@@ -2353,6 +2353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1330628026}
   - component: {fileID: 1330628025}
+  - component: {fileID: 1330628027}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2390,6 +2391,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1330628027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330628024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e685ff295faf242b9eb0d1171a6904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSystem
+  puzzles: []
+  startingItems: []
 --- !u!1 &1385039787
 GameObject:
   m_ObjectHideFlags: 0
