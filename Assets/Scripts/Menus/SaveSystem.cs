@@ -1,53 +1,130 @@
 using UnityEngine;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+
 public static class SaveSystem
-
 {
+	private const string SaveFileName = "player.save";
+
+	static string GetSavePath()
+	{
+		return Path.Combine(Application.persistentDataPath, SaveFileName);
+	}
+
 	public static void SavePlayer(Player player)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
+	{
+		if (player == null)
+		{
+			Debug.LogError("[SaveSystem] SavePlayer called with null player.");
+			return;
+		}
 
-        //alows to save on any OS
-        string path = Application.persistentDataPath + "/player.save";
+		try
+		{
+			PlayerData data = new PlayerData(player);
+			string json = JsonUtility.ToJson(data, true);
 
-        FileStream stream = new FileStream(path, FileMode.Create);
+			string path = GetSavePath();
+			string tmp = path + ".tmp";
 
-        PlayerData data = new PlayerData(player);
+			// atomic write: write temp then move/replace
+			File.WriteAllText(tmp, json);
+			if (File.Exists(path)) File.Delete(path);
+			File.Move(tmp, path);
 
-        formatter.Serialize(stream, data);
-        Debug.Log("project saved");
-        Debug.Log("progress was saved at" + path);
-        stream.Close();
-    }
-    
-    public static PlayerData LoadPlayer()
-    {
-        string path = Application.persistentDataPath + "/player.save";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+			Debug.Log($"[SaveSystem] Save successful: {path}");
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError($"[SaveSystem] Save failed: {ex}");
+		}
+	}
 
-            PlayerData data = formatter.Deserialize(stream) as PlayerData;
-            stream.Close();
-            
+	public static PlayerData LoadPlayer()
+	{
+		string path = GetSavePath();
+		if (!File.Exists(path))
+		{
+			Debug.LogError("[SaveSystem] Save file not found in " + path);
+			return null;
+		}
 
-            return data;
-        }
-        else
-        {
-            Debug.LogError("Save file not found in " + path);
+		try
+		{
+			// Peek first non-whitespace byte to determine JSON vs binary (backwards compatibility)
+			using (var fs = File.OpenRead(path))
+			{
+				int b;
+				do
+				{
+					b = fs.ReadByte();
+					if (b == -1) break;
+				} while (char.IsWhiteSpace((char)b));
 
-            return null;
-        }
+				if (b == -1)
+				{
+					Debug.LogError("[SaveSystem] Save file is empty or corrupted.");
+					return null;
+				}
+
+				fs.Seek(0, SeekOrigin.Begin);
+
+				char first = (char)b;
+				if (first == '{' || first == '[')
+				{
+					// JSON format
+					string json = File.ReadAllText(path);
+					PlayerData data = JsonUtility.FromJson<PlayerData>(json);
+					return data;
+				}
+				else
+				{
+					// Fallback to BinaryFormatter for old saves, then migrate to JSON
+					try
+					{
+						var formatter = new BinaryFormatter();
+						var obj = formatter.Deserialize(fs) as PlayerData;
+						if (obj != null)
+						{
+							// migrate to JSON
+							try
+							{
+								string json = JsonUtility.ToJson(obj, true);
+								File.WriteAllText(path, json);
+								Debug.Log("[SaveSystem] Migrated legacy binary save to JSON format.");
+							}
+							catch (Exception)
+							{
+								// ignore migration errors
+							}
+
+							return obj;
+						}
+					}
+					catch (Exception bfEx)
+					{
+						Debug.LogWarning($"[SaveSystem] Binary fallback failed: {bfEx}. Trying JSON read as last resort.");
+						// try JSON read anyway
+						string json = File.ReadAllText(path);
+						PlayerData data = JsonUtility.FromJson<PlayerData>(json);
+						return data;
+					}
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError($"[SaveSystem] Load failed: {ex}");
+		}
+
+		return null;
 	}
 
 	// Returns true when a save file exists and is accessible.
-	// for main menu load button to only show when a save exists
 	public static bool HasSave()
 	{
-		string path = Application.persistentDataPath + "/player.save";
+		string path = GetSavePath();
 		return File.Exists(path);
 	}
 }

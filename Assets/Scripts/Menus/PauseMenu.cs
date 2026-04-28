@@ -85,23 +85,6 @@ public class PauseMenu : MonoBehaviour
 			EventSystem.current.SetSelectedGameObject(null);
 	}
 
-	public void SaveGame()
-	{
-		var player = FindObjectOfType<Player>();
-		if (player != null)
-			player.SavePlayer();
-		// keep paused so user can continue or resume manually
-	}
-
-	public void LoadGame()
-	{
-		var player = FindObjectOfType<Player>();
-		if (player != null)
-			player.LoadPlayer();
-
-		// resume after loading to return control to the player
-		Resume();
-	}
 
 	public void OpenMainMenu()
 	{

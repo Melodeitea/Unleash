@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // This script defines a light switch that can be toggled by the player when they are in range.
+// When the red layer is enabled this optionally notifies PuzzleSystem by adding/removing a puzzle flag id.
 public class LightSwitch : MonoBehaviour
 {
     [Header("Interaction")]
@@ -12,15 +13,19 @@ public class LightSwitch : MonoBehaviour
     public KeyCode interactKey = KeyCode.E;
 
     [Header("Color / Targets")]
-    [Tooltip("Material that will be applied to referenced objects tagged 'Red'.")]
+    [Tooltip("Material that will be applied to referenced objects.")]
     public Material selectedMaterial;
-    [Tooltip("List of objects referenced by this switch. Only those with tag 'Red' will get recolored.")]
+    [Tooltip("List of objects referenced by this switch. These objects will be recolored on toggle.")]
     public List<GameObject> referencedObjects = new List<GameObject>();
     [Tooltip("List of objects that are hidden by default and should appear when the switch is activated.")]
     public List<GameObject> hiddenReferences = new List<GameObject>();
 
-    [Header("Screen Overlay")]
-    [Tooltip("Full-screen UI Image used to tint the screen (assign a red Image in the Canvas).")]
+    [Header("Puzzle integration")]
+    [Tooltip("Optional puzzle-flag id to add to PuzzleSystem when red-layer is ON. Leave empty to disable automatic puzzle notifications.")]
+    public string puzzleFlagOnRed;
+
+    [Header("Screen Overlay (optional)")]
+    [Tooltip("Full-screen UI Image used to tint the screen (assign a red Image in the Canvas). Leave null to disable overlay.")]
     public Image screenOverlay;
     [Tooltip("Overlay alpha when active (0..1).")]
     [Range(0f, 1f)]
@@ -41,8 +46,13 @@ public class LightSwitch : MonoBehaviour
             var rend = go.GetComponent<Renderer>();
             if (rend != null && !_originalMaterials.ContainsKey(rend))
             {
+                // Cache sharedMaterials so we can restore them exactly
                 _originalMaterials[rend] = rend.sharedMaterials;
             }
+
+            // Ensure each referenced object has a RedMarker (so puzzles can query it)
+            if (go != null && go.GetComponent<RedMarker>() == null)
+                go.AddComponent<RedMarker>();
         }
 
         // Ensure hiddenReferences are hidden at start
@@ -58,16 +68,15 @@ public class LightSwitch : MonoBehaviour
             var c = screenOverlay.color;
             c.a = 0f;
             screenOverlay.color = c;
-            // leave the GameObject active (so color changes are visible); ensure raycast target is off on the Image
+            // ensure overlay does not block raycasts if used
+            screenOverlay.raycastTarget = false;
         }
     }
 
     void Update()
     {
         if (_playerInRange && Input.GetKeyDown(interactKey))
-        {
             Toggle();
-        }
     }
 
     void Toggle()
@@ -76,6 +85,7 @@ public class LightSwitch : MonoBehaviour
         ApplyColor(_isActive);
         SetHidden(_isActive);
         SetOverlay(_isActive);
+        NotifyPuzzleSystem(_isActive);
     }
 
     void ApplyColor(bool apply)
@@ -84,22 +94,23 @@ public class LightSwitch : MonoBehaviour
         {
             if (go == null) continue;
 
-            // Only affect objects that are tagged "Red"
-            if (!go.CompareTag("Red")) continue;
-
             var rend = go.GetComponent<Renderer>();
             if (rend == null) continue;
 
             if (apply)
             {
                 if (selectedMaterial == null) continue;
-                // Apply the selectedMaterial to all material slots
-                var mats = rend.materials;
-                for (int i = 0; i < mats.Length; i++)
-                {
-                    mats[i] = selectedMaterial;
-                }
-                rend.materials = mats;
+
+                // Build new sharedMaterials array filled with the selected material
+                var orig = rend.sharedMaterials;
+                var newMats = new Material[orig.Length];
+                for (int i = 0; i < newMats.Length; i++)
+                    newMats[i] = selectedMaterial;
+                rend.sharedMaterials = newMats;
+
+                // mark the object as red for puzzles
+                var marker = go.GetComponent<RedMarker>() ?? go.AddComponent<RedMarker>();
+                marker.IsRed = true;
             }
             else
             {
@@ -108,6 +119,10 @@ public class LightSwitch : MonoBehaviour
                 {
                     rend.sharedMaterials = orig;
                 }
+
+                // clear red marker
+                var marker = go.GetComponent<RedMarker>();
+                if (marker != null) marker.IsRed = false;
             }
         }
     }
@@ -115,10 +130,7 @@ public class LightSwitch : MonoBehaviour
     void SetHidden(bool show)
     {
         foreach (var go in hiddenReferences)
-        {
-            if (go == null) continue;
-            go.SetActive(show);
-        }
+            if (go != null) go.SetActive(show);
     }
 
     void SetOverlay(bool show)
@@ -129,19 +141,25 @@ public class LightSwitch : MonoBehaviour
         screenOverlay.color = c;
     }
 
+    void NotifyPuzzleSystem(bool redOn)
+    {
+        if (string.IsNullOrEmpty(puzzleFlagOnRed)) return;
+        var ps = FindObjectOfType<PuzzleSystem>();
+        if (ps == null) return;
+
+        if (redOn)
+            ps.AddItem(puzzleFlagOnRed);
+        else
+            ps.RemoveItem(puzzleFlagOnRed);
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag))
-        {
-            _playerInRange = true;
-        }
+        if (other.CompareTag(playerTag)) _playerInRange = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(playerTag))
-        {
-            _playerInRange = false;
-        }
+        if (other.CompareTag(playerTag)) _playerInRange = false;
     }
 }
