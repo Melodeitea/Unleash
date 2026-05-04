@@ -4,27 +4,53 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PlayerData
 {
+	// ------------------------
+	// PLAYER STATE
+	// ------------------------
 	public int level;
 	public float[] position;
 
-	// new fields persisted
+	// ------------------------
+	// FLASHLIGHT
+	// ------------------------
 	public bool flashlightOn;
 	public float[] flashlightEuler;
-	public List<string> solvedPuzzles;
+
+	// ------------------------
+	// INVENTORY
+	// ------------------------
+	public List<string> inventoryItemIds;
+
+	// ------------------------
+	// GAME FLAGS (progression)
+	// ------------------------
+	public List<string> gameFlags;
+
+	// ------------------------
+	// RED LAYER
+	// ------------------------
+	public bool redLayerActive;
 
 	public PlayerData(Player player)
 	{
+		// ------------------------
+		// BASIC PLAYER
+		// ------------------------
 		level = player.level;
+
 		position = new float[3];
 		position[0] = player.transform.position.x;
 		position[1] = player.transform.position.y;
 		position[2] = player.transform.position.z;
 
-		// flashlight
+		// ------------------------
+		// FLASHLIGHT
+		// ------------------------
 		var fl = player.GetComponentInChildren<Flashlight>();
 		if (fl != null)
 		{
 			flashlightOn = fl.IsOn;
+
 			var rot = fl.GetRotationEuler();
 			flashlightEuler = new float[2];
 			flashlightEuler[0] = rot.x;
@@ -36,14 +62,41 @@ public class PlayerData
 			flashlightEuler = new float[2] { 0f, 0f };
 		}
 
-		// puzzles: read from PuzzleSystem (no PuzzleManager fallback)
-		solvedPuzzles = new List<string>();
-		var ps = UnityEngine.Object.FindObjectOfType<PuzzleSystem>();
-		if (ps != null)
+		// ------------------------
+		// INVENTORY
+		// ------------------------
+		inventoryItemIds = new List<string>();
+
+		if (InventoryManager.Instance != null)
 		{
-			var list = ps.GetSolvedPuzzleIds();
-			if (list != null) solvedPuzzles = list;
+			var items = InventoryManager.Instance.GetAll();
+			foreach (var item in items)
+			{
+				if (item != null && !string.IsNullOrEmpty(item.id))
+					inventoryItemIds.Add(item.id);
+			}
+		}
+
+		// ------------------------
+		// GAME FLAGS
+		// ------------------------
+		gameFlags = new List<string>();
+
+		if (GameFlags.Instance != null)
+		{
+			gameFlags = GameFlags.Instance.GetAllFlags();
+		}
+
+		// ------------------------
+		// RED LAYER STATE
+		// ------------------------
+		if (RedLayerManager.Instance != null)
+		{
+			redLayerActive = RedLayerManager.Instance.IsActive;
+		}
+		else
+		{
+			redLayerActive = false;
 		}
 	}
 }
-

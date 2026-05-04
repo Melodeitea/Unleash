@@ -113,4 +113,9 @@ public class GameFlags : MonoBehaviour
 
 		Debug.Log("[GameFlags] All flags cleared.");
 	}
+
+	public List<string> GetAllFlags()
+	{
+		return new List<string>(activeFlags);
+	}
 }

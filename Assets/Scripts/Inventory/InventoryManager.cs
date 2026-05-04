@@ -107,4 +107,10 @@ public class InventoryManager : MonoBehaviour
 
 		return null;
 	}
+
+	public void ClearAll()
+	{
+		items.Clear();
+		OnInventoryChanged?.Invoke();
+	}
 }

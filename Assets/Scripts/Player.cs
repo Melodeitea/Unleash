@@ -1,47 +1,135 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
 	public int level;
 
+	// ------------------------
+	// SAVE
+	// ------------------------
 	public void SavePlayer()
 	{
 		SaveSystem.SavePlayer(this);
 	}
 
+	// ------------------------
+	// LOAD
+	// ------------------------
 	public void LoadPlayer()
 	{
 		PlayerData data = SaveSystem.LoadPlayer();
+
 		if (data == null)
 		{
 			Debug.LogWarning("No save to load.");
 			return;
 		}
 
+		ApplyPlayerData(data);
+	}
+
+	// ------------------------
+	// APPLY DATA
+	// ------------------------
+	private void ApplyPlayerData(PlayerData data)
+	{
+		// ------------------------
+		// BASIC PLAYER
+		// ------------------------
 		level = data.level;
 
 		if (data.position != null && data.position.Length >= 3)
 		{
-			Vector3 position = new Vector3(data.position[0], data.position[1], data.position[2]);
-			transform.position = position;
+			transform.position = new Vector3(
+				data.position[0],
+				data.position[1],
+				data.position[2]
+			);
 		}
 
-		// apply flashlight state if present
+		// ------------------------
+		// FLASHLIGHT
+		// ------------------------
 		var fl = FindObjectOfType<Flashlight>();
 		if (fl != null)
 		{
 			fl.SetState(data.flashlightOn);
+
 			if (data.flashlightEuler != null && data.flashlightEuler.Length >= 2)
 			{
-				fl.SetRotationEuler(new Vector3(data.flashlightEuler[0], data.flashlightEuler[1], 0f));
+				fl.SetRotationEuler(new Vector3(
+					data.flashlightEuler[0],
+					data.flashlightEuler[1],
+					0f
+				));
 			}
 		}
 
-		// apply puzzles via PuzzleSystem (replaces previous Puzzle / PuzzleManager direct calls)
-		var puzzleSystem = FindObjectOfType<PuzzleSystem>();
-		if (puzzleSystem != null && data.solvedPuzzles != null)
+		// ------------------------
+		// INVENTORY
+		// ------------------------
+		if (InventoryManager.Instance != null)
 		{
-			puzzleSystem.ApplySolvedIds(data.solvedPuzzles);
+			InventoryManager.Instance.ClearAll();
+
+			if (data.inventoryItemIds != null)
+			{
+				foreach (string id in data.inventoryItemIds)
+				{
+					InventoryItem item = FindInventoryItem(id);
+					if (item != null)
+					{
+						InventoryManager.Instance.AddItem(item);
+					}
+					else
+					{
+						Debug.LogWarning($"[Load] Missing InventoryItem: {id}");
+					}
+				}
+			}
 		}
+
+		// ------------------------
+		// GAME FLAGS
+		// ------------------------
+		if (GameFlags.Instance != null)
+		{
+			GameFlags.Instance.ClearAll();
+
+			if (data.gameFlags != null)
+			{
+				foreach (string flag in data.gameFlags)
+				{
+					GameFlags.Instance.SetFlag(flag);
+				}
+			}
+		}
+
+		// ------------------------
+		// RED LAYER
+		// ------------------------
+		if (RedLayerManager.Instance != null)
+		{
+			RedLayerManager.Instance.SetLayerState(data.redLayerActive);
+		}
+
+		Debug.Log("[Player] Load complete.");
+	}
+
+	// ------------------------
+	// HELPER: FIND ITEM
+	// ------------------------
+	private InventoryItem FindInventoryItem(string id)
+	{
+		InventoryItem[] allItems = Resources.LoadAll<InventoryItem>("");
+
+		foreach (var item in allItems)
+		{
+			if (item.id == id)
+				return item;
+		}
+
+		return null;
 	}
 }
