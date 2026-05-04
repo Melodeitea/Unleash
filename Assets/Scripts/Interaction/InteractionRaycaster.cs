@@ -6,36 +6,28 @@ public class InteractionRaycaster : MonoBehaviour
 	[Header("Settings")]
 	[SerializeField] private float interactRange = 2.5f;
 	[SerializeField] private KeyCode interactKey = KeyCode.E;
-	[SerializeField] private LayerMask interactableLayer;
 
 	[Header("UI")]
 	[SerializeField] private GameObject promptUI;
 	[SerializeField] private TextMeshProUGUI promptText;
 
-	private Camera playerCamera;
+	[SerializeField] private Transform rayOrigin;
+	private bool justInteracted;
+
 	private IInteractable currentInteractable;
-
-	private void Awake()
-	{
-		playerCamera = Camera.main;
-		HidePrompt();
-	}
-
 
 	private void Update()
 	{
-
-		if (DialogueManager.Instance != null && DialogueManager.Instance.IsPlaying)
+		if (justInteracted)
 		{
-			HidePrompt();
+			justInteracted = false;
 			return;
 		}
-		Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-		RaycastHit hit;
+		Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
 
-		if (Physics.Raycast(ray, out hit, interactRange, interactableLayer))
+		if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
 		{
-			IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+			IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
 
 			if (interactable != null)
 			{
@@ -46,15 +38,20 @@ public class InteractionRaycaster : MonoBehaviour
 				if (!string.IsNullOrEmpty(prompt))
 				{
 					ShowPrompt(prompt);
-
-					if (Input.GetKeyDown(interactKey))
-					{
-						interactable.Interact(GetComponent<Player>());
-					}
 				}
 				else
 				{
 					HidePrompt();
+				}
+
+				if (Input.GetKeyDown(interactKey))
+				{
+					interactable.Interact(GetComponentInParent<Player>());
+
+					HidePrompt();
+
+					justInteracted = true;
+					return;
 				}
 
 				return;
@@ -67,7 +64,7 @@ public class InteractionRaycaster : MonoBehaviour
 
 	private void ShowPrompt(string text)
 	{
-		if (promptUI == null || promptText == null) return;
+		if (!promptUI || !promptText) return;
 
 		promptUI.SetActive(true);
 		promptText.text = text;
@@ -75,7 +72,7 @@ public class InteractionRaycaster : MonoBehaviour
 
 	private void HidePrompt()
 	{
-		if (promptUI == null) return;
+		if (!promptUI) return;
 
 		promptUI.SetActive(false);
 	}

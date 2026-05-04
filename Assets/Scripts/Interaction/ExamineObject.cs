@@ -33,6 +33,7 @@ public class ExamineObject : MonoBehaviour, IInteractable
 		if (!string.IsNullOrEmpty(monologueText))
 		{
 			MonologueManager.Instance.Play(monologueText);
+			Debug.Log("monologue");
 		}
 
 		// Add item
