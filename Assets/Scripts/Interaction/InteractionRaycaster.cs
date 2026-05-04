@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class InteractionRaycaster : MonoBehaviour
@@ -13,16 +13,15 @@ public class InteractionRaycaster : MonoBehaviour
 
 	[SerializeField] private Transform rayOrigin;
 	private bool justInteracted;
+	private IInteractable lastInteracted;
 
 	private IInteractable currentInteractable;
 
+	private bool hasInteractedThisPress;
+
 	private void Update()
 	{
-		if (justInteracted)
-		{
-			justInteracted = false;
-			return;
-		}
+		
 		Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
 
 		if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
@@ -32,6 +31,13 @@ public class InteractionRaycaster : MonoBehaviour
 			if (interactable != null)
 			{
 				currentInteractable = interactable;
+
+				
+				if (lastInteracted == currentInteractable)
+				{
+					HidePrompt();
+					return;
+				}
 
 				string prompt = interactable.GetPrompt();
 
@@ -46,19 +52,33 @@ public class InteractionRaycaster : MonoBehaviour
 
 				if (Input.GetKeyDown(interactKey))
 				{
-					interactable.Interact(GetComponentInParent<Player>());
+					var player = GetComponentInParent<Player>();
+
+					// 1. If monologue is already open → close it instead of interacting
+					if (MonologueManager.Instance != null && MonologueManager.Instance.IsPlaying)
+					{
+						MonologueManager.Instance.Dismiss();
+						HidePrompt();
+						return;
+					}
+
+					// 2. Otherwise interact normally
+					interactable.Interact(player);
+
+					// 3. Show monologue AFTER interaction (if any)
+					// NOTE: ExamineObject handles content, so we just ensure UI stays clean
 
 					HidePrompt();
+					lastInteracted = interactable;
 
-					justInteracted = true;
 					return;
 				}
 
 				return;
 			}
 		}
-
 		currentInteractable = null;
+		lastInteracted = null; // <-- ADD THIS
 		HidePrompt();
 	}
 
@@ -68,6 +88,7 @@ public class InteractionRaycaster : MonoBehaviour
 
 		promptUI.SetActive(true);
 		promptText.text = text;
+		
 	}
 
 	private void HidePrompt()
