@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class ExamineObject : MonoBehaviour, IInteractable
@@ -18,61 +18,40 @@ public class ExamineObject : MonoBehaviour, IInteractable
 	[Header("Events")]
 	[SerializeField] private UnityEvent onExamined;
 
-	[SerializeField] private DocumentReader documentReader;
-
 	private bool hasBeenExamined = false;
 
 	public void Interact(Player player)
 	{
-		if (documentReader != null)
-		{
-			documentReader.OpenDocument();
-		}
+		if (examineOnce && hasBeenExamined) return;
+		if (requireRedLayer && !RedLayerManager.Instance.IsActive) return;
 
-		if (examineOnce && hasBeenExamined)
-			return;
-
-		// Red layer restriction
-		if (requireRedLayer && !RedLayerManager.Instance.IsActive)
-			return;
-
-		// Play monologue
-		if (!string.IsNullOrEmpty(monologueText))
-		{
-			MonologueManager.Instance.Play(monologueText);
-			Debug.Log("monologue");
-		}
-
-		// Add item
+		// Route item to inventory OR notes
 		if (itemToAdd != null)
 		{
-			InventoryManager.Instance.AddItem(itemToAdd);
+			if (itemToAdd.isNote)
+			{
+				NotesManager.Instance.AddNote(itemToAdd);
+				NotesUI.Instance.Open(itemToAdd); // open reader immediately
+			}
+			else
+			{
+				InventoryManager.Instance.AddItem(itemToAdd);
+			}
 		}
 
-		// Fire events
-		onExamined?.Invoke();
+		if (!string.IsNullOrEmpty(monologueText))
+			MonologueManager.Instance.Play(monologueText);
 
+		onExamined?.Invoke();
 		hasBeenExamined = true;
 
-		// Disable interaction if needed
-		if (examineOnce)
-		{
-			// Option 1: Disable this component
-			enabled = false;
-
-			// Option 2 (alternative): destroy component
-			// Destroy(this);
-		}
+		if (examineOnce) enabled = false;
 	}
 
 	public string GetPrompt()
 	{
-		if (examineOnce && hasBeenExamined)
-			return string.Empty;
-
-		if (requireRedLayer && !RedLayerManager.Instance.IsActive)
-			return string.Empty;
-
+		if (examineOnce && hasBeenExamined) return string.Empty;
+		if (requireRedLayer && !RedLayerManager.Instance.IsActive) return string.Empty;
 		return prompt;
 	}
 }
