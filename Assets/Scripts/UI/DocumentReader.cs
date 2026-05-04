@@ -1,201 +1,159 @@
-using System.Text;
+﻿using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-/// <summary>
-/// Attach to a document GameObject (with an isTrigger collider).
-/// Player presses E when in range to open the document UI (assign `readingUIRoot`).
-/// While the document UI is open, pressing Space toggles a side-text view that shows a numeric representation
-/// (ASCII codes) of the main text for readability.
-/// Optional: assign components to disable while reading (e.g., player controller scripts).
-/// </summary>
 [DisallowMultipleComponent]
 public class DocumentReader : MonoBehaviour
 {
-    [Header("Interaction")]
-    [Tooltip("Tag used for the player.")]
-    public string playerTag = "Player";
-    [Tooltip("Key to interact with the document.")]
-    public KeyCode interactKey = KeyCode.E;
-    [Tooltip("Key to toggle the numeric side text while viewing.")]
-    public KeyCode toggleSideKey = KeyCode.Space;
+	[Header("Data")]
+	public DocumentContentSO content;
+	public DocumentVisualSO visual;
 
-    [Header("UI")]
-    [Tooltip("Root GameObject of the document UI (assign in inspector). This object will be activated/deactivated.")]
-    public GameObject readingUIRoot;
-    [Tooltip("Main TextMeshProUGUI inside the reading UI that shows the readable document text.")]
-    public TextMeshProUGUI mainText;
-    [Tooltip("Side TextMeshProUGUI that will show numeric representation. This object will be toggled.")]
-    public TextMeshProUGUI sideText;
+	[Header("UI")]
+	public GameObject readingUIRoot;
+	public Transform visualContainer;
+	public TextMeshProUGUI transcriptionText;
 
-    [Header("Optional")]
-    [Tooltip("Components to disable while the player is reading (e.g., movement scripts).")]
-    public Behaviour[] componentsToDisable;
+	[Header("Controls")]
+	public KeyCode closeKey = KeyCode.E;
+	public KeyCode toggleAsciiKey = KeyCode.Space;
 
-    bool _playerInRange;
-    bool _isViewing;
-    bool _sideVisible;
-    bool[] _previousComponentStates;
+	[Header("Optional")]
+	public Behaviour[] componentsToDisable;
 
-    void Awake()
-    {
-        // Ensure UI is hidden at start (do not assume inspector state)
-        if (readingUIRoot != null)
-            readingUIRoot.SetActive(false);
-        if (sideText != null && sideText.gameObject.activeSelf)
-            sideText.gameObject.SetActive(false);
+	bool _isViewing;
+	bool _showingAscii;
 
-        if (componentsToDisable != null && componentsToDisable.Length > 0)
-            _previousComponentStates = new bool[componentsToDisable.Length];
-    }
+	bool[] _previousComponentStates;
+	GameObject _spawnedVisual;
 
-    void Update()
-    {
-        // Open/close document
-        if (Input.GetKeyDown(interactKey))
-        {
-            if (_isViewing)
-            {
-                CloseDocument();
-            }
-            else if (_playerInRange)
-            {
-                OpenDocument();
-            }
-        }
+	void Awake()
+	{
+		if (readingUIRoot != null)
+			readingUIRoot.SetActive(false);
 
-        // Toggle numeric side text only when viewing
-        if (_isViewing && Input.GetKeyDown(toggleSideKey))
-        {
-            ToggleSideText();
-        }
-    }
+		if (componentsToDisable != null && componentsToDisable.Length > 0)
+			_previousComponentStates = new bool[componentsToDisable.Length];
+	}
 
-    void OpenDocument()
-    {
-        if (readingUIRoot == null)
-        {
-            Debug.LogWarning($"DocumentReader on '{name}' has no readingUIRoot assigned.");
-            return;
-        }
+	void Update()
+	{
+		if (!_isViewing) return;
 
-        _isViewing = true;
-        _sideVisible = false;
+		if (Input.GetKeyDown(closeKey))
+			CloseDocument();
 
-        readingUIRoot.SetActive(true);
-        if (sideText != null)
-            sideText.gameObject.SetActive(false);
+		if (Input.GetKeyDown(toggleAsciiKey))
+			ToggleAsciiView();
+	}
 
-        // show cursor so player can read / interact with UI
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+	// 🔥 CALLED BY ExamineObject
+	public void OpenDocument()
+	{
+		if (readingUIRoot == null) return;
 
-        // disable requested components
-        if (componentsToDisable != null)
-        {
-            for (int i = 0; i < componentsToDisable.Length; i++)
-            {
-                var comp = componentsToDisable[i];
-                if (comp == null) continue;
-                _previousComponentStates[i] = comp.enabled;
-                comp.enabled = false;
-            }
-        }
-    }
+		_isViewing = true;
+		_showingAscii = false;
 
-    void CloseDocument()
-    {
-        _isViewing = false;
-        _sideVisible = false;
+		readingUIRoot.SetActive(true);
 
-        if (readingUIRoot != null)
-            readingUIRoot.SetActive(false);
-        if (sideText != null)
-            sideText.gameObject.SetActive(false);
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
 
-        // restore cursor (locked for gameplay)
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+		// TEXT
+		if (content != null && transcriptionText != null)
+			transcriptionText.text = content.transcriptionText;
 
-        // restore components
-        if (componentsToDisable != null)
-        {
-            for (int i = 0; i < componentsToDisable.Length; i++)
-            {
-                var comp = componentsToDisable[i];
-                if (comp == null) continue;
-                // If we saved previous state, restore it; otherwise enable by default
-                if (_previousComponentStates != null && i < _previousComponentStates.Length)
-                    comp.enabled = _previousComponentStates[i];
-                else
-                    comp.enabled = true;
-            }
-        }
-    }
+		// VISUAL
+		SpawnVisual();
 
-    void ToggleSideText()
-    {
-        if (sideText == null)
-        {
-            Debug.LogWarning($"DocumentReader on '{name}' has no sideText assigned.");
-            return;
-        }
+		// Disable player
+		if (componentsToDisable != null)
+		{
+			for (int i = 0; i < componentsToDisable.Length; i++)
+			{
+				if (componentsToDisable[i] == null) continue;
 
-        _sideVisible = !_sideVisible;
-        if (_sideVisible)
-        {
-            // populate numeric representation from mainText if available
-            var source = mainText != null ? mainText.text : string.Empty;
-            sideText.text = ConvertToNumeric(source);
-        }
+				_previousComponentStates[i] = componentsToDisable[i].enabled;
+				componentsToDisable[i].enabled = false;
+			}
+		}
+	}
 
-        sideText.gameObject.SetActive(_sideVisible);
-    }
+	void CloseDocument()
+	{
+		_isViewing = false;
+		_showingAscii = false;
 
-    // Convert text into a readable numeric representation (ASCII codes grouped per-character).
-    // Example: "Hi" -> "72 105"
-    string ConvertToNumeric(string input)
-    {
-        if (string.IsNullOrEmpty(input)) return string.Empty;
+		if (readingUIRoot != null)
+			readingUIRoot.SetActive(false);
 
-        var sb = new StringBuilder(input.Length * 3);
-        for (int i = 0; i < input.Length; i++)
-        {
-            char c = input[i];
-            if (c == '\n' || c == '\r')
-            {
-                sb.AppendLine();
-                continue;
-            }
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
 
-            // represent space as a visible token (optional)
-            if (c == ' ')
-            {
-                sb.Append("?"); // visible space marker
-            }
-            else
-            {
-                sb.Append(((int)c).ToString());
-            }
+		if (_spawnedVisual != null)
+			Destroy(_spawnedVisual);
 
-            // separate with a single space
-            if (i < input.Length - 1)
-                sb.Append(' ');
-        }
-        return sb.ToString();
-    }
+		if (componentsToDisable != null)
+		{
+			for (int i = 0; i < componentsToDisable.Length; i++)
+			{
+				if (componentsToDisable[i] == null) continue;
+				componentsToDisable[i].enabled = _previousComponentStates[i];
+			}
+		}
+	}
 
-    // Trigger range detection (document must have a trigger collider)
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(playerTag))
-            _playerInRange = true;
-    }
+	void SpawnVisual()
+	{
+		if (visual == null || visualContainer == null) return;
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(playerTag))
-            _playerInRange = false;
-    }
+		// clean previous
+		if (_spawnedVisual != null)
+			Destroy(_spawnedVisual);
+
+		if (visual.visualPrefab != null)
+		{
+			_spawnedVisual = Instantiate(visual.visualPrefab, visualContainer);
+			_spawnedVisual.transform.localPosition = visual.localPositionOffset;
+			_spawnedVisual.transform.localRotation = Quaternion.Euler(visual.localRotationOffset);
+			_spawnedVisual.transform.localScale = visual.localScale;
+		}
+	}
+
+	void ToggleAsciiView()
+	{
+		if (transcriptionText == null || content == null) return;
+
+		_showingAscii = !_showingAscii;
+
+		transcriptionText.text = _showingAscii
+			? ConvertToNumeric(content.transcriptionText)
+			: content.transcriptionText;
+	}
+
+	string ConvertToNumeric(string input)
+	{
+		if (string.IsNullOrEmpty(input)) return string.Empty;
+
+		var sb = new StringBuilder(input.Length * 3);
+
+		for (int i = 0; i < input.Length; i++)
+		{
+			char c = input[i];
+
+			if (c == '\n' || c == '\r')
+			{
+				sb.AppendLine();
+				continue;
+			}
+
+			sb.Append(c == ' ' ? "32" : ((int)c).ToString());
+
+			if (i < input.Length - 1)
+				sb.Append(' ');
+		}
+
+		return sb.ToString();
+	}
 }

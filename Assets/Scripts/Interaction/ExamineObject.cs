@@ -18,10 +18,17 @@ public class ExamineObject : MonoBehaviour, IInteractable
 	[Header("Events")]
 	[SerializeField] private UnityEvent onExamined;
 
+	[SerializeField] private DocumentReader documentReader;
+
 	private bool hasBeenExamined = false;
 
 	public void Interact(Player player)
 	{
+		if (documentReader != null)
+		{
+			documentReader.OpenDocument();
+		}
+
 		if (examineOnce && hasBeenExamined)
 			return;
 
