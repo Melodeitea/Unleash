@@ -37,7 +37,7 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 		SaveSystem.SavePlayer(player.GetComponent<Player>());
 
 		// Save global systems
-		InventoryManager.Instance.SaveToPlayerPrefs();
+		//InventoryManager.Instance.SaveToPlayerPrefs();
 		GameFlags.Instance.SaveFlags();
 
 		Debug.Log("[WiBSavePoint] Game saved.");

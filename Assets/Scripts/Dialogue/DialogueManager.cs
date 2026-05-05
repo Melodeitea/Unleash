@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using TMPro;
 
@@ -12,11 +12,12 @@ public class DialogueManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI lineText;
 
 	[Header("Controls")]
-	[SerializeField] private KeyCode advanceKey = KeyCode.E;
+	[SerializeField] private KeyCode advanceKey = KeyCode.Space; // ← changed from E
 
 	private DialogueSequence currentSequence;
 	private int currentIndex;
 	private Action onComplete;
+	private bool justOpened; // ← fixes the double-trigger bug
 
 	public bool IsPlaying { get; private set; }
 
@@ -30,38 +31,39 @@ public class DialogueManager : MonoBehaviour
 	{
 		if (!IsPlaying) return;
 
-		if (Input.GetKeyDown(advanceKey))
+		// Skip this frame if we just opened — prevents the same keypress
+		// that triggered Interact() from also immediately advancing the line
+		if (justOpened)
 		{
-			AdvanceLine();
+			justOpened = false;
+			return;
 		}
+
+		if (Input.GetKeyDown(advanceKey))
+			AdvanceLine();
 	}
 
 	public void PlaySequence(DialogueSequence seq, Action onCompleteCallback = null)
 	{
 		if (seq == null) return;
-
-		if (seq.triggerOnce && seq.hasPlayed)
-			return;
+		if (seq.triggerOnce && seq.hasPlayed) return;
 
 		currentSequence = seq;
 		currentIndex = 0;
 		onComplete = onCompleteCallback;
+		justOpened = true; // ← tells Update() to skip the first frame
 
 		dialoguePanel.SetActive(true);
 		IsPlaying = true;
-
 		ShowLine();
-
 		seq.hasPlayed = true;
 	}
 
 	private void ShowLine()
 	{
-		if (currentSequence == null || currentSequence.lines.Length == 0)
-			return;
+		if (currentSequence == null || currentSequence.lines.Length == 0) return;
 
 		DialogueLine line = currentSequence.lines[currentIndex];
-
 		speakerNameText.text = line.speakerName;
 		lineText.text = line.line;
 	}
@@ -69,22 +71,16 @@ public class DialogueManager : MonoBehaviour
 	public void AdvanceLine()
 	{
 		currentIndex++;
-
 		if (currentIndex >= currentSequence.lines.Length)
-		{
 			EndSequence();
-		}
 		else
-		{
 			ShowLine();
-		}
 	}
 
 	private void EndSequence()
 	{
 		dialoguePanel.SetActive(false);
 		IsPlaying = false;
-
 		onComplete?.Invoke();
 	}
 }

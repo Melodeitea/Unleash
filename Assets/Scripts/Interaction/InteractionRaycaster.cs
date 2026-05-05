@@ -10,91 +10,85 @@ public class InteractionRaycaster : MonoBehaviour
 	[Header("UI")]
 	[SerializeField] private GameObject promptUI;
 	[SerializeField] private TextMeshProUGUI promptText;
-
 	[SerializeField] private Transform rayOrigin;
-	private bool justInteracted;
+
 	private IInteractable lastInteracted;
-
-	private IInteractable currentInteractable;
-
-	private bool hasInteractedThisPress;
+	private IInteractable nearestInteractable;
 
 	private void Update()
 	{
-		
-		Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
-
-		if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+		// Don't update prompt or accept input while dialogue is open
+		if (DialogueManager.Instance != null && DialogueManager.Instance.IsPlaying)
 		{
-			IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
+			HidePrompt();
+			return;
+		}
 
-			if (interactable != null)
+		nearestInteractable = GetNearestInteractable();
+
+		if (nearestInteractable != null)
+		{
+			ShowPrompt(nearestInteractable.GetPrompt());
+
+			if (Input.GetKeyDown(interactKey))
 			{
-				currentInteractable = interactable;
-
-				
-				if (lastInteracted == currentInteractable)
+				if (MonologueManager.Instance != null && MonologueManager.Instance.IsPlaying)
 				{
+					MonologueManager.Instance.Dismiss();
 					HidePrompt();
 					return;
 				}
 
-				string prompt = interactable.GetPrompt();
-
-				if (!string.IsNullOrEmpty(prompt))
-				{
-					ShowPrompt(prompt);
-				}
-				else
-				{
-					HidePrompt();
-				}
-
-				if (Input.GetKeyDown(interactKey))
-				{
-					var player = GetComponentInParent<Player>();
-
-					// 1. If monologue is already open → close it instead of interacting
-					if (MonologueManager.Instance != null && MonologueManager.Instance.IsPlaying)
-					{
-						MonologueManager.Instance.Dismiss();
-						HidePrompt();
-						return;
-					}
-
-					// 2. Otherwise interact normally
-					interactable.Interact(player);
-
-					// 3. Show monologue AFTER interaction (if any)
-					// NOTE: ExamineObject handles content, so we just ensure UI stays clean
-
-					HidePrompt();
-					lastInteracted = interactable;
-
-					return;
-				}
-
-				return;
+				var player = GetComponentInParent<Player>();
+				nearestInteractable.Interact(player);
+				HidePrompt();
 			}
 		}
-		currentInteractable = null;
-		lastInteracted = null; // <-- ADD THIS
-		HidePrompt();
+		else
+		{
+			HidePrompt();
+		}
+	}
+
+	private IInteractable GetNearestInteractable()
+	{
+		Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
+
+		IInteractable nearest = null;
+		float closestDistance = Mathf.Infinity;
+
+		foreach (Collider col in hits)
+		{
+			IInteractable interactable = col.GetComponentInParent<IInteractable>();
+			if (interactable == null) continue;
+
+			float dist = Vector3.Distance(transform.position, col.transform.position);
+			if (dist < closestDistance)
+			{
+				closestDistance = dist;
+				nearest = interactable;
+			}
+		}
+
+		return nearest;
 	}
 
 	private void ShowPrompt(string text)
 	{
 		if (!promptUI || !promptText) return;
-
 		promptUI.SetActive(true);
 		promptText.text = text;
-		
 	}
 
 	private void HidePrompt()
 	{
 		if (!promptUI) return;
-
 		promptUI.SetActive(false);
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, interactRange);
 	}
 }

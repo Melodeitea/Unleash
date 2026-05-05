@@ -67,15 +67,15 @@ public class PlayerData
 		// ------------------------
 		inventoryItemIds = new List<string>();
 
-		if (InventoryManager.Instance != null)
-		{
-			var items = InventoryManager.Instance.GetAll();
-			foreach (var item in items)
-			{
-				if (item != null && !string.IsNullOrEmpty(item.id))
-					inventoryItemIds.Add(item.id);
-			}
-		}
+		//if (InventoryManager.Instance != null)
+		//{
+		//	var items = InventoryManager.Instance.GetAll();
+		//	foreach (var item in items)
+		//	{
+		//		if (item != null && !string.IsNullOrEmpty(item.id))
+		//			inventoryItemIds.Add(item.id);
+		//	}
+		//}
 
 		// ------------------------
 		// GAME FLAGS
@@ -87,16 +87,5 @@ public class PlayerData
 			gameFlags = GameFlags.Instance.GetAllFlags();
 		}
 
-		// ------------------------
-		// RED LAYER STATE
-		// ------------------------
-		if (RedLayerManager.Instance != null)
-		{
-			redLayerActive = RedLayerManager.Instance.IsActive;
-		}
-		else
-		{
-			redLayerActive = false;
-		}
 	}
 }

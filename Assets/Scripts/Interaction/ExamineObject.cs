@@ -9,7 +9,7 @@ public class ExamineObject : MonoBehaviour, IInteractable
 	[SerializeField] private string monologueText;
 
 	[Header("Rewards")]
-	[SerializeField] private InventoryItem itemToAdd;
+	//[SerializeField] private InventoryItem itemToAdd;
 
 	[Header("Behaviour")]
 	[SerializeField] private bool examineOnce = false;
@@ -23,21 +23,7 @@ public class ExamineObject : MonoBehaviour, IInteractable
 	public void Interact(Player player)
 	{
 		if (examineOnce && hasBeenExamined) return;
-		if (requireRedLayer && !RedLayerManager.Instance.IsActive) return;
 
-		// Route item to inventory OR notes
-		if (itemToAdd != null)
-		{
-			if (itemToAdd.isNote)
-			{
-				NotesManager.Instance.AddNote(itemToAdd);
-				NotesUI.Instance.Open(itemToAdd); // open reader immediately
-			}
-			else
-			{
-				InventoryManager.Instance.AddItem(itemToAdd);
-			}
-		}
 
 		if (!string.IsNullOrEmpty(monologueText))
 			MonologueManager.Instance.Play(monologueText);
@@ -51,7 +37,6 @@ public class ExamineObject : MonoBehaviour, IInteractable
 	public string GetPrompt()
 	{
 		if (examineOnce && hasBeenExamined) return string.Empty;
-		if (requireRedLayer && !RedLayerManager.Instance.IsActive) return string.Empty;
 		return prompt;
 	}
 }

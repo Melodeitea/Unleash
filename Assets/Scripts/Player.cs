@@ -69,26 +69,26 @@ public class Player : MonoBehaviour
 		// ------------------------
 		// INVENTORY
 		// ------------------------
-		if (InventoryManager.Instance != null)
-		{
-			InventoryManager.Instance.ClearAll();
+		//if (InventoryManager.Instance != null)
+		//{
+		//	InventoryManager.Instance.ClearAll();
 
-			if (data.inventoryItemIds != null)
-			{
-				foreach (string id in data.inventoryItemIds)
-				{
-					InventoryItem item = FindInventoryItem(id);
-					if (item != null)
-					{
-						InventoryManager.Instance.AddItem(item);
-					}
-					else
-					{
-						Debug.LogWarning($"[Load] Missing InventoryItem: {id}");
-					}
-				}
-			}
-		}
+		//	if (data.inventoryItemIds != null)
+		//	{
+		//		foreach (string id in data.inventoryItemIds)
+		//		{
+		//			InventoryItem item = FindInventoryItem(id);
+		//			if (item != null)
+		//			{
+		//				InventoryManager.Instance.AddItem(item);
+		//			}
+		//			else
+		//			{
+		//				Debug.LogWarning($"[Load] Missing InventoryItem: {id}");
+		//			}
+		//		}
+		//	}
+		//}
 
 		// ------------------------
 		// GAME FLAGS
@@ -106,30 +106,6 @@ public class Player : MonoBehaviour
 			}
 		}
 
-		// ------------------------
-		// RED LAYER
-		// ------------------------
-		if (RedLayerManager.Instance != null)
-		{
-			RedLayerManager.Instance.SetLayerState(data.redLayerActive);
-		}
-
-		Debug.Log("[Player] Load complete.");
-	}
-
-	// ------------------------
-	// HELPER: FIND ITEM
-	// ------------------------
-	private InventoryItem FindInventoryItem(string id)
-	{
-		InventoryItem[] allItems = Resources.LoadAll<InventoryItem>("");
-
-		foreach (var item in allItems)
-		{
-			if (item.id == id)
-				return item;
-		}
-
-		return null;
+		
 	}
 }
