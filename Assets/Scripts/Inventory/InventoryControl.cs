@@ -21,7 +21,7 @@ public class InventoryControl : MonoBehaviour
 			isOpen = true;
 			inventoryOpen.Play();
 			inventoryFade.SetActive(true);
-			StartCoroutine(InvOpen());
+			StartCoroutine(InvControl());
 		}
 
 		if (Input.GetKeyDown(KeyCode.Tab) && isOpen == true && canClose == true)
@@ -29,27 +29,33 @@ public class InventoryControl : MonoBehaviour
 			isOpen = false;
 			inventoryClose.Play();
 			inventoryFade.SetActive(true);
-			StartCoroutine(InvClose());
+			StartCoroutine(InvControl());
 		}
 	}
 
-	IEnumerator InvOpen()
+	IEnumerator InvControl()
 	{
 		yield return new WaitForSeconds(0.25f);
-		inventoryScreen.SetActive(true);
+		if (isOpen == true)
+		{
+			inventoryScreen.SetActive(true);
+
+		}
+		else
+		{
+			inventoryScreen.SetActive(false);
+		}
 		yield return new WaitForSeconds(0.25f);
 		inventoryFade.SetActive(false);
-		yield return new WaitForSeconds(0.5f);
-		canClose = true;
+		
+		if (isOpen == true)
+		{
+			canClose = true;
+		}
+		else
+		{
+			canClose = false;
+		}
 	}
 
-	IEnumerator InvClose()
-	{
-		yield return new WaitForSeconds(0.25f);
-		inventoryScreen.SetActive(false);
-		yield return new WaitForSeconds(0.25f);
-		inventoryFade.SetActive(false);
-		yield return new WaitForSeconds(0.5f);
-		canClose = false;
-	}
 }
