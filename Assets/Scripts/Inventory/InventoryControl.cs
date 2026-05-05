@@ -17,7 +17,6 @@ public class InventoryControl : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Tab) && isOpen == false && canClose == false)
 		{
 			// Debug.Log("Tab key was pressed.");
-
 			isOpen = true;
 			inventoryOpen.Play();
 			inventoryFade.SetActive(true);
@@ -26,6 +25,9 @@ public class InventoryControl : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Tab) && isOpen == true && canClose == true)
 		{
+			Time.timeScale = 1;
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
 			isOpen = false;
 			inventoryClose.Play();
 			inventoryFade.SetActive(true);
@@ -51,11 +53,25 @@ public class InventoryControl : MonoBehaviour
 		if (isOpen == true)
 		{
 			canClose = true;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			Time.timeScale = 0;
+			
 		}
 		else
 		{
 			canClose = false;
+			Cursor.lockState = CursorLockMode.Locked;
 		}
+	}
+	public void NotesButton()
+	{
+
+	}
+
+	public void CluesButton()
+	{
+
 	}
 
 }
