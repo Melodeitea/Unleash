@@ -20,6 +20,7 @@ public class InventoryUI : MonoBehaviour
 	[SerializeField] private Image detailIcon;
 	[SerializeField] private TextMeshProUGUI detailName;
 	[SerializeField] private TextMeshProUGUI detailDesc;
+	[SerializeField] private GameObject itemDetailSection;
 	[SerializeField] private Button useButton;
 
 	[Header("Detail Panel — Files")]
@@ -29,6 +30,10 @@ public class InventoryUI : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI clueTitle;
 	[SerializeField] private Button playAudioBtn;
 	private AudioSource _audioSource;
+
+	[Header("Back Buttons")]
+	[SerializeField] private Button filesBackBtn;
+	[SerializeField] private Button cluesBackBtn;
 
 	private ItemData _selected;
 	private ItemType _currentTab = ItemType.Item;
@@ -47,6 +52,8 @@ public class InventoryUI : MonoBehaviour
 		useButton.onClick.AddListener(OnUseClicked);
 		playAudioBtn.onClick.AddListener(OnPlayClicked);
 		SwitchTab(ItemType.Item);
+		filesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Item));
+		cluesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Item));
 	}
 
 	private void OnDisable()
@@ -61,6 +68,15 @@ public class InventoryUI : MonoBehaviour
 		itemsPanel.SetActive(tab == ItemType.Item);
 		filesPanel.SetActive(tab == ItemType.File);
 		cluesPanel.SetActive(tab == ItemType.Clue);
+
+		// Hide item detail when switching away
+		if (tab != ItemType.Item)
+		{
+			itemDetailSection.SetActive(false);
+			_selected = null;
+		}
+
+
 		Refresh();
 	}
 
@@ -98,11 +114,12 @@ public class InventoryUI : MonoBehaviour
 		ShowDetail(data);
 	}
 
-	private void ShowDetail(ItemData data)
+	public void ShowDetail(ItemData data)
 	{
 		switch (data.itemType)
 		{
 			case ItemType.Item:
+				itemDetailSection.SetActive(true);
 				detailIcon.sprite = data.icon;
 				detailName.text = data.itemName;
 				detailDesc.text = data.description;
@@ -110,10 +127,12 @@ public class InventoryUI : MonoBehaviour
 				break;
 
 			case ItemType.File:
+				itemDetailSection.SetActive(false);
 				fileBodyText.text = data.fileText;
 				break;
 
 			case ItemType.Clue:
+				itemDetailSection.SetActive(false);
 				clueTitle.text = data.itemName;
 				playAudioBtn.gameObject.SetActive(data.audioClip != null);
 				break;
