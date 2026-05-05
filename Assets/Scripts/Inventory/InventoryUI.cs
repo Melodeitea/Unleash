@@ -1,0 +1,146 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class InventoryUI : MonoBehaviour
+{
+	[Header("Tabs")]
+	[SerializeField] private GameObject itemsPanel;
+	[SerializeField] private GameObject filesPanel;
+	[SerializeField] private GameObject cluesPanel;
+	[SerializeField] private Button filesTabBtn;
+	[SerializeField] private Button cluesTabBtn;
+
+	[Header("Scroll List (shared)")]
+	[SerializeField] private Transform listContent;       // ScrollView > Viewport > Content
+	[SerializeField] private GameObject slotPrefab;
+
+	[Header("Detail Panel — Items")]
+	[SerializeField] private Image detailIcon;
+	[SerializeField] private TextMeshProUGUI detailName;
+	[SerializeField] private TextMeshProUGUI detailDesc;
+	[SerializeField] private Button useButton;
+
+	[Header("Detail Panel — Files")]
+	[SerializeField] private TextMeshProUGUI fileBodyText;
+
+	[Header("Detail Panel — Clues")]
+	[SerializeField] private TextMeshProUGUI clueTitle;
+	[SerializeField] private Button playAudioBtn;
+	private AudioSource _audioSource;
+
+	private ItemData _selected;
+	private ItemType _currentTab = ItemType.Item;
+
+	private void Awake()
+	{
+		_audioSource = GetComponent<AudioSource>();
+		if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
+	}
+
+	private void OnEnable()
+	{
+		InventoryManager.Instance.OnInventoryChanged += Refresh;
+		filesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.File));
+		cluesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Clue));
+		useButton.onClick.AddListener(OnUseClicked);
+		playAudioBtn.onClick.AddListener(OnPlayClicked);
+		SwitchTab(ItemType.Item);
+	}
+
+	private void OnDisable()
+	{
+		if (InventoryManager.Instance != null)
+			InventoryManager.Instance.OnInventoryChanged -= Refresh;
+	}
+
+	public void SwitchTab(ItemType tab)
+	{
+		_currentTab = tab;
+		itemsPanel.SetActive(tab == ItemType.Item);
+		filesPanel.SetActive(tab == ItemType.File);
+		cluesPanel.SetActive(tab == ItemType.Clue);
+		Refresh();
+	}
+
+	private void Refresh()
+	{
+		// Clear old slots
+		foreach (Transform child in listContent)
+			Destroy(child.gameObject);
+
+		List<ItemData> list = _currentTab switch
+		{
+			ItemType.Item => InventoryManager.Instance.items,
+			ItemType.File => InventoryManager.Instance.files,
+			ItemType.Clue => InventoryManager.Instance.clues,
+			_ => InventoryManager.Instance.items
+		};
+
+		foreach (var item in list)
+		{
+			var go = Instantiate(slotPrefab, listContent);
+			var slot = go.GetComponent<InventorySlot>();
+			slot.Setup(item, OnSlotClicked);
+		}
+
+		// Reselect or clear detail
+		if (_selected != null && list.Contains(_selected))
+			ShowDetail(_selected);
+		else
+			ClearDetail();
+	}
+
+	private void OnSlotClicked(ItemData data)
+	{
+		_selected = data;
+		ShowDetail(data);
+	}
+
+	private void ShowDetail(ItemData data)
+	{
+		switch (data.itemType)
+		{
+			case ItemType.Item:
+				detailIcon.sprite = data.icon;
+				detailName.text = data.itemName;
+				detailDesc.text = data.description;
+				useButton.gameObject.SetActive(!string.IsNullOrEmpty(data.usageTargetID));
+				break;
+
+			case ItemType.File:
+				fileBodyText.text = data.fileText;
+				break;
+
+			case ItemType.Clue:
+				clueTitle.text = data.itemName;
+				playAudioBtn.gameObject.SetActive(data.audioClip != null);
+				break;
+		}
+	}
+
+	private void ClearDetail()
+	{
+		_selected = null;
+		detailName.text = "";
+		detailDesc.text = "";
+		fileBodyText.text = "";
+	}
+
+	private void OnUseClicked()
+	{
+		if (_selected == null) return;
+		// RE-style: selecting "Use" marks item as active for world interaction.
+		// Store selected item so UsageTarget can check it.
+		ActiveItemHolder.Current = _selected;
+		Debug.Log($"Active item set: {_selected.itemName}. Approach a target to use it.");
+	}
+
+	private void OnPlayClicked()
+	{
+		if (_selected?.audioClip == null) return;
+		_audioSource.clip = _selected.audioClip;
+		_audioSource.Play();
+	}
+}
