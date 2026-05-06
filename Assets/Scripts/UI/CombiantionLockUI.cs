@@ -8,16 +8,19 @@ public class CombinationLockUI : MonoBehaviour
 {
 	[Header("References")]
 	[SerializeField] private CanvasGroup canvasGroup;
-	[SerializeField] private Animator animator;              // assign if using anim triggers
+	[SerializeField] private Animator animator;
 	[SerializeField] private TextMeshProUGUI codeText;
-	[SerializeField] private Button[] digitButtons;          // assign all 0–9 buttons here
+	[SerializeField] private Button[] digitButtons;
 
 	[Header("Settings")]
 	[SerializeField] private float fadeSpeed = 5f;
 	[SerializeField] private float successWaitTime = 1.5f;
 	[SerializeField] private string fadeInTrigger = "FadeIn";
 	[SerializeField] private string fadeOutTrigger = "FadeOut";
-	[SerializeField] private bool useAnimatorForFade = false; // flip on if you want anim-driven fade
+	[SerializeField] private bool useAnimatorForFade = false;
+
+	// Any other UI (pause menu etc.) can check this before acting on Escape
+	public static bool IsOpen { get; private set; }
 
 	private string _currentInput = "";
 	private int _maxDigits;
@@ -26,13 +29,11 @@ public class CombinationLockUI : MonoBehaviour
 	private bool _lockedInput;
 	private bool _isOpen;
 
-	// Cursor state so we can restore it on close
 	private CursorLockMode _prevLockMode;
 	private bool _prevCursorVisible;
 
 	private void Awake()
 	{
-		// Start fully hidden and non-interactive
 		canvasGroup.alpha = 0f;
 		canvasGroup.interactable = false;
 		canvasGroup.blocksRaycasts = false;
@@ -40,18 +41,16 @@ public class CombinationLockUI : MonoBehaviour
 
 	private void Update()
 	{
-		// gameObject IS active while open — this fires correctly
 		if (!_isOpen) return;
 		if (Input.GetKeyDown(KeyCode.Escape))
 			_onClose?.Invoke();
 	}
 
-	// ─── Public API ───────────────────────────────────────────────────────────
-
 	public void Open(int digits, Action<string> onSubmit, Action onClose)
 	{
-		gameObject.SetActive(true); // ← must be FIRST, before any coroutine
+		gameObject.SetActive(true); // must be before any coroutine
 
+		IsOpen = true;
 		_maxDigits = digits;
 		_onSubmit = onSubmit;
 		_onClose = onClose;
@@ -80,6 +79,7 @@ public class CombinationLockUI : MonoBehaviour
 
 	public void Close()
 	{
+		IsOpen = false;
 		_isOpen = false;
 		canvasGroup.interactable = false;
 		canvasGroup.blocksRaycasts = false;
@@ -91,17 +91,15 @@ public class CombinationLockUI : MonoBehaviour
 		if (useAnimatorForFade && animator != null)
 			animator.SetTrigger(fadeOutTrigger);
 		else
-			StartCoroutine(Fade(0f, () => gameObject.SetActive(false))); // ← deactivate in callback
+			StartCoroutine(Fade(0f, () => gameObject.SetActive(false)));
 	}
 
 	public void AddDigit(string digit)
 	{
 		if (_lockedInput) return;
 		if (_currentInput.Length >= _maxDigits) return;
-
 		_currentInput += digit;
 		UpdateDisplay();
-
 		if (_currentInput.Length == _maxDigits)
 			_onSubmit?.Invoke(_currentInput);
 	}
@@ -115,7 +113,7 @@ public class CombinationLockUI : MonoBehaviour
 	public void LockInput()
 	{
 		_lockedInput = true;
-		canvasGroup.interactable = false; // visually disables buttons too
+		canvasGroup.interactable = false;
 	}
 
 	public void PlaySuccessAndExit(Action onExit)
@@ -123,21 +121,14 @@ public class CombinationLockUI : MonoBehaviour
 		StartCoroutine(SuccessRoutine(onExit));
 	}
 
-	// ─── Private ──────────────────────────────────────────────────────────────
-
 	private void WireDigitButtons()
 	{
 		foreach (Button btn in digitButtons)
 		{
 			if (btn == null) continue;
-
-			// Read the digit from the button's TMP child label
 			var label = btn.GetComponentInChildren<TextMeshProUGUI>();
 			if (label == null) continue;
-
 			string digit = label.text.Trim();
-
-			// Clear previous listeners to avoid double-registration
 			btn.onClick.RemoveAllListeners();
 			btn.onClick.AddListener(() => AddDigit(digit));
 		}

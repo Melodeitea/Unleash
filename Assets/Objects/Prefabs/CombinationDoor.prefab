@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &939210236073398687
+--- !u!1 &1420228967190115781
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3358502146794488590}
-  - component: {fileID: 3807653241115816233}
+  - component: {fileID: 6953321150468842742}
+  - component: {fileID: 4663884200697519159}
   m_Layer: 0
-  m_Name: KeyDoor
+  m_Name: CombinationDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3358502146794488590
+--- !u!4 &6953321150468842742
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939210236073398687}
+  m_GameObject: {fileID: 1420228967190115781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.497, z: 0}
+  m_LocalPosition: {x: -1.92, y: 0, z: 13.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3853626646945313193}
+  - {fileID: 2463938014848441173}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3807653241115816233
+--- !u!95 &4663884200697519159
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939210236073398687}
+  m_GameObject: {fileID: 1420228967190115781}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: acd7e2be555705246b3c7328428514f3, type: 2}
@@ -55,13 +55,13 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1001 &1456327059495453879
+--- !u!1001 &251803744193015371
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3358502146794488590}
+    m_TransformParent: {fileID: 6953321150468842742}
     m_Modifications:
     - target: {fileID: 2400203897015874846, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
       propertyPath: m_LocalPosition.x
@@ -106,18 +106,46 @@ PrefabInstance:
     - target: {fileID: 2547862513464392337, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
       propertyPath: lockAnimator
       value: 
-      objectReference: {fileID: 3807653241115816233}
+      objectReference: {fileID: 3807653241115816233, guid: 9a4a781aaeac90541bb1d4e5fd1f44f7, type: 3}
     - target: {fileID: 6802619194935391842, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
       propertyPath: m_Name
       value: door 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2547862513464392337, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6802619194935391842, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4419739089833856442}
   m_SourcePrefab: {fileID: 100100000, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
---- !u!4 &3853626646945313193 stripped
+--- !u!4 &2463938014848441173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2400203897015874846, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
-  m_PrefabInstance: {fileID: 1456327059495453879}
+  m_PrefabInstance: {fileID: 251803744193015371}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6708485712558970921 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6802619194935391842, guid: 8426e660d5f87fd4690902c25552ee96, type: 3}
+  m_PrefabInstance: {fileID: 251803744193015371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4419739089833856442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708485712558970921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b5596845bf8bd42b11a84eee9138d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UsageTarget
+  targetID: 1
+  lockedPrompt: It won't budge...
+  unlockedPrompt: Use item here
+  objectAnimator: {fileID: 4663884200697519159}
+  onUsed:
+    m_PersistentCalls:
+      m_Calls: []

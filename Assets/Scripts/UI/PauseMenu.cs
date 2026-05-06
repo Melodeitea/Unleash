@@ -39,6 +39,7 @@ public class PauseMenu : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
+			if (CombinationLockUI.IsOpen) return; // lock panel owns Escape right now
 			TogglePause();
 		}
 	}

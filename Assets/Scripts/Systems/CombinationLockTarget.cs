@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class CombinationLockTarget : MonoBehaviour, IInteractable
@@ -6,7 +6,7 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 	[SerializeField] private string correctCode = "1234";
 	[SerializeField] private int digitCount = 4;
 	[SerializeField] private CombinationLockUI lockUI;
-	//[SerializeField] private Animator lockAnimator;         // the door/lock animator
+	[SerializeField] private Animator lockAnimator; // drag the door child object here
 	[SerializeField] private UnityEvent onUnlocked;
 
 	private bool _unlocked = false;
@@ -44,12 +44,16 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 	private void Unlock()
 	{
 		_unlocked = true;
-		lockUI.LockInput();                          // disable further keypresses
+		lockUI.LockInput();
 
-		//if (lockAnimator != null)
-		//	lockAnimator.SetTrigger("Open");         // play door/lock opening anim
+		// ── Door animation ──────────────────────────────
+		Debug.Log($"Unlock triggered. Animator assigned: {lockAnimator != null}");
+		if (lockAnimator != null)
+			lockAnimator.enabled = true;
+		else
+			Debug.LogWarning("lockAnimator is null — drag the door object into the Lock Animator slot on CombinationLockTarget.");
 
 		onUnlocked?.Invoke();
-		lockUI.PlaySuccessAndExit(OnPlayerExit);     // wait, then auto-close
+		lockUI.PlaySuccessAndExit(OnPlayerExit);
 	}
 }
