@@ -8,11 +8,14 @@ public class ScrollListUI : MonoBehaviour
 	[SerializeField] private GameObject slotPrefab;
 	[SerializeField] private InventoryUI inventoryUI;
 
+	[SerializeField] private ClueDetailUI clueDetailUI;
+
 	private void OnEnable()
 	{
 		InventoryManager.Instance.OnInventoryChanged += Refresh;
 		Refresh();
 	}
+
 
 	private void OnDisable()
 	{
@@ -32,8 +35,19 @@ public class ScrollListUI : MonoBehaviour
 		foreach (var item in list)
 		{
 			var go = Instantiate(slotPrefab, content);
-			var slot = go.GetComponent<NoteSlotUI>();
-			slot.Setup(item, inventoryUI.ShowDetail);
+
+			if (listType == ItemType.File)
+			{
+				var slot = go.GetComponent<NoteSlotUI>();
+				slot.Setup(item, inventoryUI.ShowDetail);
+			}
+			else // Clue
+			{
+				var slot = go.GetComponent<ClueSlotUI>();
+				slot.Setup(item, clueDetailUI.ShowDetail);
+			}
 		}
 	}
+
+
 }
