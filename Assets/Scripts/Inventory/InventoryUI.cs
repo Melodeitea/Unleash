@@ -21,7 +21,6 @@ public class InventoryUI : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI detailName;
 	[SerializeField] private TextMeshProUGUI detailDesc;
 	[SerializeField] private GameObject itemDetailSection;
-	[SerializeField] private Button useButton;
 
 	[Header("Detail Panel — Files")]
 	[SerializeField] private TextMeshProUGUI fileBodyText;
@@ -49,7 +48,6 @@ public class InventoryUI : MonoBehaviour
 		InventoryManager.Instance.OnInventoryChanged += Refresh;
 		filesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.File));
 		cluesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Clue));
-		useButton.onClick.AddListener(OnUseClicked);
 		playAudioBtn.onClick.AddListener(OnPlayClicked);
 		SwitchTab(ItemType.Item);
 		filesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Item));
@@ -60,6 +58,12 @@ public class InventoryUI : MonoBehaviour
 	{
 		if (InventoryManager.Instance != null)
 			InventoryManager.Instance.OnInventoryChanged -= Refresh;
+
+		filesTabBtn.onClick.RemoveAllListeners();
+		cluesTabBtn.onClick.RemoveAllListeners();
+		playAudioBtn.onClick.RemoveAllListeners();
+		filesBackBtn.onClick.RemoveAllListeners();
+		cluesBackBtn.onClick.RemoveAllListeners();
 	}
 
 	public void SwitchTab(ItemType tab)
@@ -123,7 +127,6 @@ public class InventoryUI : MonoBehaviour
 				detailIcon.sprite = data.icon;
 				detailName.text = data.itemName;
 				detailDesc.text = data.description;
-				useButton.gameObject.SetActive(!string.IsNullOrEmpty(data.usageTargetID));
 				break;
 
 			case ItemType.File:
@@ -139,22 +142,15 @@ public class InventoryUI : MonoBehaviour
 		}
 	}
 
-	private void ClearDetail()
+	public void ClearDetail()
 	{
 		_selected = null;
+		itemDetailSection.SetActive(false);
 		detailName.text = "";
 		detailDesc.text = "";
 		fileBodyText.text = "";
 	}
 
-	private void OnUseClicked()
-	{
-		if (_selected == null) return;
-		// RE-style: selecting "Use" marks item as active for world interaction.
-		// Store selected item so UsageTarget can check it.
-		ActiveItemHolder.Current = _selected;
-		Debug.Log($"Active item set: {_selected.itemName}. Approach a target to use it.");
-	}
 
 	private void OnPlayClicked()
 	{

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UsageTarget : MonoBehaviour, IInteractable
 {
@@ -11,10 +11,13 @@ public class UsageTarget : MonoBehaviour, IInteractable
 
 	public string GetPrompt()
 	{
-		if (_used) return "";
-		bool hasItem = ActiveItemHolder.Current != null &&
-					   ActiveItemHolder.Current.usageTargetID == targetID;
-		return hasItem ? $"[E] {unlockedPrompt}" : lockedPrompt;
+		if (_used) return "";                          // ← State 3: after unlocking (empty, as it is)
+
+		bool hasItem = InventoryManager.Instance.items
+						   .Exists(i => i.usageTargetID == targetID);
+
+		return hasItem ? $"[E] {unlockedPrompt}"       // ← State 2: carrying the right item
+					   : lockedPrompt;                 // ← State 1: no matching item
 	}
 
 	public void Interact(Player player)

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -47,13 +47,16 @@ public class InvSelectionUI : MonoBehaviour
 			if (slots[i].emptyIndicator != null)
 				slots[i].emptyIndicator.SetActive(!hasItem);
 
-			// Wire click � capture i in local var to avoid closure bug
+			// Wire click — capture i in local var to avoid closure bug
 			int index = i;
 			slots[i].button.onClick.RemoveAllListeners();
+			// InvSelectionUI.cs — in Refresh(), update the listener
 			slots[i].button.onClick.AddListener(() =>
 			{
 				if (index < InventoryManager.Instance.items.Count)
 					inventoryUI.ShowDetail(InventoryManager.Instance.items[index]);
+				else
+					inventoryUI.ClearDetail(); // ← add this
 			});
 		}
 	}
