@@ -32,7 +32,7 @@ public class ScrollListUI : MonoBehaviour
 		foreach (var item in list)
 		{
 			var go = Instantiate(slotPrefab, content);
-			var slot = go.GetComponent<InventorySlot>();
+			var slot = go.GetComponent<NoteSlotUI>();
 			slot.Setup(item, inventoryUI.ShowDetail);
 		}
 	}

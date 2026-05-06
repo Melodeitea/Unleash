@@ -86,27 +86,19 @@ public class InventoryUI : MonoBehaviour
 
 	private void Refresh()
 	{
-		// Clear old slots
+		// Only handle Items tab — Files/Clues are handled by ScrollListUI
+		if (_currentTab != ItemType.Item) return;
+
 		foreach (Transform child in listContent)
 			Destroy(child.gameObject);
 
-		List<ItemData> list = _currentTab switch
-		{
-			ItemType.Item => InventoryManager.Instance.items,
-			ItemType.File => InventoryManager.Instance.files,
-			ItemType.Clue => InventoryManager.Instance.clues,
-			_ => InventoryManager.Instance.items
-		};
-
-		foreach (var item in list)
+		foreach (var item in InventoryManager.Instance.items)
 		{
 			var go = Instantiate(slotPrefab, listContent);
-			var slot = go.GetComponent<InventorySlot>();
-			slot.Setup(item, OnSlotClicked);
+			go.GetComponent<InventorySlot>().Setup(item, OnSlotClicked);
 		}
 
-		// Reselect or clear detail
-		if (_selected != null && list.Contains(_selected))
+		if (_selected != null && InventoryManager.Instance.items.Contains(_selected))
 			ShowDetail(_selected);
 		else
 			ClearDetail();
