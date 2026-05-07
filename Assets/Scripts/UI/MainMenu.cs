@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
+using System.IO;
 using System.Reflection;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -30,7 +31,24 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(gameSceneName); 
     }
 
-    public void LoadGame()
+    
+
+    public void OnNewGamePressed()
+    {
+	    // Wipe old save so Player.Start() doesn't load it
+	    string path = Path.Combine(Application.persistentDataPath, "player.save");
+	    if (File.Exists(path)) File.Delete(path);
+
+	    // Also clear flags and inventory in memory
+	    GameFlags.Instance?.ClearAll();
+	    InventoryManager.Instance?.items.Clear();
+	    InventoryManager.Instance?.files.Clear();
+	    InventoryManager.Instance?.clues.Clear();
+
+	    // Then load your game scene
+	    UnityEngine.SceneManagement.SceneManager.LoadScene("Lvl"); // your scene name
+    }
+public void LoadGame()
     {
         if (!SaveSystem.HasSave())
         {

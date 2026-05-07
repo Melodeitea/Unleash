@@ -29,6 +29,22 @@ public class InventoryManager : MonoBehaviour
 		Debug.Log($"Picked up: {data.itemName}");
 	}
 
+	public void LoadInventory(List<string> ids, ItemDatabase db)
+	{
+		items.Clear();
+		files.Clear();
+		clues.Clear();
+
+		foreach (string id in ids)
+		{
+			ItemData data = db.Get(id);
+			if (data != null)
+				AddItem(data); // reuses your existing switch + event
+			else
+				Debug.LogWarning($"[InventoryManager] Could not find item with ID '{id}' in database.");
+		}
+	}
+
 	public void RemoveItem(ItemData data)
 	{
 		items.Remove(data);

@@ -26,10 +26,6 @@ public class PlayerData
 	// ------------------------
 	public List<string> gameFlags;
 
-	// ------------------------
-	// RED LAYER
-	// ------------------------
-	public bool redLayerActive;
 
 	public PlayerData(Player player)
 	{
@@ -65,17 +61,22 @@ public class PlayerData
 		// ------------------------
 		// INVENTORY
 		// ------------------------
-		inventoryItemIds = new List<string>();
 
-		//if (InventoryManager.Instance != null)
-		//{
-		//	var items = InventoryManager.Instance.GetAll();
-		//	foreach (var item in items)
-		//	{
-		//		if (item != null && !string.IsNullOrEmpty(item.id))
-		//			inventoryItemIds.Add(item.id);
-		//	}
-		//}
+		// INVENTORY
+		inventoryItemIds = new List<string>();
+		if (InventoryManager.Instance != null)
+		{
+			foreach (var item in InventoryManager.Instance.items)
+				if (!string.IsNullOrEmpty(item.itemID)) inventoryItemIds.Add(item.itemID);
+
+			foreach (var file in InventoryManager.Instance.files)
+				if (!string.IsNullOrEmpty(file.itemID)) inventoryItemIds.Add(file.itemID);
+
+			foreach (var clue in InventoryManager.Instance.clues)
+				if (!string.IsNullOrEmpty(clue.itemID)) inventoryItemIds.Add(clue.itemID);
+		}
+
+
 
 		// ------------------------
 		// GAME FLAGS
