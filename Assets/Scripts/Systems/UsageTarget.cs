@@ -10,6 +10,18 @@ public class UsageTarget : MonoBehaviour, IInteractable
 
 	private bool _used = false;
 
+	private void Start()
+	{
+		if (GameFlags.Instance != null && GameFlags.Instance.GetFlag("used_" + targetID))
+		{
+			_used = true;
+			if (objectAnimator != null)
+			{
+				objectAnimator.enabled = true;
+				objectAnimator.Play(objectAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 1f); // snap to end
+			}
+		}
+	}
 	public string GetPrompt()
 	{
 		if (_used) return "";
@@ -24,19 +36,13 @@ public class UsageTarget : MonoBehaviour, IInteractable
 		if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
 		{
 			_used = true;
+			GameFlags.Instance?.SetFlag("used_" + targetID); // ADD THIS LINE
 			ActiveItemHolder.Clear();
-
 			if (objectAnimator != null)
 				objectAnimator.enabled = true;
 			else
 				Debug.LogWarning($"UsageTarget '{targetID}': no Animator assigned.");
-
 			onUsed?.Invoke();
-			Debug.Log($"{targetID} used successfully.");
-		}
-		else
-		{
-			Debug.Log("Wrong item or no item selected.");
 		}
 	}
 }

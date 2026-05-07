@@ -8,9 +8,23 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 	[SerializeField] private CombinationLockUI lockUI;
 	[SerializeField] private Animator lockAnimator; // drag the door child object here
 	[SerializeField] private UnityEvent onUnlocked;
+	[SerializeField] private string puzzleID;
 
 	private bool _unlocked = false;
 	private bool _isOpen = false;
+
+	private void Start()
+	{
+		if (GameFlags.Instance != null && GameFlags.Instance.GetFlag("unlocked_" + puzzleID))
+		{
+			_unlocked = true;
+			if (lockAnimator != null)
+			{
+				lockAnimator.enabled = true;
+				lockAnimator.Play(lockAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 1f); // snap to end
+			}
+		}
+	}
 
 	public string GetPrompt() => _unlocked ? "" : "[E] Open lock";
 
@@ -44,6 +58,7 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 	private void Unlock()
 	{
 		_unlocked = true;
+		GameFlags.Instance?.SetFlag("unlocked_" + puzzleID);
 		lockUI.LockInput();
 
 		// ── Door animation ──────────────────────────────
