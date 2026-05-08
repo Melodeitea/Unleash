@@ -9,9 +9,10 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Scene names")]
     public string gameSceneName = "MainScene";
-    public string creditsSceneName = "Credits";
+    public string creditsSceneName = "Credits"; 
+    public string gymSceneName = "Gym";
 
-    [Header("UI")]
+	[Header("UI")]
     public Button loadButton;
 
     void Start()
@@ -21,19 +22,20 @@ public class MainMenu : MonoBehaviour
             loadButton.interactable = SaveSystem.HasSave();
     }
 
-    public void StartGame()
-    {
-        // Ensure game is unpaused and cursor is locked for gameplay
-        Time.timeScale = 1f;
-        SetCursorLockedState(true);
 
-        // Start a new game (does not try to load saved data)
-        SceneManager.LoadScene(gameSceneName); 
-    }
+	public void LoadGym()
+	{
+		
+		// Ensure game is unpaused and cursor will be locked for gameplay
+		Time.timeScale = 1f;
+		SetCursorLockedState(true);
 
-    
+		// Register callback to apply loaded data once scene is loaded
+		SceneManager.sceneLoaded += OnSceneLoadedApplySave;
+		SceneManager.LoadScene(gymSceneName);
+	}
 
-    public void OnNewGamePressed()
+	public void OnNewGamePressed()
     {
 	    // Wipe old save so Player.Start() doesn't load it
 	    string path = Path.Combine(Application.persistentDataPath, "player.save");
@@ -46,7 +48,7 @@ public class MainMenu : MonoBehaviour
 	    InventoryManager.Instance?.clues.Clear();
 
 	    // Then load your game scene
-	    UnityEngine.SceneManagement.SceneManager.LoadScene("Lvl"); // your scene name
+	    UnityEngine.SceneManagement.SceneManager.LoadScene("Chapter1"); // your scene name
     }
 public void LoadGame()
     {

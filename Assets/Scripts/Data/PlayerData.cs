@@ -4,6 +4,9 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PlayerData
 {
+
+	public int currentChapterIndex;
+
 	// ------------------------
 	// PLAYER STATE
 	// ------------------------
@@ -76,8 +79,6 @@ public class PlayerData
 				if (!string.IsNullOrEmpty(clue.itemID)) inventoryItemIds.Add(clue.itemID);
 		}
 
-
-
 		// ------------------------
 		// GAME FLAGS
 		// ------------------------
@@ -87,6 +88,9 @@ public class PlayerData
 		{
 			gameFlags = GameFlags.Instance.GetAllFlags();
 		}
+
+		currentChapterIndex = ChapterManager.Instance != null
+		? ChapterManager.Instance.currentChapterIndex : 0;
 
 	}
 }

@@ -37,6 +37,9 @@ public class Player : MonoBehaviour
 
 	private void ApplyPlayerData(PlayerData data)
 	{
+		if (ChapterManager.Instance != null)
+			ChapterManager.Instance.currentChapterIndex = data.currentChapterIndex;
+
 		// BASIC PLAYER
 		level = data.level;
 		if (data.position != null && data.position.Length >= 3)
