@@ -1,44 +1,59 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
-using Unity.Cinemachine;
 
-// This script manages the switching between different Cinemachine cameras in the scene.
-// It keeps track of all registered cameras and allows switching between them by setting their priority.
+// Previously: managed priority switching between multiple CinemachineCameras.
+// Now: manages zone history and delegates transitions to the single
+// ZoneCameraController. The static API is preserved so call-sites stay familiar.
 public static class CameraSwitcher
 {
-	static List<CinemachineCamera> cameras = new List<CinemachineCamera>();
+	private static ZoneCameraController _controller;
+	private static readonly Stack<CameraZoneData> _history = new Stack<CameraZoneData>();
+	public static CameraZoneData ActiveZone { get; private set; }
 
-	public static CinemachineCamera ActiveCamera = null;
-
-	public static bool IsActiveCamera(CinemachineCamera camera)
+	// Called automatically by ZoneCameraController on enable/disable
+	public static void SetController(ZoneCameraController controller)
 	{
-			return camera = ActiveCamera;
+		_controller = controller;
 	}
 
-	public static void SwitchCamera(CinemachineCamera camera)
-	{
-		camera.Priority = 10;
-		ActiveCamera = camera;
+	// ── Main API ──────────────────────────────────────────────────────────────
 
-		foreach (CinemachineCamera c in cameras)
+	// Transition to a new zone, saving the current one in history.
+	public static void SwitchToZone(CameraZoneData zone)
+	{
+		if (_controller == null)
 		{
-			if (c != camera && c.Priority != 0)
-			{
-				c.Priority = 0;
-			}
+			Debug.LogWarning("[CameraSwitcher] No active ZoneCameraController in scene.");
+			return;
 		}
+
+		if (ActiveZone != null)
+			_history.Push(ActiveZone);
+
+		ActiveZone = zone;
+		_controller.TransitionToZone(zone);
 	}
 
-	public static void Register(CinemachineCamera camera)
+	// Revert to the previous zone (e.g. player walks back through a doorway).
+	public static void GoToPreviousZone()
 	{
-		cameras.Add(camera);
-		//Debug.Log("Registered camera: " + camera);
+		if (_history.Count == 0)
+		{
+			Debug.LogWarning("[CameraSwitcher] No previous zone in history.");
+			return;
+		}
+
+		ActiveZone = _history.Pop();
+		_controller.TransitionToZone(ActiveZone);
 	}
 
-	public static void Unregister(CinemachineCamera camera)
+	// Snap instantly to a zone and clear history (useful for scene resets).
+	public static void SnapToZone(CameraZoneData zone)
 	{
-		cameras.Remove(camera);
-		//Debug.Log("Unregistered camera: " + camera);
+		_history.Clear();
+		ActiveZone = zone;
+		_controller?.SnapToZone(zone);
 	}
+
+	public static bool HasPreviousZone => _history.Count > 0;
 }
