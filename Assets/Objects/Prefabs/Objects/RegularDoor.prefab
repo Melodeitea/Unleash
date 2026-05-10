@@ -30,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6262398564386490922}
   - {fileID: 644044977272418415}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d980e1a7b8b65f64e95b547a07316cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenSimpleDoor
-  doorID: 0
+  doorID: 1
   prompt: Open door
   doorAnimator: {fileID: 156637109663002816}
   onOpened:
@@ -77,11 +78,11 @@ Transform:
   m_GameObject: {fileID: 5572187923208232767}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.013, y: 0.233, z: 0}
-  m_LocalScale: {x: 1.4929106, y: 1, z: 1.5372}
+  m_LocalPosition: {x: 0.741, y: 0.23299998, z: -1.454}
+  m_LocalScale: {x: 2.718441, y: 1, z: 1.5860686}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1851777665625704641}
+  m_Father: {fileID: 2488483174729018043}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &9083008417427265873
 BoxCollider:
@@ -235,10 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4004414253207190, guid: d1b83e7de190a194589cd7aa4265b260, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6262398564386490922}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b83e7de190a194589cd7aa4265b260, type: 3}
 --- !u!4 &1851777665625704641 stripped
