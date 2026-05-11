@@ -9,7 +9,11 @@ public class UsageTarget : MonoBehaviour, IInteractable
 	[SerializeField] private Animator objectAnimator; // door/drawer anim
 	[SerializeField] private UnityEngine.Events.UnityEvent onUsed;
 
-	private bool _used = false;
+    [Header("Flags")]
+    [SerializeField] private string[] flagsToSet;
+    [SerializeField] private string[] flagsToClear;
+
+    private bool _used = false;
 
 	private void Start()
 	{
@@ -33,20 +37,40 @@ public class UsageTarget : MonoBehaviour, IInteractable
 		return hasItem ? $"[E] {unlockedPrompt}" : lockedPrompt;
 	}
 
-	public void Interact(Player player)
-	{
-		if (_used) return;
-		if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
-		{
-			_used = true;
-			GameFlags.Instance?.SetFlag("used_" + targetID);
-			ActiveItemHolder.Clear();
-			onUsed?.Invoke();
-			StartCoroutine(PlaySequence());
-		}
-	}
+    public void Interact(Player player)
+    {
+        if (_used) return;
 
-	private System.Collections.IEnumerator PlaySequence()
+        if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
+        {
+            _used = true;
+
+            if (GameFlags.Instance != null)
+            {
+                GameFlags.Instance.SetFlag("used_" + targetID);
+
+                foreach (var flag in flagsToSet)
+                {
+                    if (!string.IsNullOrWhiteSpace(flag))
+                        GameFlags.Instance.SetFlag(flag);
+                }
+
+                foreach (var flag in flagsToClear)
+                {
+                    if (!string.IsNullOrWhiteSpace(flag))
+                        GameFlags.Instance.ClearFlag(flag);
+                }
+            }
+
+            ActiveItemHolder.Clear();
+
+            onUsed?.Invoke();
+
+            StartCoroutine(PlaySequence());
+        }
+    }
+
+    private System.Collections.IEnumerator PlaySequence()
 	{
 		// 1. Play lock anim and wait for it
 		if (lockAnimator != null)
