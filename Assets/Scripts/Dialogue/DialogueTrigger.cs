@@ -1,43 +1,50 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class DialogueTrigger : MonoBehaviour, IInteractable
 {
-	[SerializeField] private string prompt = "Talk";
-	[SerializeField] private DialogueSequence sequence;
+    [SerializeField] private string prompt = "Talk";
+    [SerializeField] private DialogueSequence sequence;
 
-	[Header("Optional Reward")]
-	//[SerializeField] private InventoryItem itemToGiveOnComplete;
+    [Header("Flag Gate")]
+    [Tooltip("When true, the flag below must be active to allow interaction.")]
+    [SerializeField] private bool requireFlag = false;
+    [SerializeField] private string requiredFlag = "flashlight_on";
+    [Tooltip("Prompt shown when the flag gate blocks interaction. Leave empty to show nothing.")]
+    [SerializeField] private string lockedPrompt = "";
 
-	[Header("Events")]
-	[SerializeField] private UnityEvent onSequenceComplete;
+    [Header("Events")]
+    [SerializeField] private UnityEvent onSequenceComplete;
 
-	public void Interact(Player player)
-	{
-		Debug.Log("[DialogueTrigger] Interact called.");
-		Debug.Log($"[DialogueTrigger] sequence assigned: {sequence != null}");
-		if (sequence != null)
-		{
-			Debug.Log($"[DialogueTrigger] lines count: {sequence.lines?.Length ?? 0}");
-			Debug.Log($"[DialogueTrigger] triggerOnce={sequence.triggerOnce}, hasPlayed={sequence.hasPlayed}");
-		}
-		Debug.Log($"[DialogueTrigger] DialogueManager.Instance: {DialogueManager.Instance != null}");
+    // ── IInteractable ────────────────────────────────────────
 
-		DialogueManager.Instance.PlaySequence(sequence, OnComplete);
-	}
+    public void Interact(Player player)
+    {
+        if (!IsFlagSatisfied()) return;
 
-	private void OnComplete()
-	{
-		//if (itemToGiveOnComplete != null)
-		//{
-		//	InventoryManager.Instance.AddItem(itemToGiveOnComplete);
-		//}
+        if (sequence != null)
+            DialogueManager.Instance.PlaySequence(sequence, OnComplete);
+    }
 
-		//onSequenceComplete?.Invoke();
-	}
+    public string GetPrompt()
+    {
+        if (!IsFlagSatisfied())
+            return lockedPrompt; // Empty string hides the prompt in most interaction UIs
 
-	public string GetPrompt()
-	{
-		return prompt;
-	}
+        return prompt;
+    }
+
+    // ── Internals ────────────────────────────────────────────
+
+    private bool IsFlagSatisfied()
+    {
+        if (!requireFlag) return true;
+        if (GameFlags.Instance == null) return false;
+        return GameFlags.Instance.GetFlag(requiredFlag);
+    }
+
+    private void OnComplete()
+    {
+        onSequenceComplete?.Invoke();
+    }
 }
