@@ -66,6 +66,18 @@ PrefabInstance:
       value: prf_key_01 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.54789
       objectReference: {fileID: 0}
@@ -135,6 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldItem
   itemData: {fileID: 11400000, guid: 83a7106b17153054499bbc42786c348b, type: 2}
   promptMessage: Pick up
+  autoPickup: 0
+  destroyAfterPickup: 1
 --- !u!4 &3077830530760837030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
