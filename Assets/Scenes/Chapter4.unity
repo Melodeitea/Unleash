@@ -77896,8 +77896,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5555432806178740942, guid: e165296e857d75045883f0cc200d2643, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1498836983}
   m_SourcePrefab: {fileID: 100100000, guid: e165296e857d75045883f0cc200d2643, type: 3}
+--- !u!1 &1498836981 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5555432806178740942, guid: e165296e857d75045883f0cc200d2643, type: 3}
+  m_PrefabInstance: {fileID: 1498836980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1498836982 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2746074677055666940, guid: e165296e857d75045883f0cc200d2643, type: 3}
+  m_PrefabInstance: {fileID: 1498836980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1498836983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498836981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7265532866118bb48b22e420c72ec2d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombinationLockTarget
+  correctCode: 1234
+  digitCount: 4
+  lockUI: {fileID: 1674403267}
+  lockAnimator: {fileID: 0}
+  objectAnimator: {fileID: 1498836982}
+  onUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  puzzleID: 
 --- !u!43 &1499068709
 Mesh:
   m_ObjectHideFlags: 0
@@ -94040,7 +94074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20.63385, y: 0}
+  m_AnchoredPosition: {x: -20.633911, y: 0}
   m_SizeDelta: {x: -329.8752, y: -2013.4692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1791943484
