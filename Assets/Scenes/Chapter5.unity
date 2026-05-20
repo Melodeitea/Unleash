@@ -29817,6 +29817,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6495154541722653708, guid: 3b6684e3b800b924195ed84a0558b207, type: 3}
   m_PrefabInstance: {fileID: 670031826}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &670031828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7378079984638578943, guid: 3b6684e3b800b924195ed84a0558b207, type: 3}
+  m_PrefabInstance: {fileID: 670031826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &672660075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85497,9 +85502,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3608eac75a12eb64082c2af6de5540e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrialItemSelector
-  panel: {fileID: 0}
+  panel: {fileID: 181095314}
   buttonContainer: {fileID: 0}
-  itemButtonPrefab: {fileID: 0}
+  itemButtonPrefab: {fileID: 670031828}
   skipButton: {fileID: 0}
   accusationLabel: {fileID: 0}
 --- !u!114 &1868349504
