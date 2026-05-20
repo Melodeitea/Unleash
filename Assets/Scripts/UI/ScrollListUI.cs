@@ -28,7 +28,7 @@ public class ScrollListUI : MonoBehaviour
 		foreach (Transform child in content)
 			Destroy(child.gameObject);
 
-		List<ItemData> list = listType == ItemType.File
+		List<ItemData> list = listType == ItemType.Notes
 			? InventoryManager.Instance.files
 			: InventoryManager.Instance.clues;
 
@@ -36,7 +36,7 @@ public class ScrollListUI : MonoBehaviour
 		{
 			var go = Instantiate(slotPrefab, content);
 
-			if (listType == ItemType.File)
+			if (listType == ItemType.Notes)
 			{
 				var slot = go.GetComponent<NoteSlotUI>();
 				slot.Setup(item, inventoryUI.ShowDetail);

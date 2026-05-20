@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class WiBSavePoint : MonoBehaviour, IInteractable
 {
@@ -14,6 +15,10 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 	[Header("Audio")]
 	[SerializeField] private AudioClip saveSFX;
 
+	[Header("UI (TextMeshPro)")]
+	[SerializeField] private TextMeshProUGUI womanNameTMP;
+	[SerializeField] private TextMeshProUGUI saveMessageTMP;
+
 	public void Interact(Player player)
 	{
 		if (player == null)
@@ -24,6 +29,13 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 
 		SaveAll(player);
 
+		// UI updates on successful save
+		if (womanNameTMP != null)
+			womanNameTMP.text = "Woman in Black";
+
+		if (saveMessageTMP != null)
+			saveMessageTMP.text = "Sweet child, in time you'll see the light";
+
 		if (wibLight != null)
 			StartCoroutine(PulseRed());
 
@@ -33,11 +45,7 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 
 	private void SaveAll(Player player)
 	{
-		// Save player data
 		SaveSystem.SavePlayer(player.GetComponent<Player>());
-
-		// Save global systems
-		//InventoryManager.Instance.SaveToPlayerPrefs();
 		GameFlags.Instance.SaveFlags();
 
 		Debug.Log("[WiBSavePoint] Game saved.");
@@ -53,7 +61,6 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 		float half = pulseDuration * 0.5f;
 		float t = 0f;
 
-		// Fade up
 		while (t < half)
 		{
 			t += Time.deltaTime;
@@ -63,7 +70,6 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 
 		t = 0f;
 
-		// Fade down
 		while (t < half)
 		{
 			t += Time.deltaTime;

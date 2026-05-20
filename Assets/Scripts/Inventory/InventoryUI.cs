@@ -35,7 +35,7 @@ public class InventoryUI : MonoBehaviour
 	[SerializeField] private Button cluesBackBtn;
 
 	private ItemData _selected;
-	private ItemType _currentTab = ItemType.Item;
+	private ItemType _currentTab = ItemType.Items;
 
 	private void Awake()
 	{
@@ -46,12 +46,12 @@ public class InventoryUI : MonoBehaviour
 	private void OnEnable()
 	{
 		InventoryManager.Instance.OnInventoryChanged += Refresh;
-		filesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.File));
-		cluesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Clue));
+		filesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Notes));
+		cluesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Clues));
 		playAudioBtn.onClick.AddListener(OnPlayClicked);
-		SwitchTab(ItemType.Item);
-		filesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Item));
-		cluesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Item));
+		SwitchTab(ItemType.Items);
+		filesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Items));
+		cluesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Items));
 	}
 
 	private void OnDisable()
@@ -69,12 +69,12 @@ public class InventoryUI : MonoBehaviour
 	public void SwitchTab(ItemType tab)
 	{
 		_currentTab = tab;
-		itemsPanel.SetActive(tab == ItemType.Item);
-		filesPanel.SetActive(tab == ItemType.File);
-		cluesPanel.SetActive(tab == ItemType.Clue);
+		itemsPanel.SetActive(tab == ItemType.Items);
+		filesPanel.SetActive(tab == ItemType.Notes);
+		cluesPanel.SetActive(tab == ItemType.Clues);
 
 		// Hide item detail when switching away
-		if (tab != ItemType.Item)
+		if (tab != ItemType.Items)
 		{
 			itemDetailSection.SetActive(false);
 			_selected = null;
@@ -87,7 +87,7 @@ public class InventoryUI : MonoBehaviour
 	private void Refresh()
 	{
 		// Only handle Items tab — Files/Clues are handled by ScrollListUI
-		if (_currentTab != ItemType.Item) return;
+		if (_currentTab != ItemType.Items) return;
 
 		foreach (Transform child in listContent)
 			Destroy(child.gameObject);
@@ -114,19 +114,19 @@ public class InventoryUI : MonoBehaviour
 	{
 		switch (data.itemType)
 		{
-			case ItemType.Item:
+			case ItemType.Items:
 				itemDetailSection.SetActive(true);
 				detailIcon.sprite = data.icon;
 				detailName.text = data.itemName;
 				detailDesc.text = data.description;
 				break;
 
-			case ItemType.File:
+			case ItemType.Notes:
 				itemDetailSection.SetActive(false);
 				fileBodyText.text = data.fileText;
 				break;
 
-			case ItemType.Clue:
+			case ItemType.Clues:
 				itemDetailSection.SetActive(false);
 				clueTitle.text = data.itemName;
 				playAudioBtn.gameObject.SetActive(data.audioClip != null);

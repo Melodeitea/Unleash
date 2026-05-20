@@ -21,9 +21,9 @@ public class InventoryManager : MonoBehaviour
 	{
 		switch (data.itemType)
 		{
-			case ItemType.Item: items.Add(data); break;
-			case ItemType.File: files.Add(data); break;
-			case ItemType.Clue: clues.Add(data); break;
+			case ItemType.Items: items.Add(data); break;
+			case ItemType.Notes: files.Add(data); break;
+			case ItemType.Clues: clues.Add(data); break;
 		}
 		OnInventoryChanged?.Invoke();
 		Debug.Log($"Picked up: {data.itemName}");
