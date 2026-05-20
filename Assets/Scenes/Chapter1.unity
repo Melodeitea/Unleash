@@ -25037,7 +25037,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 895120184}
+  m_Mesh: {fileID: 661658832}
 --- !u!33 &588490675
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -25509,7 +25509,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 52050120}
+  m_Mesh: {fileID: 895120184}
 --- !u!33 &615200276
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -25865,7 +25865,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 81991632}
+  m_Mesh: {fileID: 1619159204}
 --- !u!33 &615409440
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -42867,7 +42867,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1619159204}
+  m_Mesh: {fileID: 1572524114}
 --- !u!33 &954401236
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -47253,7 +47253,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 52050120}
 --- !u!33 &1024078143
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -73107,7 +73107,7 @@ Transform:
   m_GameObject: {fileID: 1536744954}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.38270998, y: 0, z: 1.0747706}
+  m_LocalPosition: {x: 13.75, y: 0, z: 11.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96247,7 +96247,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 661658832}
+  m_Mesh: {fileID: 732297286}
 --- !u!33 &2092809140
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -96835,7 +96835,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 732297286}
+  m_Mesh: {fileID: 937703285}
 --- !u!33 &2095382091
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -99075,8 +99075,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5761561325104016440, guid: a522f89912d393546bd3397fc10cefd8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3434071256726055029}
   m_SourcePrefab: {fileID: 100100000, guid: a522f89912d393546bd3397fc10cefd8, type: 3}
+--- !u!1 &3434071256726055028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5761561325104016440, guid: a522f89912d393546bd3397fc10cefd8, type: 3}
+  m_PrefabInstance: {fileID: 3434071256726055027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3434071256726055029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3434071256726055028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed4b505ebc392c40b76c70d3ed0e5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagTrigger
+  prompt: 
+  usedPrompt: 
+  triggerOnce: 1
+  selfFlag: 
+  flagsToSet:
+  - firstSave
+  flagsToClear: []
+  requiredFlag: 
+  lockedPrompt: 
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4259058028589878114
 PrefabInstance:
   m_ObjectHideFlags: 0
