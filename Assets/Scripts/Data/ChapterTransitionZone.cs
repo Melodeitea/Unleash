@@ -1,32 +1,26 @@
-using UnityEngine;
-public class ChapterTransitionZone : MonoBehaviour
+﻿using UnityEngine;
+
+public class ChapterTransitionZone : MonoBehaviour, IInteractable
 {
-	private bool _triggered = false;
+    [SerializeField] private string readyPrompt = "Continue";
+    [SerializeField] private string notReadyPrompt = "";
 
-	private void OnTriggerEnter(Collider other)
-	{
-		Debug.Log($"[TransitionZone] Something entered: {other.gameObject.name} (tag: {other.tag})");
+    private bool _triggered = false;
 
-		if (_triggered)
-		{
-			Debug.Log("[TransitionZone] Already triggered, ignoring.");
-			return;
-		}
-		if (!other.CompareTag("Player"))
-		{
-			Debug.Log($"[TransitionZone] Not player, ignoring.");
-			return;
-		}
+    public string GetPrompt()
+    {
+        if (_triggered) return string.Empty;
+        return ChapterManager.Instance.IsCurrentChapterComplete()
+            ? readyPrompt
+            : notReadyPrompt;
+    }
 
-		Debug.Log("[TransitionZone] Player entered transition zone.");
+    public void Interact(Player player)
+    {
+        if (_triggered) return;
+        if (!ChapterManager.Instance.IsCurrentChapterComplete()) return;
 
-		bool complete = ChapterManager.Instance.IsCurrentChapterComplete();
-		Debug.Log($"[TransitionZone] Chapter complete: {complete}");
-
-		if (!complete) return;
-
-		_triggered = true;
-		Debug.Log("[TransitionZone] Triggering chapter transition.");
-		ChapterTransitionUI.Instance.StartTransition();
-	}
+        _triggered = true;
+        ChapterTransitionUI.Instance.StartTransition();
+    }
 }

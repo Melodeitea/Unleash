@@ -1,59 +1,54 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// Previously: managed priority switching between multiple CinemachineCameras.
-// Now: manages zone history and delegates transitions to the single
-// ZoneCameraController. The static API is preserved so call-sites stay familiar.
 public static class CameraSwitcher
 {
-	private static ZoneCameraController _controller;
-	private static readonly Stack<CameraZoneData> _history = new Stack<CameraZoneData>();
-	public static CameraZoneData ActiveZone { get; private set; }
+    private static ZoneCameraController _controller;
+    private static readonly List<CameraZoneData> _stack = new();
 
-	// Called automatically by ZoneCameraController on enable/disable
-	public static void SetController(ZoneCameraController controller)
-	{
-		_controller = controller;
-	}
+    public static CameraZoneData ActiveZone =>
+        _stack.Count > 0 ? _stack[_stack.Count - 1] : null;
 
-	// ── Main API ──────────────────────────────────────────────────────────────
+    public static bool HasPreviousZone => _stack.Count > 1;
 
-	// Transition to a new zone, saving the current one in history.
-	public static void SwitchToZone(CameraZoneData zone)
-	{
-		if (_controller == null)
-		{
-			Debug.LogWarning("[CameraSwitcher] No active ZoneCameraController in scene.");
-			return;
-		}
+    public static void SetController(ZoneCameraController controller)
+    {
+        _controller = controller;
+        if (_controller != null && _stack.Count > 0)
+            _controller.TransitionToZone(ActiveZone);
+    }
 
-		if (ActiveZone != null)
-			_history.Push(ActiveZone);
+    // Player enters a zone
+    public static void EnterZone(CameraZoneData zone)
+    {
+        if (_controller == null)
+        {
+            Debug.LogWarning("[CameraSwitcher] No active ZoneCameraController.");
+            return;
+        }
 
-		ActiveZone = zone;
-		_controller.TransitionToZone(zone);
-	}
+        _stack.Remove(zone); // prevent duplicates on re-entry
+        _stack.Add(zone);    // last entered = top = highest priority
 
-	// Revert to the previous zone (e.g. player walks back through a doorway).
-	public static void GoToPreviousZone()
-	{
-		if (_history.Count == 0)
-		{
-			Debug.LogWarning("[CameraSwitcher] No previous zone in history.");
-			return;
-		}
+        _controller.TransitionToZone(ActiveZone);
+    }
 
-		ActiveZone = _history.Pop();
-		_controller.TransitionToZone(ActiveZone);
-	}
+    // Player exits a specific zone — removes it from anywhere in the stack
+    public static void ExitZone(CameraZoneData zone)
+    {
+        _stack.Remove(zone);
 
-	// Snap instantly to a zone and clear history (useful for scene resets).
-	public static void SnapToZone(CameraZoneData zone)
-	{
-		_history.Clear();
-		ActiveZone = zone;
-		_controller?.SnapToZone(zone);
-	}
+        if (_stack.Count > 0)
+            _controller?.TransitionToZone(ActiveZone);
+    }
 
-	public static bool HasPreviousZone => _history.Count > 0;
+    // Keep snap for scene resets
+    public static void SnapToZone(CameraZoneData zone)
+    {
+        _stack.Clear();
+        _stack.Add(zone);
+        _controller?.SnapToZone(zone);
+    }
+
+    public static void Clear() => _stack.Clear();
 }
