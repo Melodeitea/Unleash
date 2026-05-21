@@ -46159,6 +46159,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7943386602781851464, guid: c9ed075d28833da479e6778b4ff6ccc5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 995608342}
+    - targetCorrespondingSourceObject: {fileID: 7943386602781851464, guid: c9ed075d28833da479e6778b4ff6ccc5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 995608345}
   m_SourcePrefab: {fileID: 100100000, guid: c9ed075d28833da479e6778b4ff6ccc5, type: 3}
 --- !u!1 &995608341 stripped
 GameObject:
@@ -46177,7 +46180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc83fb9929f43b4db17ce0ab9afad5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldItem
-  itemData: {fileID: 11400000, guid: e5c7cf7e78baabf45831741e97471703, type: 2}
+  itemData: {fileID: 11400000, guid: 472f4ca1c3127294f82e4363523218ab, type: 2}
   promptMessage: Pick up
   autoPickup: 0
   destroyAfterPickup: 1
@@ -46207,6 +46210,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8582891189080709616, guid: c9ed075d28833da479e6778b4ff6ccc5, type: 3}
   m_PrefabInstance: {fileID: 995608340}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &995608345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995608341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed4b505ebc392c40b76c70d3ed0e5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagTrigger
+  prompt: 
+  usedPrompt: 
+  triggerOnce: 1
+  selfFlag: 
+  flagsToSet:
+  - puzzle_2_3_complete
+  flagsToClear: []
+  requiredFlag: 
+  lockedPrompt: 
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!43 &996558773
 Mesh:
   m_ObjectHideFlags: 0
@@ -47393,6 +47420,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4939033946003949797, guid: 4421dcd12f4a79f4597a43cb1179da2d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1010930425}
+    - targetCorrespondingSourceObject: {fileID: 4939033946003949797, guid: 4421dcd12f4a79f4597a43cb1179da2d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1010930427}
   m_SourcePrefab: {fileID: 100100000, guid: 4421dcd12f4a79f4597a43cb1179da2d, type: 3}
 --- !u!1 &1010930423 stripped
 GameObject:
@@ -47441,6 +47471,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.5531669, y: 3.982181, z: 0.04381591}
   m_Center: {x: -0.0016378766, y: 0.000035703135, z: -0.00003051844}
+--- !u!114 &1010930427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010930423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed4b505ebc392c40b76c70d3ed0e5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagTrigger
+  prompt: 
+  usedPrompt: 
+  triggerOnce: 1
+  selfFlag: 
+  flagsToSet:
+  - document_2_4_found
+  flagsToClear: []
+  requiredFlag: 
+  lockedPrompt: 
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1011149988
 GameObject:
   m_ObjectHideFlags: 0
@@ -85871,6 +85925,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e42c6608e170d4a972a5125b5833a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChapterTransitionZone
+  readyPrompt: Continue
+  notReadyPrompt: 
 --- !u!1 &1823222483
 GameObject:
   m_ObjectHideFlags: 0
@@ -94312,7 +94368,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChapterTransitionUI
   fadePanel: {fileID: 9722721}
-  titleText: {fileID: 681714092}
+  chapterNumberText: {fileID: 0}
+  chapterTimeText: {fileID: 0}
+  chapterNameText: {fileID: 0}
   fadeDuration: 1
   titleHoldDuration: 2.5
 --- !u!114 &2007588255
