@@ -28814,7 +28814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a2f591930879814181ca31053778939, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6029592
+      value: 2.794
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a2f591930879814181ca31053778939, type: 3}
       propertyPath: m_LocalPosition.z
@@ -28862,6 +28862,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a2f591930879814181ca31053778939, type: 3}
       insertIndex: -1
       addedObject: {fileID: 552054949}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a2f591930879814181ca31053778939, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 552054951}
   m_SourcePrefab: {fileID: 100100000, guid: 7a2f591930879814181ca31053778939, type: 3}
 --- !u!1 &552054948 stripped
 GameObject:
@@ -28894,6 +28897,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a2f591930879814181ca31053778939, type: 3}
   m_PrefabInstance: {fileID: 552054947}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &552054951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552054948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed4b505ebc392c40b76c70d3ed0e5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlagTrigger
+  prompt: 
+  usedPrompt: 
+  triggerOnce: 1
+  selfFlag: 
+  flagsToSet:
+  - scarf_found
+  flagsToClear: []
+  requiredFlag: 
+  lockedPrompt: 
+  onTriggered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &553820433
 GameObject:
   m_ObjectHideFlags: 0
@@ -76077,7 +76104,7 @@ Transform:
   m_GameObject: {fileID: 1458255930}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0275, y: 0.1795, z: -0.0422}
+  m_LocalPosition: {x: 0.0298, y: 0.1596, z: -0.0076}
   m_LocalScale: {x: 0.048494007, y: 0.048494007, z: 0.048494007}
   m_ConstrainProportionsScale: 0
   m_Children: []
