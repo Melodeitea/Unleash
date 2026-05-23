@@ -23276,7 +23276,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: RegularDoor (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2656447197361217365, guid: 9f7de394b24488e44b0749714947f48e, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5572187923208232767, guid: 9f7de394b24488e44b0749714947f48e, type: 3}
     m_AddedGameObjects: []
@@ -36976,7 +36977,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: RegularDoor (16)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2656447197361217365, guid: 9f7de394b24488e44b0749714947f48e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -37948,7 +37950,7 @@ Transform:
   m_GameObject: {fileID: 918805416}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.38270998, y: 0, z: 1.0747706}
+  m_LocalPosition: {x: 8.842, y: 0, z: 1.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42120,6 +42122,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 202948263761453645, guid: 545ddeb58c1b62c42a4830fa0dde8d5a, type: 3}
   m_PrefabInstance: {fileID: 981839653}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &983451974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 983451976}
+  - component: {fileID: 983451975}
+  m_Layer: 0
+  m_Name: GameObject (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &983451975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983451974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e863026511b31624aaa779cfcb822b3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
+  prompt: Talk
+  sequence: {fileID: 11400000, guid: d007255b9c4bf8e4c8b31f2a49c06f53, type: 2}
+  requireFlag: 0
+  requiredFlag: flashlight_on
+  lockedPrompt: 
+  onSequenceComplete:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &983451976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983451974}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.31011266, z: -0, w: 0.95069987}
+  m_LocalPosition: {x: 11.856, y: 0.76906, z: 39.628}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1189209208}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 36.132, z: 0}
 --- !u!1 &984092187
 GameObject:
   m_ObjectHideFlags: 0
@@ -42831,7 +42886,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: RegularDoor (7)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2656447197361217365, guid: 9f7de394b24488e44b0749714947f48e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -43218,7 +43274,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.16
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2656447197361217365, guid: 9f7de394b24488e44b0749714947f48e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -48088,7 +48145,8 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2656447197361217365, guid: 9f7de394b24488e44b0749714947f48e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -52752,6 +52810,59 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1189209207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1189209208}
+  - component: {fileID: 1189209209}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1189209208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189209207}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4467, y: 1, z: 1.9217}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 983451976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1189209209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189209207}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1192048160
 GameObject:
   m_ObjectHideFlags: 0
@@ -84452,24 +84563,24 @@ MonoBehaviour:
     correctItem: {fileID: 11400000, guid: 472f4ca1c3127294f82e4363523218ab, type: 2}
     answeredCorrectly: 0
   - label: The Scarf
-    accusationSequence: {fileID: 0}
+    accusationSequence: {fileID: 11400000, guid: e664ab608fbd567498c193a7f8516496, type: 2}
     correctSequence: {fileID: 0}
     wrongSequence: {fileID: 0}
     correctItem: {fileID: 0}
     answeredCorrectly: 0
-  - label: 
-    accusationSequence: {fileID: 0}
-    correctSequence: {fileID: 0}
-    wrongSequence: {fileID: 0}
-    correctItem: {fileID: 0}
+  - label: The contract
+    accusationSequence: {fileID: 11400000, guid: 20d13693a1a935c4bb6b6fef6a4be6ff, type: 2}
+    correctSequence: {fileID: 11400000, guid: 65cfd7a202b183649ab13a099da6adba, type: 2}
+    wrongSequence: {fileID: 11400000, guid: d1621dfb8c1991f4d81f4efd10cc50a9, type: 2}
+    correctItem: {fileID: 11400000, guid: 3875915dea29eda44afcfc9fc381d15b, type: 2}
     answeredCorrectly: 0
-  - label: 
-    accusationSequence: {fileID: 0}
-    correctSequence: {fileID: 0}
-    wrongSequence: {fileID: 0}
-    correctItem: {fileID: 0}
+  - label: Crossroad
+    accusationSequence: {fileID: 11400000, guid: 276f43bc8286bca4187cb9ac3f70473d, type: 2}
+    correctSequence: {fileID: 11400000, guid: bd005fce1eafda249acb448fbc948a9e, type: 2}
+    wrongSequence: {fileID: 11400000, guid: 1c1af23ac0eedd843b85832861cf4b6e, type: 2}
+    correctItem: {fileID: 11400000, guid: 4b0078aee84ac624db8b1fd5c8f04b24, type: 2}
     answeredCorrectly: 0
-  - label: 
+  - label: The Wish
     accusationSequence: {fileID: 0}
     correctSequence: {fileID: 0}
     wrongSequence: {fileID: 0}
@@ -92663,39 +92774,13 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1615345519852344659, guid: a45a6d689d3e9b043a28397f7921d780, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7219182348877295308, guid: a45a6d689d3e9b043a28397f7921d780, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2017089608}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a45a6d689d3e9b043a28397f7921d780, type: 3}
 --- !u!4 &2017089606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 832983481931413437, guid: a45a6d689d3e9b043a28397f7921d780, type: 3}
   m_PrefabInstance: {fileID: 2017089605}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2017089607 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7219182348877295308, guid: a45a6d689d3e9b043a28397f7921d780, type: 3}
-  m_PrefabInstance: {fileID: 2017089605}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2017089608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017089607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d980e1a7b8b65f64e95b547a07316cab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OpenSimpleDoor
-  doorID: 
-  prompt: Open door
-  doorAnimator: {fileID: 0}
-  onOpened:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!43 &2017838473
 Mesh:
   m_ObjectHideFlags: 0
@@ -95209,8 +95294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71fcc3a9c849cc449cc27629aa70685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExamineObject
-  prompt: Examine
-  monologueText: 
+  prompt: ROXANNE
+  monologueText: We have to regroup to the gaming room.
   requireFlag: 0
   requiredFlag: flashlight_on
   lockedPrompt: 
@@ -101053,4 +101138,5 @@ SceneRoots:
   - {fileID: 520232574}
   - {fileID: 583025275}
   - {fileID: 138147621}
+  - {fileID: 983451976}
   - {fileID: 2055207119}
