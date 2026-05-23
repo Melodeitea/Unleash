@@ -100690,11 +100690,39 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bathroom
       objectReference: {fileID: 0}
+    - target: {fileID: 5840440052278004278, guid: 581553dbbf04f8141a6d3a16ed082eb1, type: 3}
+      propertyPath: monologueText
+      value: Shit, my dress is stained
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5557684536242472261, guid: 581553dbbf04f8141a6d3a16ed082eb1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6015272339787795964}
   m_SourcePrefab: {fileID: 100100000, guid: 581553dbbf04f8141a6d3a16ed082eb1, type: 3}
+--- !u!1 &6015272339787795963 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5557684536242472261, guid: 581553dbbf04f8141a6d3a16ed082eb1, type: 3}
+  m_PrefabInstance: {fileID: 6015272339787795962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6015272339787795964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015272339787795963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc83fb9929f43b4db17ce0ab9afad5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldItem
+  itemData: {fileID: 11400000, guid: 0f58d856ac544614b970ed0d9e3467c6, type: 2}
+  promptMessage: 
+  autoPickup: 1
+  destroyAfterPickup: 1
 --- !u!1001 &8862819280650885262
 PrefabInstance:
   m_ObjectHideFlags: 0
