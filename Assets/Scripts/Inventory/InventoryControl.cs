@@ -53,7 +53,7 @@ public class InventoryControl : MonoBehaviour
 				sfxTabSwitch?.Play();
 				inventoryUI.NextTab();
 			}
-			else if (Input.GetKeyDown(KeyCode.A))
+			else if (Input.GetKeyDown(KeyCode.Q))
 			{
 				sfxTabSwitch?.Play();
 				inventoryUI.PrevTab();
