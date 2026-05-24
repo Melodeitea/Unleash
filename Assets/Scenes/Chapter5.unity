@@ -23119,7 +23119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.0273438, y: 29.400146}
+  m_AnchoredPosition: {x: 5.0273438, y: 29.400116}
   m_SizeDelta: {x: -285.252, y: -455.0861}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496998446
@@ -32943,8 +32943,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784180783}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -2.7879677, y: 0.64, z: -35.13}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.55089, y: 5.36043, z: 19.35465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44250,14 +44250,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024358293}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.38268343, y: -0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -19.338858, y: -4.72043, z: -52.709652}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.775}
   m_LocalScale: {x: 0.66776, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1295533853}
   m_Father: {fileID: 396909048}
-  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1026247100
 GameObject:
   m_ObjectHideFlags: 0
@@ -52593,10 +52593,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryControl
   inventoryScreen: {fileID: 1360779568}
   inventoryFade: {fileID: 286616594}
-  inventoryOpen: {fileID: 2083604306}
-  isOpen: 0
-  inventoryClose: {fileID: 1590229996}
-  canClose: 0
+  itemsPanel: {fileID: 0}
+  notesPanel: {fileID: 0}
+  cluesPanel: {fileID: 0}
+  itemsTabImage: {fileID: 0}
+  notesTabImage: {fileID: 0}
+  cluesTabImage: {fileID: 0}
+  tabActiveColor: {r: 1, g: 1, b: 1, a: 1}
+  tabInactiveColor: {r: 1, g: 1, b: 1, a: 0.4}
+  sfxOpen: {fileID: 0}
+  sfxClose: {fileID: 0}
+  sfxTabSwitch: {fileID: 0}
+  sfxItemSelect: {fileID: 0}
+  inventoryUI: {fileID: 0}
 --- !u!4 &1162443921
 Transform:
   m_ObjectHideFlags: 0
@@ -60618,21 +60627,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
   itemsPanel: {fileID: 406969356}
-  filesPanel: {fileID: 460827758}
+  notesPanel: {fileID: 0}
   cluesPanel: {fileID: 32187513}
-  filesTabBtn: {fileID: 1014177573}
-  cluesTabBtn: {fileID: 1651305123}
+  itemsPanelTabs:
+    toItems: {fileID: 0}
+    toNotes: {fileID: 0}
+    toClues: {fileID: 0}
+  notesPanelTabs:
+    toItems: {fileID: 0}
+    toNotes: {fileID: 0}
+    toClues: {fileID: 0}
+  cluesPanelTabs:
+    toItems: {fileID: 0}
+    toNotes: {fileID: 0}
+    toClues: {fileID: 0}
+  tabActiveColor: {r: 1, g: 1, b: 1, a: 1}
+  tabInactiveColor: {r: 1, g: 1, b: 1, a: 0.4}
   listContent: {fileID: 1605346988}
   slotPrefab: {fileID: 4598325683994703933, guid: 95dfaa1f2fd751d428fef51561c02e83, type: 3}
+  itemDetailSection: {fileID: 355478756}
   detailIcon: {fileID: 355478758}
   detailName: {fileID: 1694213724}
   detailDesc: {fileID: 545812785}
-  itemDetailSection: {fileID: 355478756}
   fileBodyText: {fileID: 1694213724}
   clueTitle: {fileID: 1610211555}
   playAudioBtn: {fileID: 948231279}
-  filesBackBtn: {fileID: 765711234}
-  cluesBackBtn: {fileID: 1285405303}
 --- !u!43 &1362867941
 Mesh:
   m_ObjectHideFlags: 0
@@ -62151,7 +62170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   items: []
-  files: []
+  notes: []
   clues: []
 --- !u!1001 &1412580075
 PrefabInstance:
@@ -78717,7 +78736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20.633667, y: 0}
+  m_AnchoredPosition: {x: -20.633606, y: 0}
   m_SizeDelta: {x: -329.8752, y: -2013.4692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1748380508
