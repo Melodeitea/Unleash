@@ -72,7 +72,7 @@ public class PlayerData
 			foreach (var item in InventoryManager.Instance.items)
 				if (!string.IsNullOrEmpty(item.itemID)) inventoryItemIds.Add(item.itemID);
 
-			foreach (var file in InventoryManager.Instance.files)
+			foreach (var file in InventoryManager.Instance.notes)
 				if (!string.IsNullOrEmpty(file.itemID)) inventoryItemIds.Add(file.itemID);
 
 			foreach (var clue in InventoryManager.Instance.clues)

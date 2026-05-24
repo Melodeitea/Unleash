@@ -29,7 +29,7 @@ public class ScrollListUI : MonoBehaviour
 			Destroy(child.gameObject);
 
 		List<ItemData> list = listType == ItemType.Notes
-			? InventoryManager.Instance.files
+			? InventoryManager.Instance.notes
 			: InventoryManager.Instance.clues;
 
 		foreach (var item in list)

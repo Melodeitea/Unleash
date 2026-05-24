@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour
 	    // Also clear flags and inventory in memory
 	    GameFlags.Instance?.ClearAll();
 	    InventoryManager.Instance?.items.Clear();
-	    InventoryManager.Instance?.files.Clear();
+	    InventoryManager.Instance?.notes.Clear();
 	    InventoryManager.Instance?.clues.Clear();
 
 	    // Then load your game scene

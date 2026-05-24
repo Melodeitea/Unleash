@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 	public static InventoryManager Instance { get; private set; }
 
 	public List<ItemData> items = new List<ItemData>(); // usable items
-	public List<ItemData> files = new List<ItemData>(); // readable notes
+	public List<ItemData> notes = new List<ItemData>(); // readable notes
 	public List<ItemData> clues = new List<ItemData>(); // audio clues
 
 	public System.Action OnInventoryChanged;
@@ -22,7 +22,7 @@ public class InventoryManager : MonoBehaviour
 		switch (data.itemType)
 		{
 			case ItemType.Items: items.Add(data); break;
-			case ItemType.Notes: files.Add(data); break;
+			case ItemType.Notes: notes.Add(data); break;
 			case ItemType.Clues: clues.Add(data); break;
 		}
 		OnInventoryChanged?.Invoke();
@@ -32,7 +32,7 @@ public class InventoryManager : MonoBehaviour
 	public void LoadInventory(List<string> ids, ItemDatabase db)
 	{
 		items.Clear();
-		files.Clear();
+		notes.Clear();
 		clues.Clear();
 
 		foreach (string id in ids)
@@ -48,7 +48,7 @@ public class InventoryManager : MonoBehaviour
 	public void RemoveItem(ItemData data)
 	{
 		items.Remove(data);
-		files.Remove(data);
+		notes.Remove(data);
 		clues.Remove(data);
 		OnInventoryChanged?.Invoke();
 	}

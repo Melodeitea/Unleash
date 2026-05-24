@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 		if (InventoryManager.Instance != null && itemDatabase != null)
 		{
 			InventoryManager.Instance.items.Clear();
-			InventoryManager.Instance.files.Clear();
+			InventoryManager.Instance.notes.Clear();
 			InventoryManager.Instance.clues.Clear();
 
 			if (data.inventoryItemIds != null)

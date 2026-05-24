@@ -1,41 +1,59 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-	[Header("Tabs")]
-	[SerializeField] private GameObject itemsPanel;
-	[SerializeField] private GameObject filesPanel;
-	[SerializeField] private GameObject cluesPanel;
-	[SerializeField] private Button filesTabBtn;
-	[SerializeField] private Button cluesTabBtn;
+	// ── Tab button rows — one per panel ──────────────────────────
+	[System.Serializable]
+	public struct TabButtonRow
+	{
+		public Button toItems;
+		public Button toNotes;
+		public Button toClues;
+	}
 
-	[Header("Scroll List (shared)")]
-	[SerializeField] private Transform listContent;       // ScrollView > Viewport > Content
+	[Header("Panels")]
+	[SerializeField] private GameObject itemsPanel;
+	[SerializeField] private GameObject notesPanel;
+	[SerializeField] private GameObject cluesPanel;
+
+	[Header("Tab Buttons — one row per panel")]
+	[SerializeField] private TabButtonRow itemsPanelTabs;
+	[SerializeField] private TabButtonRow notesPanelTabs;
+	[SerializeField] private TabButtonRow cluesPanelTabs;
+
+	[Header("Tab Highlight Colors")]
+	[SerializeField] private Color tabActiveColor = Color.white;
+	[SerializeField] private Color tabInactiveColor = new Color(1f, 1f, 1f, 0.4f);
+
+	[Header("Scroll List (shared — Items tab)")]
+	[SerializeField] private Transform listContent;
 	[SerializeField] private GameObject slotPrefab;
 
-	[Header("Detail Panel � Items")]
+	[Header("Detail Panel — Items")]
+	[SerializeField] private GameObject itemDetailSection;
 	[SerializeField] private Image detailIcon;
 	[SerializeField] private TextMeshProUGUI detailName;
 	[SerializeField] private TextMeshProUGUI detailDesc;
-	[SerializeField] private GameObject itemDetailSection;
 
-	[Header("Detail Panel � Files")]
+	[Header("Detail Panel — Notes")]
 	[SerializeField] private TextMeshProUGUI fileBodyText;
 
-	[Header("Detail Panel � Clues")]
+	[Header("Detail Panel — Clues")]
 	[SerializeField] private TextMeshProUGUI clueTitle;
 	[SerializeField] private Button playAudioBtn;
-	private AudioSource _audioSource;
 
-	[Header("Back Buttons")]
-	[SerializeField] private Button filesBackBtn;
-	[SerializeField] private Button cluesBackBtn;
+	// ── Tab order ─────────────────────────────────────────────────
+	private static readonly ItemType[] TAB_ORDER =
+		{ ItemType.Items, ItemType.Notes, ItemType.Clues };
 
 	private ItemData _selected;
 	private ItemType _currentTab = ItemType.Items;
+	private AudioSource _audioSource;
+
+	// ── Lifecycle ─────────────────────────────────────────────────
 
 	private void Awake()
 	{
@@ -46,12 +64,11 @@ public class InventoryUI : MonoBehaviour
 	private void OnEnable()
 	{
 		InventoryManager.Instance.OnInventoryChanged += Refresh;
-		filesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Notes));
-		cluesTabBtn.onClick.AddListener(() => SwitchTab(ItemType.Clues));
+		WireTabRow(itemsPanelTabs);
+		WireTabRow(notesPanelTabs);
+		WireTabRow(cluesPanelTabs);
 		playAudioBtn.onClick.AddListener(OnPlayClicked);
-		SwitchTab(ItemType.Items);
-		filesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Items));
-		cluesBackBtn.onClick.AddListener(() => SwitchTab(ItemType.Items));
+		SwitchTab(_currentTab);
 	}
 
 	private void OnDisable()
@@ -59,34 +76,90 @@ public class InventoryUI : MonoBehaviour
 		if (InventoryManager.Instance != null)
 			InventoryManager.Instance.OnInventoryChanged -= Refresh;
 
-		filesTabBtn.onClick.RemoveAllListeners();
-		cluesTabBtn.onClick.RemoveAllListeners();
+		UnwireTabRow(itemsPanelTabs);
+		UnwireTabRow(notesPanelTabs);
+		UnwireTabRow(cluesPanelTabs);
 		playAudioBtn.onClick.RemoveAllListeners();
-		filesBackBtn.onClick.RemoveAllListeners();
-		cluesBackBtn.onClick.RemoveAllListeners();
 	}
+
+	// ── Tab wiring ────────────────────────────────────────────────
+
+	private void WireTabRow(TabButtonRow row)
+	{
+		row.toItems?.onClick.AddListener(() => SwitchTab(ItemType.Items));
+		row.toNotes?.onClick.AddListener(() => SwitchTab(ItemType.Notes));
+		row.toClues?.onClick.AddListener(() => SwitchTab(ItemType.Clues));
+	}
+
+	private void UnwireTabRow(TabButtonRow row)
+	{
+		row.toItems?.onClick.RemoveAllListeners();
+		row.toNotes?.onClick.RemoveAllListeners();
+		row.toClues?.onClick.RemoveAllListeners();
+	}
+
+	// ── Tab navigation (called by InventoryControl A / E) ────────
+
+	public void NextTab()
+	{
+		int i = System.Array.IndexOf(TAB_ORDER, _currentTab);
+		SwitchTab(TAB_ORDER[(i + 1) % TAB_ORDER.Length]);
+	}
+
+	public void PrevTab()
+	{
+		int i = System.Array.IndexOf(TAB_ORDER, _currentTab);
+		SwitchTab(TAB_ORDER[(i - 1 + TAB_ORDER.Length) % TAB_ORDER.Length]);
+	}
+
+	// ── SwitchTab ─────────────────────────────────────────────────
 
 	public void SwitchTab(ItemType tab)
 	{
 		_currentTab = tab;
+
 		itemsPanel.SetActive(tab == ItemType.Items);
-		filesPanel.SetActive(tab == ItemType.Notes);
+		notesPanel.SetActive(tab == ItemType.Notes);
 		cluesPanel.SetActive(tab == ItemType.Clues);
 
-		// Hide item detail when switching away
+		RefreshTabHighlights();
+
 		if (tab != ItemType.Items)
 		{
 			itemDetailSection.SetActive(false);
 			_selected = null;
 		}
 
-
 		Refresh();
 	}
 
+	// ── Tab button highlights ─────────────────────────────────────
+
+	private void RefreshTabHighlights()
+	{
+		HighlightRow(itemsPanelTabs);
+		HighlightRow(notesPanelTabs);
+		HighlightRow(cluesPanelTabs);
+	}
+
+	private void HighlightRow(TabButtonRow row)
+	{
+		SetButtonHighlight(row.toItems, _currentTab == ItemType.Items);
+		SetButtonHighlight(row.toNotes, _currentTab == ItemType.Notes);
+		SetButtonHighlight(row.toClues, _currentTab == ItemType.Clues);
+	}
+
+	private void SetButtonHighlight(Button btn, bool active)
+	{
+		if (btn == null) return;
+		var img = btn.GetComponent<Image>();
+		if (img != null) img.color = active ? tabActiveColor : tabInactiveColor;
+	}
+
+	// ── Content refresh ───────────────────────────────────────────
+
 	private void Refresh()
 	{
-		// Only handle Items tab � Files/Clues are handled by ScrollListUI
 		if (_currentTab != ItemType.Items) return;
 
 		foreach (Transform child in listContent)
@@ -103,6 +176,8 @@ public class InventoryUI : MonoBehaviour
 		else
 			ClearDetail();
 	}
+
+	// ── Selection ─────────────────────────────────────────────────
 
 	private void OnSlotClicked(ItemData data)
 	{
@@ -142,7 +217,6 @@ public class InventoryUI : MonoBehaviour
 		detailDesc.text = "";
 		fileBodyText.text = "";
 	}
-
 
 	private void OnPlayClicked()
 	{
