@@ -18395,6 +18395,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 695c2a2d5ef97ee4f985d72bbe3cca31, type: 3}
   m_PrefabInstance: {fileID: 494503636}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &494503639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 695c2a2d5ef97ee4f985d72bbe3cca31, type: 3}
+  m_PrefabInstance: {fileID: 494503636}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &502744671
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52956,16 +52961,11 @@ MonoBehaviour:
   minPitch: -60
   maxPitch: 60
   revealObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1938316507}
+  - {fileID: 494503639}
+  - {fileID: 494503639}
   - {fileID: 677783535}
   - {fileID: 494503638}
-  - {fileID: 888548654}
-  - {fileID: 888548654}
   - {fileID: 888548654}
   revealMaterial: {fileID: 2100000, guid: 293bcafeddbc9524095342c1a4f5eadf, type: 2}
   flashlightFlag: flashlight_on
@@ -77006,6 +77006,11 @@ PrefabInstance:
 --- !u!4 &1938316506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4270d1c57320b6746bd3dc42dd728f57, type: 3}
+  m_PrefabInstance: {fileID: 1938316505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1938316507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4270d1c57320b6746bd3dc42dd728f57, type: 3}
   m_PrefabInstance: {fileID: 1938316505}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1946795719
