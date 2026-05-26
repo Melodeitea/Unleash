@@ -37,38 +37,33 @@ public class UsageTarget : MonoBehaviour, IInteractable
 		return hasItem ? $"[E] {unlockedPrompt}" : lockedPrompt;
 	}
 
-    public void Interact(Player player)
-    {
-        if (_used) return;
+	[Header("Audio")]
+	[SerializeField] private AudioSource unlockSFX;
 
-        if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
-        {
-            _used = true;
+	public void Interact(Player player)
+	{
+		if (_used) return;
+		if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
+		{
+			_used = true;
+			unlockSFX?.Play();      // ← once, on unlock only
 
-            if (GameFlags.Instance != null)
-            {
-                GameFlags.Instance.SetFlag("used_" + targetID);
+			if (GameFlags.Instance != null)
+			{
+				GameFlags.Instance.SetFlag("used_" + targetID);
+				foreach (var flag in flagsToSet)
+					if (!string.IsNullOrWhiteSpace(flag))
+						GameFlags.Instance.SetFlag(flag);
+				foreach (var flag in flagsToClear)
+					if (!string.IsNullOrWhiteSpace(flag))
+						GameFlags.Instance.ClearFlag(flag);
+			}
 
-                foreach (var flag in flagsToSet)
-                {
-                    if (!string.IsNullOrWhiteSpace(flag))
-                        GameFlags.Instance.SetFlag(flag);
-                }
-
-                foreach (var flag in flagsToClear)
-                {
-                    if (!string.IsNullOrWhiteSpace(flag))
-                        GameFlags.Instance.ClearFlag(flag);
-                }
-            }
-
-            ActiveItemHolder.Clear();
-
-            onUsed?.Invoke();
-
-            StartCoroutine(PlaySequence());
-        }
-    }
+			ActiveItemHolder.Clear();
+			onUsed?.Invoke();
+			StartCoroutine(PlaySequence());
+		}
+}
 
     private System.Collections.IEnumerator PlaySequence()
 	{

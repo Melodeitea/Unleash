@@ -112,18 +112,20 @@ public class MultiKeyDoor : MonoBehaviour, IInteractable
 
 	// ── Internal logic ────────────────────────────────────────────
 
+	[Header("Audio")]
+	[SerializeField] private AudioSource unlockSFX;
+
 	private void OpenDoor()
 	{
 		_opened = true;
+		unlockSFX?.Play();          // ← once, on unlock only
 
 		if (GameFlags.Instance != null)
 		{
 			GameFlags.Instance.SetFlag(DoorFlag());
-
 			foreach (var flag in flagsToSet)
 				if (!string.IsNullOrWhiteSpace(flag))
 					GameFlags.Instance.SetFlag(flag);
-
 			foreach (var flag in flagsToClear)
 				if (!string.IsNullOrWhiteSpace(flag))
 					GameFlags.Instance.ClearFlag(flag);
