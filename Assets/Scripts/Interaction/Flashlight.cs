@@ -25,7 +25,11 @@ public class Flashlight : MonoBehaviour
     [Tooltip("Flag set while flashlight is ON, cleared when OFF.")]
     [SerializeField] private string flashlightFlag = "flashlight_on";
 
-    bool _isOn;
+	[Header("Audio")]
+	[SerializeField] private AudioSource sfxOn;
+	[SerializeField] private AudioSource sfxOff;
+
+	bool _isOn;
     float _pitch;
     float _yaw;
 
@@ -101,17 +105,20 @@ public class Flashlight : MonoBehaviour
 
     public void Toggle() => SetState(!_isOn);
 
-    public void SetState(bool on)
-    {
-        _isOn = on;
+	public void SetState(bool on)
+	{
+		_isOn = on;
 
-        ApplyLightState();
-        ApplyMaterials();
-        ApplyFlag();
-    }
+		ApplyLightState();
+		ApplyMaterials();
+		ApplyFlag();
 
-    // ── Light ────────────────────────────────────────────────
-    void ApplyLightState()
+		if (_isOn) sfxOn?.Play();
+		else sfxOff?.Play();
+	}
+
+	// ── Light ────────────────────────────────────────────────
+	void ApplyLightState()
     {
         if (spotLight != null)
             spotLight.enabled = _isOn;

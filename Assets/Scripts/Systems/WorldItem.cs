@@ -52,18 +52,18 @@ public class WorldItem : MonoBehaviour, IInteractable
         Pickup();
     }
 
-    private void Pickup()
-    {
-        if (_pickedUp)
-            return;
+	private void Pickup()
+	{
+		if (_pickedUp) return;
+		_pickedUp = true;
 
-        _pickedUp = true;
+		if (itemData.pickupSFX != null)
+			AudioSource.PlayClipAtPoint(itemData.pickupSFX, transform.position);
 
-        GameFlags.Instance?.SetFlag("picked_up_" + itemData.itemID);
+		GameFlags.Instance?.SetFlag("picked_up_" + itemData.itemID);
+		InventoryManager.Instance.AddItem(itemData);
 
-        InventoryManager.Instance.AddItem(itemData);
-
-        if (destroyAfterPickup)
-            Destroy(gameObject);
-    }
+		if (destroyAfterPickup)
+			Destroy(gameObject);
+	}
 }

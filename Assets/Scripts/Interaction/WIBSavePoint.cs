@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using TMPro;
 
@@ -13,11 +13,15 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 	[SerializeField] private float maxIntensity = 5f;
 
 	[Header("Audio")]
-	[SerializeField] private AudioClip saveSFX;
+	[SerializeField] private AudioSource saveSFX;   // assign AudioSource with clip pre-loaded
 
-	[Header("UI (TextMeshPro)")]
+	[Header("UI")]
 	[SerializeField] private TextMeshProUGUI womanNameTMP;
 	[SerializeField] private TextMeshProUGUI saveMessageTMP;
+
+	// ── IInteractable ─────────────────────────────────────────────
+
+	public string GetPrompt() => prompt;
 
 	public void Interact(Player player)
 	{
@@ -28,28 +32,23 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 		}
 
 		SaveAll(player);
+		saveSFX?.Play();                             // ← once, on successful save only
 
-		// UI updates on successful save
-		if (womanNameTMP != null)
-			womanNameTMP.text = "Woman in Black";
-
-		if (saveMessageTMP != null)
-			saveMessageTMP.text = "Sweet child, in time you'll see the light";
-
-		if (wibLight != null)
-			StartCoroutine(PulseRed());
-
-		if (saveSFX != null)
-			AudioManager.Instance.PlaySFX(saveSFX);
+		if (womanNameTMP != null) womanNameTMP.text = "Woman in Black";
+		if (saveMessageTMP != null) saveMessageTMP.text = "Sweet child, in time you'll see the light";
+		if (wibLight != null) StartCoroutine(PulseRed());
 	}
+
+	// ── Save ──────────────────────────────────────────────────────
 
 	private void SaveAll(Player player)
 	{
-		SaveSystem.SavePlayer(player.GetComponent<Player>());
+		SaveSystem.SavePlayer(player);
 		GameFlags.Instance.SaveFlags();
-
 		Debug.Log("[WiBSavePoint] Game saved.");
 	}
+
+	// ── Light pulse ───────────────────────────────────────────────
 
 	private IEnumerator PulseRed()
 	{
@@ -57,7 +56,6 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 		Color originalColor = wibLight.color;
 
 		wibLight.color = Color.red;
-
 		float half = pulseDuration * 0.5f;
 		float t = 0f;
 
@@ -69,7 +67,6 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 		}
 
 		t = 0f;
-
 		while (t < half)
 		{
 			t += Time.deltaTime;
@@ -79,10 +76,5 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 
 		wibLight.intensity = originalIntensity;
 		wibLight.color = originalColor;
-	}
-
-	public string GetPrompt()
-	{
-		return prompt;
 	}
 }

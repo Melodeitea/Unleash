@@ -18,7 +18,10 @@ public class ChapterTransitionUI : MonoBehaviour
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private float titleHoldDuration = 2.5f;
 
-    private void Awake()
+	[Header("Audio")]
+	[SerializeField] private AudioSource chapterSFX;
+
+	private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
@@ -75,24 +78,28 @@ public class ChapterTransitionUI : MonoBehaviour
         StartCoroutine(IntroRoutine());
     }
 
-    // ── Show chapter titles then fade in ─────────────────────────
-    private IEnumerator IntroRoutine()
-    {
-        var chapter = ChapterManager.Instance.CurrentChapter;
+	// ── Show chapter titles then fade in ─────────────────────────
+	private IEnumerator IntroRoutine()
+	{
+		var chapter = ChapterManager.Instance.CurrentChapter;
 
-        chapterNumberText.text = $"Chapter {chapter.chapterNumber}";
-        chapterTimeText.text = chapter.chapterTime;
-        chapterNameText.text = chapter.displayName;
+		chapterNumberText.text = $"Chapter {chapter.chapterNumber}";
+		chapterTimeText.text = chapter.chapterTime;
+		chapterNameText.text = chapter.displayName;
 
-        SetTitlesVisible(true);
-        yield return new WaitForSeconds(titleHoldDuration);
-        SetTitlesVisible(false);
+		SetTitlesVisible(true);
+		chapterSFX?.Play();
 
-        yield return StartCoroutine(Fade(1f, 0f));
-    }
+		yield return new WaitForSeconds(titleHoldDuration);
 
-    // ── Helpers ───────────────────────────────────────────────────
-    private IEnumerator Fade(float from, float to)
+		SetTitlesVisible(false);
+		chapterSFX?.Stop();
+
+		yield return StartCoroutine(Fade(1f, 0f));
+	}
+
+	// ── Helpers ───────────────────────────────────────────────────
+	private IEnumerator Fade(float from, float to)
     {
         float t = 0f;
         while (t < fadeDuration)

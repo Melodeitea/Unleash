@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 5818881114037227640}
   - component: {fileID: 4686555655744978103}
   - component: {fileID: 1034740142806145998}
+  - component: {fileID: 4055823412165391835}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -353,6 +354,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4055823412165391835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455345527330494571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &539906093456966477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,7 +1191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20.63379, y: 0}
+  m_AnchoredPosition: {x: -20.63385, y: 0}
   m_SizeDelta: {x: -329.8752, y: -2013.4692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3943520861336749390
@@ -1691,6 +1705,7 @@ GameObject:
   - component: {fileID: 3364689157217440314}
   - component: {fileID: 1090481946702149484}
   - component: {fileID: 3138611509485608384}
+  - component: {fileID: 3559766564345092238}
   m_Layer: 5
   m_Name: quit game button
   m_TagString: Untagged
@@ -1812,6 +1827,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3559766564345092238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198589839144429730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &2449931237727335048
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,6 +2064,7 @@ GameObject:
   - component: {fileID: 2087514327181835656}
   - component: {fileID: 1311678512964110014}
   - component: {fileID: 3324463594185583671}
+  - component: {fileID: 3744645724918513177}
   m_Layer: 5
   m_Name: Button (6)
   m_TagString: Untagged
@@ -2145,6 +2174,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3744645724918513177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3620805944656137467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &3691867186602572912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2157,6 +2199,7 @@ GameObject:
   - component: {fileID: 2494444899904571956}
   - component: {fileID: 8987340869535963254}
   - component: {fileID: 3901592585326594130}
+  - component: {fileID: 676342060085947069}
   m_Layer: 5
   m_Name: Button (9)
   m_TagString: Untagged
@@ -2266,6 +2309,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &676342060085947069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691867186602572912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &3838711989394118629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,6 +2471,7 @@ GameObject:
   - component: {fileID: 5551424384191747851}
   - component: {fileID: 916235746343257415}
   - component: {fileID: 1595956112886791393}
+  - component: {fileID: 5127338746083141694}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -2524,6 +2581,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5127338746083141694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935186160113573773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &4490112389525935597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,6 +3460,7 @@ GameObject:
   - component: {fileID: 6811175229128821840}
   - component: {fileID: 5130860797366146405}
   - component: {fileID: 2137895451071696956}
+  - component: {fileID: 6038733717412518839}
   m_Layer: 5
   m_Name: Button (7)
   m_TagString: Untagged
@@ -3499,6 +3570,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6038733717412518839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739945204329312874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &6154727001526196745
 GameObject:
   m_ObjectHideFlags: 0
@@ -3511,6 +3595,7 @@ GameObject:
   - component: {fileID: 958387633173060299}
   - component: {fileID: 7829669416653967743}
   - component: {fileID: 739481090548271011}
+  - component: {fileID: 38996004014445120}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -3620,6 +3705,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &38996004014445120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154727001526196745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &6507954534055263384
 GameObject:
   m_ObjectHideFlags: 0
@@ -3632,6 +3730,7 @@ GameObject:
   - component: {fileID: 9193765246646785745}
   - component: {fileID: 2947303572614035523}
   - component: {fileID: 1423097010200893320}
+  - component: {fileID: 7447915101984160670}
   m_Layer: 5
   m_Name: Button (4)
   m_TagString: Untagged
@@ -3741,6 +3840,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7447915101984160670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507954534055263384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &6654347348433043710
 GameObject:
   m_ObjectHideFlags: 0
@@ -4443,6 +4555,7 @@ MonoBehaviour:
   chapterNameText: {fileID: 4215252659069980062}
   fadeDuration: 1
   titleHoldDuration: 2.5
+  chapterSFX: {fileID: 0}
 --- !u!1 &7188937387946855064
 GameObject:
   m_ObjectHideFlags: 0
@@ -4919,6 +5032,7 @@ GameObject:
   - component: {fileID: 4260911590065108382}
   - component: {fileID: 134347609807348017}
   - component: {fileID: 4867765051982564204}
+  - component: {fileID: 3452838352837429087}
   m_Layer: 5
   m_Name: Button (3)
   m_TagString: Untagged
@@ -5028,6 +5142,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3452838352837429087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748335725840179559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &7993835736864749336
 GameObject:
   m_ObjectHideFlags: 0
@@ -5314,6 +5441,7 @@ GameObject:
   - component: {fileID: 5224885826675625235}
   - component: {fileID: 9054691518024784635}
   - component: {fileID: 7416835980226510108}
+  - component: {fileID: 7713382746912211004}
   m_Layer: 5
   m_Name: Button (5)
   m_TagString: Untagged
@@ -5423,6 +5551,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7713382746912211004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043676067669336209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &8072474463632076190
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,6 +5788,7 @@ GameObject:
   - component: {fileID: 2864928405831452333}
   - component: {fileID: 7261276086310407718}
   - component: {fileID: 6434550287455706895}
+  - component: {fileID: 5318443310454490133}
   m_Layer: 5
   m_Name: Button (8)
   m_TagString: Untagged
@@ -5756,6 +5898,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5318443310454490133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8187483416902985729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &8238807852228316224
 GameObject:
   m_ObjectHideFlags: 0
@@ -5843,6 +5998,7 @@ GameObject:
   - component: {fileID: 7421103146038736741}
   - component: {fileID: 4750590467422191666}
   - component: {fileID: 5337583254557521544}
+  - component: {fileID: 6166462847458924071}
   m_Layer: 5
   m_Name: main menu button
   m_TagString: Untagged
@@ -5964,6 +6120,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6166462847458924071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630736919175388376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &8657063709788353846
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,6 +6143,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2657671071318337390}
   - component: {fileID: 9201630898134789577}
+  - component: {fileID: 1435627315892847366}
+  - component: {fileID: 5628087360931495021}
   m_Layer: 5
   m_Name: ButtonsGrid
   m_TagString: Untagged
@@ -6034,6 +6205,63 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 3
+--- !u!114 &1435627315892847366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657063709788353846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5628087360931495021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657063709788353846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1 &8693993657040846284
 GameObject:
   m_ObjectHideFlags: 0
@@ -6457,6 +6685,7 @@ GameObject:
   - component: {fileID: 6457123845227192095}
   - component: {fileID: 4248940756141568036}
   - component: {fileID: 2461137762807071997}
+  - component: {fileID: 3123728925967390878}
   m_Layer: 5
   m_Name: resume button
   m_TagString: Untagged
@@ -6578,6 +6807,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3123728925967390878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139156657824669614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!1001 &1621132649559101371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7257,10 +7499,430 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2693107875189595462, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2822360316117331181}
+    - targetCorrespondingSourceObject: {fileID: 3961828253651282497, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 113320649429298771}
+    - targetCorrespondingSourceObject: {fileID: 159372201479236037, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4713401074322777033}
+    - targetCorrespondingSourceObject: {fileID: 4599066555573114267, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8878785300421275827}
+    - targetCorrespondingSourceObject: {fileID: 2707550935301880878, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6276132600779949592}
+    - targetCorrespondingSourceObject: {fileID: 6947547940804345928, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6705854858945666061}
+    - targetCorrespondingSourceObject: {fileID: 8523276182642911858, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1379908019773830002}
+    - targetCorrespondingSourceObject: {fileID: 4509126592743273522, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5702236542773275889}
+    - targetCorrespondingSourceObject: {fileID: 4995795979592645871, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2710860739938828760}
+    - targetCorrespondingSourceObject: {fileID: 3334702753963389647, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3686821705382968702}
+    - targetCorrespondingSourceObject: {fileID: 2194227339865925371, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7028649299108618020}
+    - targetCorrespondingSourceObject: {fileID: 6440094645891683458, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3937396390507371584}
+    - targetCorrespondingSourceObject: {fileID: 7070892538137050984, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6602231049681297792}
+    - targetCorrespondingSourceObject: {fileID: 5423559791455482731, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5509765775539741141}
+    - targetCorrespondingSourceObject: {fileID: 532357436663326460, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4876560291242032811}
+    - targetCorrespondingSourceObject: {fileID: 7969551158016722741, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1565446596961908233}
+    - targetCorrespondingSourceObject: {fileID: 9101384567643140788, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7919953310755130467}
+    - targetCorrespondingSourceObject: {fileID: 1986680141213254224, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6122250218627108042}
+    - targetCorrespondingSourceObject: {fileID: 3393242176094944314, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2594410904325618703}
+    - targetCorrespondingSourceObject: {fileID: 7788920361122461459, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2449326636279479472}
   m_SourcePrefab: {fileID: 100100000, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+--- !u!1 &579871084714305856 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2194227339865925371, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7028649299108618020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579871084714305856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &1003582116913794539 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1986680141213254224, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6122250218627108042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003582116913794539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &1232926139431315783 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 532357436663326460, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4876560291242032811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232926139431315783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &1461804705578477182 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159372201479236037, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4713401074322777033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461804705578477182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &2343092540783175162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3961828253651282497, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &113320649429298771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343092540783175162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &2948953067665030025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4509126592743273522, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5702236542773275889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2948953067665030025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &3002846676195121696 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4599066555573114267, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8878785300421275827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3002846676195121696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &3684152123516883709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2693107875189595462, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2822360316117331181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3684152123516883709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &3741449729690825621 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2707550935301880878, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6276132600779949592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741449729690825621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &4051082365496409460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3334702753963389647, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3686821705382968702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051082365496409460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &4136657729861268353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3393242176094944314, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2594410904325618703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4136657729861268353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
 --- !u!224 &4360236095255353637 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3097843425526552222, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
   m_PrefabInstance: {fileID: 1621132649559101371}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5701737979232836409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6440094645891683458, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3937396390507371584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5701737979232836409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &5993106342723957588 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4995795979592645871, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2710860739938828760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5993106342723957588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &6718017605271665872 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5423559791455482731, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5509765775539741141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6718017605271665872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &6933196010067355081 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8523276182642911858, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1379908019773830002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933196010067355081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &7508053105839537423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9101384567643140788, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7919953310755130467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7508053105839537423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &8385615382255005907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7070892538137050984, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6602231049681297792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385615382255005907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &8508933041587081203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6947547940804345928, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6705854858945666061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8508933041587081203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &8711900135482837134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7969551158016722741, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1565446596961908233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711900135482837134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}
+--- !u!1 &8820482677741254824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7788920361122461459, guid: f8263e59d3bdf26488451a70ea482b0f, type: 3}
+  m_PrefabInstance: {fileID: 1621132649559101371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2449326636279479472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8820482677741254824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb98256ad531e0040a54836f12978daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  sfx: {fileID: 0}

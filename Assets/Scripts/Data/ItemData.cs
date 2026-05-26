@@ -23,4 +23,7 @@ public class ItemData : ScriptableObject
 	[Header("Usage")]
 	public string usageTargetID;    // ID of world object this item unlocks
 	public bool consumeOnUse = true;
+
+	[Header("Audio")]
+	public AudioClip pickupSFX;
 }
