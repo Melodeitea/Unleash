@@ -3349,6 +3349,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 986918453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &108152778 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 820801088406169616, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 286606739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &108152779 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8993531409485348020, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 286606739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &108152780 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5696522724067483235, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 286606739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &108152781 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9147335988957115846, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 286606739}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &113757251
 GameObject:
   m_ObjectHideFlags: 0
@@ -33324,13 +33344,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843865143}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.775}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.55089, y: -5.36043, z: -15.804651}
   m_LocalScale: {x: 0.66776, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1599981241}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1964380191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &845397875
 PrefabInstance:
@@ -37903,10 +37923,10 @@ MonoBehaviour:
   cluesTabImage: {fileID: 647189828}
   tabActiveColor: {r: 0.6886792, g: 0, b: 0, a: 1}
   tabInactiveColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 0.4}
-  sfxOpen: {fileID: 2115428244}
-  sfxClose: {fileID: 106076745}
-  sfxTabSwitch: {fileID: 106076745}
-  sfxItemSelect: {fileID: 106076745}
+  sfxOpen: {fileID: 108152781}
+  sfxClose: {fileID: 108152780}
+  sfxTabSwitch: {fileID: 108152778}
+  sfxItemSelect: {fileID: 108152779}
   inventoryUI: {fileID: 369583467}
 --- !u!4 &986918453
 Transform:
@@ -41436,6 +41456,7 @@ MonoBehaviour:
   flagsToSet:
   - DrawerOpen
   flagsToClear: []
+  unlockSFX: {fileID: 0}
 --- !u!1 &1052363772
 GameObject:
   m_ObjectHideFlags: 0
@@ -52969,6 +52990,8 @@ MonoBehaviour:
   - {fileID: 888548654}
   revealMaterial: {fileID: 2100000, guid: 293bcafeddbc9524095342c1a4f5eadf, type: 2}
   flashlightFlag: flashlight_on
+  sfxOn: {fileID: 0}
+  sfxOff: {fileID: 0}
 --- !u!1 &1333232727
 GameObject:
   m_ObjectHideFlags: 0
@@ -57076,12 +57099,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405748575}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.775}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.55089, y: -5.36043, z: -15.804651}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1964380191}
   m_LocalEulerAnglesHint: {x: 8.097, y: 0, z: 0}
 --- !u!1001 &1406952896
 PrefabInstance:
@@ -63443,6 +63466,7 @@ MonoBehaviour:
   onOpened:
     m_PersistentCalls:
       m_Calls: []
+  unlockSFX: {fileID: 0}
 --- !u!1001 &1569501806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78624,6 +78648,8 @@ Transform:
   - {fileID: 861095299}
   - {fileID: 1667984317}
   - {fileID: 1457034594}
+  - {fileID: 1405748580}
+  - {fileID: 843865146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1965375841
@@ -87494,8 +87520,6 @@ SceneRoots:
   - {fileID: 512983448}
   - {fileID: 986918453}
   - {fileID: 1964380191}
-  - {fileID: 1405748580}
-  - {fileID: 843865146}
   - {fileID: 347791706}
   - {fileID: 1106721129}
   - {fileID: 782020862}

@@ -37320,6 +37320,7 @@ MonoBehaviour:
   onDoorOpened:
     m_PersistentCalls:
       m_Calls: []
+  unlockSFX: {fileID: 0}
 --- !u!95 &795692683
 Animator:
   serializedVersion: 7
@@ -37379,6 +37380,7 @@ MonoBehaviour:
   onDoorOpened:
     m_PersistentCalls:
       m_Calls: []
+  unlockSFX: {fileID: 0}
 --- !u!114 &795692685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63789,6 +63791,8 @@ MonoBehaviour:
   - {fileID: 962997131}
   revealMaterial: {fileID: 2100000, guid: 293bcafeddbc9524095342c1a4f5eadf, type: 2}
   flashlightFlag: flashlight_on
+  sfxOn: {fileID: 0}
+  sfxOff: {fileID: 0}
 --- !u!1 &1424020187
 GameObject:
   m_ObjectHideFlags: 0
@@ -74924,6 +74928,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ---------Canvas--------------
       objectReference: {fileID: 0}
+    - target: {fileID: 2643768354644189377, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 7.084717
+      objectReference: {fileID: 0}
     - target: {fileID: 8207273996291006783, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -75003,6 +75011,10 @@ PrefabInstance:
     - target: {fileID: 8207273996291006783, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295067182802920599, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -20.63379
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -81039,6 +81051,26 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!82 &1883413724 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 820801088406169616, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 1741050383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1883413725 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8993531409485348020, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 1741050383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1883413726 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5696522724067483235, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 1741050383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1883413727 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9147335988957115846, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 1741050383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1886582666
 GameObject:
   m_ObjectHideFlags: 0
@@ -91048,6 +91080,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxOpen
+      value: 
+      objectReference: {fileID: 1883413727}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxClose
+      value: 
+      objectReference: {fileID: 1883413726}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
       propertyPath: cluesPanel
       value: 
       objectReference: {fileID: 1741050392}
@@ -91064,6 +91104,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1741050387}
     - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxTabSwitch
+      value: 
+      objectReference: {fileID: 1883413724}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
       propertyPath: cluesTabImage
       value: 
       objectReference: {fileID: 1741050388}
@@ -91079,6 +91123,10 @@ PrefabInstance:
       propertyPath: notesTabImage
       value: 
       objectReference: {fileID: 1741050389}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxItemSelect
+      value: 
+      objectReference: {fileID: 1883413725}
     - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
       propertyPath: inventoryScreen
       value: 
@@ -91128,7 +91176,9 @@ PrefabInstance:
       value: MenuControl
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2843456904705567029, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+    - {fileID: 5423021981245129105, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}

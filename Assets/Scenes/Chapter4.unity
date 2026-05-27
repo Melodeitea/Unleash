@@ -32206,6 +32206,26 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 3663368999741172831, guid: a45a6d689d3e9b043a28397f7921d780, type: 3}
   m_PrefabInstance: {fileID: 2147424298}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &762394412 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 820801088406169616, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 886801148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &762394413 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8993531409485348020, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 886801148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &762394414 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5696522724067483235, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 886801148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &762394415 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9147335988957115846, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 886801148}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &765388626
 GameObject:
   m_ObjectHideFlags: 0
@@ -39198,6 +39218,8 @@ MonoBehaviour:
   - {fileID: 5903335623100558431}
   revealMaterial: {fileID: 2100000, guid: 293bcafeddbc9524095342c1a4f5eadf, type: 2}
   flashlightFlag: flashlight_on
+  sfxOn: {fileID: 0}
+  sfxOff: {fileID: 0}
 --- !u!1 &942633904
 GameObject:
   m_ObjectHideFlags: 0
@@ -66111,6 +66133,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   puzzleID: 
+  unlockSFX: {fileID: 0}
 --- !u!43 &1499068709
 Mesh:
   m_ObjectHideFlags: 0
@@ -85236,6 +85259,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxOpen
+      value: 
+      objectReference: {fileID: 762394415}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxClose
+      value: 
+      objectReference: {fileID: 762394414}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
       propertyPath: cluesPanel
       value: 
       objectReference: {fileID: 886801154}
@@ -85252,6 +85283,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 58729895}
     - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxTabSwitch
+      value: 
+      objectReference: {fileID: 762394412}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
       propertyPath: cluesTabImage
       value: 
       objectReference: {fileID: 886801150}
@@ -85267,6 +85302,10 @@ PrefabInstance:
       propertyPath: notesTabImage
       value: 
       objectReference: {fileID: 886801151}
+    - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+      propertyPath: sfxItemSelect
+      value: 
+      objectReference: {fileID: 762394413}
     - target: {fileID: 2759761159368016809, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
       propertyPath: inventoryScreen
       value: 
@@ -85316,7 +85355,9 @@ PrefabInstance:
       value: MenuControl
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2843456904705567029, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
+    - {fileID: 5423021981245129105, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3da1c5300c68f8b4abe0a70f26355526, type: 3}
@@ -85670,6 +85711,7 @@ MonoBehaviour:
   onOpened:
     m_PersistentCalls:
       m_Calls: []
+  unlockSFX: {fileID: 0}
 --- !u!1001 &1962649143
 PrefabInstance:
   m_ObjectHideFlags: 0
