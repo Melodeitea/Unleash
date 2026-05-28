@@ -42,4 +42,9 @@ public class ChapterManager : MonoBehaviour
 		currentChapterIndex++;
 		Debug.Log($"[ChapterManager] Advanced to chapter index {currentChapterIndex}.");
 	}
+
+	public void ResetToFirstChapter()
+	{
+		currentChapterIndex = 0;
+	}
 }
