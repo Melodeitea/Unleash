@@ -56,14 +56,9 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 		else lockUI.ClearInput();
 	}
 
-	[Header("Audio")]
-	[SerializeField] private AudioSource unlockSFX;
-
 	private void Unlock()
 	{
 		_unlocked = true;
-		unlockSFX?.Play();          // ← once, on unlock only
-
 		GameFlags.Instance?.SetFlag("unlocked_" + puzzleID);
 		lockUI.LockInput();
 		onUnlocked?.Invoke();

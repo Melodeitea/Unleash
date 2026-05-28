@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class OpenSimpleDoor : MonoBehaviour, IInteractable
 {
@@ -6,9 +6,6 @@ public class OpenSimpleDoor : MonoBehaviour, IInteractable
 	[SerializeField] private string prompt = "Open door";
 	[SerializeField] private Animator doorAnimator;
 	[SerializeField] private UnityEngine.Events.UnityEvent onOpened;
-
-	[Header("Audio")]
-	[SerializeField] private AudioSource unlockSFX;
 
 	private bool _opened = false;
 
@@ -33,9 +30,8 @@ public class OpenSimpleDoor : MonoBehaviour, IInteractable
 	public void Interact(Player player)
 	{
 		if (_opened) return;
-		_opened = true;
-		unlockSFX?.Play();
 
+		_opened = true;
 		GameFlags.Instance?.SetFlag("opened_" + doorID);
 
 		if (doorAnimator != null)
