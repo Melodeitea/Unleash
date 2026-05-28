@@ -13,6 +13,9 @@ public class UsageTarget : MonoBehaviour, IInteractable
     [SerializeField] private string[] flagsToSet;
     [SerializeField] private string[] flagsToClear;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource unlockSFX;
+
     private bool _used = false;
 
 	private void Start()
@@ -40,32 +43,24 @@ public class UsageTarget : MonoBehaviour, IInteractable
     public void Interact(Player player)
     {
         if (_used) return;
-
         if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
         {
             _used = true;
+            unlockSFX?.Play();      // ← once, on unlock only
 
             if (GameFlags.Instance != null)
             {
                 GameFlags.Instance.SetFlag("used_" + targetID);
-
                 foreach (var flag in flagsToSet)
-                {
                     if (!string.IsNullOrWhiteSpace(flag))
                         GameFlags.Instance.SetFlag(flag);
-                }
-
                 foreach (var flag in flagsToClear)
-                {
                     if (!string.IsNullOrWhiteSpace(flag))
                         GameFlags.Instance.ClearFlag(flag);
-                }
             }
 
             ActiveItemHolder.Clear();
-
             onUsed?.Invoke();
-
             StartCoroutine(PlaySequence());
         }
     }

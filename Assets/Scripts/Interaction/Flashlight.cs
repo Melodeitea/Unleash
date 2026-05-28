@@ -40,6 +40,7 @@ public class Flashlight : MonoBehaviour
     {
         public Renderer renderer;
         public Material[] originalMaterials;
+        public int originalLayer;
     }
 
     readonly List<CachedRenderer> _cachedRenderers = new();
@@ -98,6 +99,11 @@ public class Flashlight : MonoBehaviour
                 {
                     renderer = rend,
                     originalMaterials = rend.sharedMaterials
+                }); _cachedRenderers.Add(new CachedRenderer
+                {
+                    renderer = rend,
+                    originalMaterials = rend.sharedMaterials,
+                    originalLayer = rend.gameObject.layer
                 });
             }
         }
@@ -141,10 +147,16 @@ public class Flashlight : MonoBehaviour
                     mats[i] = revealMaterial;
 
                 entry.renderer.sharedMaterials = mats;
+
+                // 👉 NEW: move to Red layer
+                entry.renderer.gameObject.layer = LayerMask.NameToLayer("Red");
             }
             else
             {
                 entry.renderer.sharedMaterials = entry.originalMaterials;
+
+                // 👉 restore original layer
+                entry.renderer.gameObject.layer = entry.originalLayer;
             }
         }
     }

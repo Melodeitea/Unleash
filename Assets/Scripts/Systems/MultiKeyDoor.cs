@@ -32,7 +32,10 @@ public class MultiKeyDoor : MonoBehaviour, IInteractable
 	[SerializeField] private UnityEvent onAllKeysInserted;
 	[SerializeField] private UnityEvent onDoorOpened;
 
-	private bool _opened = false;
+    [Header("Audio")]
+    [SerializeField] private AudioSource unlockSFX;
+
+    private bool _opened = false;
 
 	// ── Lifecycle ─────────────────────────────────────────────────
 
@@ -110,34 +113,33 @@ public class MultiKeyDoor : MonoBehaviour, IInteractable
 		}
 	}
 
-	// ── Internal logic ────────────────────────────────────────────
+    // ── Internal logic ────────────────────────────────────────────
 
-	private void OpenDoor()
-	{
-		_opened = true;
+    private void OpenDoor()
+    {
+        _opened = true;
+        unlockSFX?.Play();          // ← once, on unlock only
 
-		if (GameFlags.Instance != null)
-		{
-			GameFlags.Instance.SetFlag(DoorFlag());
+        if (GameFlags.Instance != null)
+        {
+            GameFlags.Instance.SetFlag(DoorFlag());
+            foreach (var flag in flagsToSet)
+                if (!string.IsNullOrWhiteSpace(flag))
+                    GameFlags.Instance.SetFlag(flag);
+            foreach (var flag in flagsToClear)
+                if (!string.IsNullOrWhiteSpace(flag))
+                    GameFlags.Instance.ClearFlag(flag);
+        }
 
-			foreach (var flag in flagsToSet)
-				if (!string.IsNullOrWhiteSpace(flag))
-					GameFlags.Instance.SetFlag(flag);
+        onDoorOpened?.Invoke();
 
-			foreach (var flag in flagsToClear)
-				if (!string.IsNullOrWhiteSpace(flag))
-					GameFlags.Instance.ClearFlag(flag);
-		}
+        if (doorAnimator != null)
+            doorAnimator.enabled = true;
+        else
+            Debug.LogWarning($"MultiKeyDoor '{doorID}': no door Animator assigned.");
+    }
 
-		onDoorOpened?.Invoke();
-
-		if (doorAnimator != null)
-			doorAnimator.enabled = true;
-		else
-			Debug.LogWarning($"MultiKeyDoor '{doorID}': no door Animator assigned.");
-	}
-
-	private IEnumerator OpenAfterDelay()
+    private IEnumerator OpenAfterDelay()
 	{
 		float longestSlotAnim = 0f;
 		foreach (var slot in slots)

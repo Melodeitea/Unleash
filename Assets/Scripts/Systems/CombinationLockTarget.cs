@@ -11,7 +11,10 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 	[SerializeField] private UnityEvent onUnlocked;
 	[SerializeField] private string puzzleID;
 
-	private bool _unlocked = false;
+    [Header("Audio")]
+    [SerializeField] private AudioSource unlockSFX;
+
+    private bool _unlocked = false;
 	private bool _isOpen = false;
 
 	private void Start()
@@ -56,17 +59,19 @@ public class CombinationLockTarget : MonoBehaviour, IInteractable
 		else lockUI.ClearInput();
 	}
 
-	private void Unlock()
-	{
-		_unlocked = true;
-		GameFlags.Instance?.SetFlag("unlocked_" + puzzleID);
-		lockUI.LockInput();
-		onUnlocked?.Invoke();
-		lockUI.PlaySuccessAndExit(OnPlayerExit);
-		StartCoroutine(PlaySequence());
-	}
+    private void Unlock()
+    {
+        _unlocked = true;
+        unlockSFX?.Play();          // ← once, on unlock only
 
-	private System.Collections.IEnumerator PlaySequence()
+        GameFlags.Instance?.SetFlag("unlocked_" + puzzleID);
+        lockUI.LockInput();
+        onUnlocked?.Invoke();
+        lockUI.PlaySuccessAndExit(OnPlayerExit);
+        StartCoroutine(PlaySequence());
+    }
+
+    private System.Collections.IEnumerator PlaySequence()
 	{
 		// 1. Play lock anim and wait for it
 		if (lockAnimator != null)
