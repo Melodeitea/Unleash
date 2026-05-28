@@ -394,6 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165436157}
   - component: {fileID: 165436156}
+  - component: {fileID: 165436158}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -432,6 +433,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &165436158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165436155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4579b48ae0ce09d4bb08f6b9cf38be79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterManager
+  chapters:
+  - {fileID: 11400000, guid: 004f78434538b1e4abd3b2e4c0c054c8, type: 2}
+  - {fileID: 11400000, guid: 4f43a221de44793479b1cda70f319f46, type: 2}
+  - {fileID: 11400000, guid: 938d14dd44bd3e448b05251840728751, type: 2}
+  - {fileID: 11400000, guid: 755c7813b05215d40ad059792e2c33ce, type: 2}
+  - {fileID: 11400000, guid: f69a196ddf031ad46995ef645dcf0f30, type: 2}
+  - {fileID: 11400000, guid: 6217ee8791bce49428281c1170cd97d8, type: 2}
+  currentChapterIndex: 0
 --- !u!1 &260515136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,8 +1922,8 @@ Camera:
   m_GameObject: {fileID: 1542742119}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
