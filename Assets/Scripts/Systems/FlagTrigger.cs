@@ -1,30 +1,29 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class FlagTrigger : MonoBehaviour, IInteractable
 {
 	[Header("Prompt")]
 	[SerializeField] private string prompt = "Examine";
-	[SerializeField] private string usedPrompt = "";          // empty = hide after use
+	[SerializeField] private string usedPrompt = ""; // empty = hide after use
 
 	[Header("Behaviour")]
 	[SerializeField] private bool triggerOnce = true;
 
 	[Header("Flags")]
-	[SerializeField] private string selfFlag = "";            // auto-set on use (like "used_" + id)
+	[SerializeField] private string selfFlag = "";
 	[SerializeField] private string[] flagsToSet;
 	[SerializeField] private string[] flagsToClear;
-	[SerializeField] private string requiredFlag = "";        // optional gate
-	[SerializeField] private string lockedPrompt = "";        // shown when gate is unmet
+	[SerializeField] private string requiredFlag = "";
+	[SerializeField] private string lockedPrompt = "";
 
 	[Header("Events")]
 	[SerializeField] private UnityEvent onTriggered;
 
-	private bool _used = false;
+	private bool _used;
 
 	private void Start()
 	{
-		// Restore state from flags on load
 		if (!string.IsNullOrWhiteSpace(selfFlag)
 			&& GameFlags.Instance != null
 			&& GameFlags.Instance.GetFlag(selfFlag))
@@ -33,10 +32,28 @@ public class FlagTrigger : MonoBehaviour, IInteractable
 		}
 	}
 
+	// 🔥 RULE: null/empty = DO NOT SHOW PROMPT UI
 	public string GetPrompt()
 	{
-		if (_used) return usedPrompt;
-		if (!IsGateSatisfied()) return lockedPrompt;
+		if (_used)
+		{
+			if (string.IsNullOrWhiteSpace(usedPrompt))
+				return null;
+
+			return usedPrompt;
+		}
+
+		if (!IsGateSatisfied())
+		{
+			if (string.IsNullOrWhiteSpace(lockedPrompt))
+				return null;
+
+			return lockedPrompt;
+		}
+
+		if (string.IsNullOrWhiteSpace(prompt))
+			return null;
+
 		return prompt;
 	}
 
@@ -45,20 +62,27 @@ public class FlagTrigger : MonoBehaviour, IInteractable
 		if (triggerOnce && _used) return;
 		if (!IsGateSatisfied()) return;
 
-		if (triggerOnce) _used = true;
+		if (triggerOnce)
+			_used = true;
 
 		if (GameFlags.Instance != null)
 		{
 			if (!string.IsNullOrWhiteSpace(selfFlag))
 				GameFlags.Instance.SetFlag(selfFlag);
 
-			foreach (var flag in flagsToSet)
-				if (!string.IsNullOrWhiteSpace(flag))
-					GameFlags.Instance.SetFlag(flag);
+			if (flagsToSet != null)
+			{
+				foreach (var flag in flagsToSet)
+					if (!string.IsNullOrWhiteSpace(flag))
+						GameFlags.Instance.SetFlag(flag);
+			}
 
-			foreach (var flag in flagsToClear)
-				if (!string.IsNullOrWhiteSpace(flag))
-					GameFlags.Instance.ClearFlag(flag);
+			if (flagsToClear != null)
+			{
+				foreach (var flag in flagsToClear)
+					if (!string.IsNullOrWhiteSpace(flag))
+						GameFlags.Instance.ClearFlag(flag);
+			}
 		}
 
 		onTriggered?.Invoke();
@@ -66,8 +90,12 @@ public class FlagTrigger : MonoBehaviour, IInteractable
 
 	private bool IsGateSatisfied()
 	{
-		if (string.IsNullOrWhiteSpace(requiredFlag)) return true;
-		if (GameFlags.Instance == null) return false;
+		if (string.IsNullOrWhiteSpace(requiredFlag))
+			return true;
+
+		if (GameFlags.Instance == null)
+			return false;
+
 		return GameFlags.Instance.GetFlag(requiredFlag);
 	}
 }

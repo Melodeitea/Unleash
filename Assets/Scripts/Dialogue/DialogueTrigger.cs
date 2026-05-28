@@ -3,48 +3,59 @@ using UnityEngine.Events;
 
 public class DialogueTrigger : MonoBehaviour, IInteractable
 {
-    [SerializeField] private string prompt = "Talk";
-    [SerializeField] private DialogueSequence sequence;
+	[SerializeField] private string prompt = "Talk";
+	[SerializeField] private DialogueSequence sequence;
 
-    [Header("Flag Gate")]
-    [Tooltip("When true, the flag below must be active to allow interaction.")]
-    [SerializeField] private bool requireFlag = false;
-    [SerializeField] private string requiredFlag = "flashlight_on";
-    [Tooltip("Prompt shown when the flag gate blocks interaction. Leave empty to show nothing.")]
-    [SerializeField] private string lockedPrompt = "";
+	[Header("Flag Gate")]
+	[SerializeField] private bool requireFlag = false;
+	[SerializeField] private string requiredFlag = "flashlight_on";
+	[SerializeField] private string lockedPrompt = "";
 
-    [Header("Events")]
-    [SerializeField] private UnityEvent onSequenceComplete;
+	[Header("Events")]
+	[SerializeField] private UnityEvent onSequenceComplete;
 
-    // ── IInteractable ────────────────────────────────────────
+	// 🔥 cache so we don't spam checks every frame in UI systems
+	private bool isConsumed => sequence != null && sequence.triggerOnce && sequence.hasPlayed;
 
-    public void Interact(Player player)
-    {
-        if (!IsFlagSatisfied()) return;
+	public void Interact(Player player)
+	{
+		// ❌ Block forever if already used (triggerOnce)
+		if (isConsumed) return;
 
-        if (sequence != null)
-            DialogueManager.Instance.PlaySequence(sequence, OnComplete);
-    }
+		if (!IsFlagSatisfied()) return;
 
-    public string GetPrompt()
-    {
-        if (!IsFlagSatisfied())
-            return lockedPrompt; // Empty string hides the prompt in most interaction UIs
+		if (sequence != null)
+			DialogueManager.Instance.PlaySequence(sequence, OnComplete);
+	}
 
-        return prompt;
-    }
+	public string GetPrompt()
+	{
+		// ❌ DO NOT show prompt if already consumed
+		if (isConsumed)
+			return string.Empty;
 
-    // ── Internals ────────────────────────────────────────────
+		if (!IsFlagSatisfied())
+			return lockedPrompt;
 
-    private bool IsFlagSatisfied()
-    {
-        if (!requireFlag) return true;
-        if (GameFlags.Instance == null) return false;
-        return GameFlags.Instance.GetFlag(requiredFlag);
-    }
+		return prompt;
+	}
 
-    private void OnComplete()
-    {
-        onSequenceComplete?.Invoke();
-    }
+	private bool IsFlagSatisfied()
+	{
+		if (!requireFlag) return true;
+		if (GameFlags.Instance == null) return false;
+
+		return GameFlags.Instance.GetFlag(requiredFlag);
+	}
+
+	private void OnComplete()
+	{
+		onSequenceComplete?.Invoke();
+
+		// Optional: hard disable object after completion
+		if (isConsumed)
+		{
+			gameObject.SetActive(false);
+		}
+	}
 }

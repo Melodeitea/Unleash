@@ -12,17 +12,23 @@ public class DialogueManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI lineText;
 
 	[Header("Controls")]
-	[SerializeField] private KeyCode advanceKey = KeyCode.Space; // ← changed from E
+	[SerializeField] private KeyCode advanceKey = KeyCode.Space;
 
 	private DialogueSequence currentSequence;
 	private int currentIndex;
 	private Action onComplete;
-	private bool justOpened; // ← fixes the double-trigger bug
+	private bool justOpened;
 
 	public bool IsPlaying { get; private set; }
 
 	private void Awake()
 	{
+		if (Instance != null && Instance != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
+
 		Instance = this;
 		dialoguePanel.SetActive(false);
 	}
@@ -31,8 +37,6 @@ public class DialogueManager : MonoBehaviour
 	{
 		if (!IsPlaying) return;
 
-		// Skip this frame if we just opened — prevents the same keypress
-		// that triggered Interact() from also immediately advancing the line
 		if (justOpened)
 		{
 			justOpened = false;
@@ -46,16 +50,23 @@ public class DialogueManager : MonoBehaviour
 	public void PlaySequence(DialogueSequence seq, Action onCompleteCallback = null)
 	{
 		if (seq == null) return;
-		if (seq.triggerOnce && seq.hasPlayed) return;
+
+		// 🔥 Prevent replay if triggerOnce already used
+		if (seq.triggerOnce && seq.hasPlayed)
+			return;
 
 		currentSequence = seq;
 		currentIndex = 0;
 		onComplete = onCompleteCallback;
-		justOpened = true; // ← tells Update() to skip the first frame
+
+		justOpened = true;
 
 		dialoguePanel.SetActive(true);
 		IsPlaying = true;
+
 		ShowLine();
+
+		// Mark as played immediately
 		seq.hasPlayed = true;
 	}
 
@@ -64,6 +75,7 @@ public class DialogueManager : MonoBehaviour
 		if (currentSequence == null || currentSequence.lines.Length == 0) return;
 
 		DialogueLine line = currentSequence.lines[currentIndex];
+
 		speakerNameText.text = line.speakerName;
 		lineText.text = line.line;
 	}
@@ -71,6 +83,7 @@ public class DialogueManager : MonoBehaviour
 	public void AdvanceLine()
 	{
 		currentIndex++;
+
 		if (currentIndex >= currentSequence.lines.Length)
 			EndSequence();
 		else
@@ -81,6 +94,7 @@ public class DialogueManager : MonoBehaviour
 	{
 		dialoguePanel.SetActive(false);
 		IsPlaying = false;
+
 		onComplete?.Invoke();
 	}
 }
