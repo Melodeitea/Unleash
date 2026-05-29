@@ -21,6 +21,9 @@ public class ChapterTransitionUI : MonoBehaviour
 	[Header("Audio")]
 	[SerializeField] private AudioSource chapterSFX;
 
+	[Header("Root")]
+	[SerializeField] private GameObject transitionRoot;
+
 	private bool isTransitioning;
 
 	private void Awake()
@@ -109,6 +112,10 @@ public class ChapterTransitionUI : MonoBehaviour
 			yield break;
 		}
 
+		// Enable full transition UI
+		if (transitionRoot != null)
+			transitionRoot.SetActive(true);
+
 		// 🔓 unlock cursor during intro
 		SetGameplayCursor(false);
 
@@ -117,14 +124,27 @@ public class ChapterTransitionUI : MonoBehaviour
 		chapterNameText.text = chapter.displayName;
 
 		SetTitlesVisible(true);
-		chapterSFX?.Play();
+
+		if (chapterSFX != null)
+			chapterSFX.Play();
 
 		yield return new WaitForSeconds(titleHoldDuration);
 
 		SetTitlesVisible(false);
-		chapterSFX?.Stop();
+
+		if (chapterSFX != null)
+			chapterSFX.Stop();
 
 		yield return Fade(1f, 0f);
+
+		// 🔥 Disable ALL transition visuals after fade finishes
+		if (transitionRoot != null)
+		{
+			foreach (Transform child in transitionRoot.transform)
+			{
+				child.gameObject.SetActive(false);
+			}
+		}
 
 		// 🔒 lock cursor when gameplay starts
 		SetGameplayCursor(true);
