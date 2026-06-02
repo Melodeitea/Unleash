@@ -3,6 +3,8 @@
 [System.Serializable]
 public class CameraZoneData
 {
+    [Tooltip("Higher value wins when zones overlap. Default 0.")]
+    public int priority = 0;
     [Tooltip("World-space position the camera moves to for this zone.")]
     public Vector3 position;
     [Tooltip("World-space euler angles the camera rotates to for this zone.")]
@@ -17,6 +19,8 @@ public class CameraZoneData
     public AnimationCurve transitionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     public Quaternion Rotation => Quaternion.Euler(eulerAngles);
+
+    
 }
 
 [RequireComponent(typeof(BoxCollider))]

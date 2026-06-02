@@ -6,8 +6,7 @@ public static class CameraSwitcher
     private static ZoneCameraController _controller;
     private static readonly List<CameraZoneData> _stack = new();
 
-    public static CameraZoneData ActiveZone =>
-        _stack.Count > 0 ? _stack[_stack.Count - 1] : null;
+    public static CameraZoneData ActiveZone => GetHighestPriority();
 
     public static bool HasPreviousZone => _stack.Count > 1;
 
@@ -18,7 +17,6 @@ public static class CameraSwitcher
             _controller.TransitionToZone(ActiveZone);
     }
 
-    // Player enters a zone
     public static void EnterZone(CameraZoneData zone)
     {
         if (_controller == null)
@@ -27,13 +25,12 @@ public static class CameraSwitcher
             return;
         }
 
-        _stack.Remove(zone); // prevent duplicates on re-entry
-        _stack.Add(zone);    // last entered = top = highest priority
+        _stack.Remove(zone);
+        _stack.Add(zone);
 
-        _controller.TransitionToZone(ActiveZone);
+        _controller.TransitionToZone(ActiveZone);   // highest priority, not just last
     }
 
-    // Player exits a specific zone — removes it from anywhere in the stack
     public static void ExitZone(CameraZoneData zone)
     {
         _stack.Remove(zone);
@@ -42,7 +39,6 @@ public static class CameraSwitcher
             _controller?.TransitionToZone(ActiveZone);
     }
 
-    // Keep snap for scene resets
     public static void SnapToZone(CameraZoneData zone)
     {
         _stack.Clear();
@@ -51,4 +47,17 @@ public static class CameraSwitcher
     }
 
     public static void Clear() => _stack.Clear();
+
+    // ── Returns the zone with the highest priority value in the stack ──
+    private static CameraZoneData GetHighestPriority()
+    {
+        if (_stack.Count == 0) return null;
+
+        CameraZoneData best = _stack[0];
+        for (int i = 1; i < _stack.Count; i++)
+            if (_stack[i].priority > best.priority)
+                best = _stack[i];
+
+        return best;
+    }
 }
