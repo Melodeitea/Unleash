@@ -47,8 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExamineObject
   prompt: Examine
   monologueText: 
+  requireFlag: 0
+  requiredFlag: flashlight_on
+  lockedPrompt: 
   examineOnce: 0
-  requireRedLayer: 0
   onExamined:
     m_PersistentCalls:
       m_Calls: []
