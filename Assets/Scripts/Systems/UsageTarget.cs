@@ -8,6 +8,9 @@ public class UsageTarget : MonoBehaviour, IInteractable
 	[SerializeField] private Animator lockAnimator;   // lock mechanism anim
 	[SerializeField] private Animator objectAnimator; // door/drawer anim
 	[SerializeField] private UnityEngine.Events.UnityEvent onUsed;
+	[Header("Unlock Method")]
+	[SerializeField] private bool useFlagInsteadOfItem = false;
+	[SerializeField] private string requiredFlag = "";
 
     [Header("Flags")]
     [SerializeField] private string[] flagsToSet;
@@ -35,35 +38,70 @@ public class UsageTarget : MonoBehaviour, IInteractable
 
 	public string GetPrompt()
 	{
-		if (_used) return "";
-		bool hasItem = InventoryManager.Instance.items.Exists(i => i.usageTargetID == targetID);
-		return hasItem ? $"[E] {unlockedPrompt}" : lockedPrompt;
+	if (_used)
+		return "";
+
+	bool canUse = false;
+
+	if (useFlagInsteadOfItem)
+	{
+		canUse = GameFlags.Instance != null &&
+				 GameFlags.Instance.GetFlag(requiredFlag);
+	}
+	else
+	{
+		canUse = InventoryManager.Instance.items.Exists(
+			i => i.usageTargetID == targetID);
+	}
+
+	return canUse
+		? $"[E] {unlockedPrompt}"
+		: lockedPrompt;
 	}
 
     public void Interact(Player player)
-    {
-        if (_used) return;
-        if (InventoryManager.Instance.TryUseItemOnTarget(targetID, out _))
-        {
-            _used = true;
-            unlockSFX?.Play();      // ← once, on unlock only
+	{
+	if (_used) return;
 
-            if (GameFlags.Instance != null)
-            {
-                GameFlags.Instance.SetFlag("used_" + targetID);
-                foreach (var flag in flagsToSet)
-                    if (!string.IsNullOrWhiteSpace(flag))
-                        GameFlags.Instance.SetFlag(flag);
-                foreach (var flag in flagsToClear)
-                    if (!string.IsNullOrWhiteSpace(flag))
-                        GameFlags.Instance.ClearFlag(flag);
-            }
+	bool canUse = false;
 
-            ActiveItemHolder.Clear();
-            onUsed?.Invoke();
-            StartCoroutine(PlaySequence());
-        }
-    }
+	if (useFlagInsteadOfItem)
+	{
+		canUse = GameFlags.Instance != null &&
+				 GameFlags.Instance.GetFlag(requiredFlag);
+	}
+	else
+	{
+		canUse = InventoryManager.Instance.TryUseItemOnTarget(targetID, out _);
+	}
+
+	if (!canUse)
+		return;
+
+	_used = true;
+
+	unlockSFX?.Play();
+
+	if (GameFlags.Instance != null)
+	{
+		GameFlags.Instance.SetFlag("used_" + targetID);
+
+		foreach (var flag in flagsToSet)
+			if (!string.IsNullOrWhiteSpace(flag))
+				GameFlags.Instance.SetFlag(flag);
+
+		foreach (var flag in flagsToClear)
+			if (!string.IsNullOrWhiteSpace(flag))
+				GameFlags.Instance.ClearFlag(flag);
+	}
+
+	// Only clear active item if using item mode
+	if (!useFlagInsteadOfItem)
+		ActiveItemHolder.Clear();
+
+	onUsed?.Invoke();
+	StartCoroutine(PlaySequence());
+	}
 
     private System.Collections.IEnumerator PlaySequence()
 	{
