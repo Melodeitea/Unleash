@@ -21103,6 +21103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pauseMenuUI: {fileID: 63963080}
   firstSelected: {fileID: 1785186165}
+  bindingsPanel: {fileID: 886801150}
+  masterVolumeSlider: {fileID: 0}
   mainMenuSceneName: MainMenu
 --- !u!4 &754047802
 Transform:
@@ -25258,6 +25260,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 754047801}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenControlsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 162714979284070036, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 257693356723880468, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: tabActiveColor.b
       value: 0
@@ -25393,6 +25415,10 @@ PrefabInstance:
     - target: {fileID: 5057540459105713243, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686084204985086086, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6034942291686872497, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_SizeDelta.x
@@ -25542,6 +25568,11 @@ PrefabInstance:
 --- !u!1 &886801149 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 539906093456966477, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 886801148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &886801150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100693019198599004, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
   m_PrefabInstance: {fileID: 886801148}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &886801151 stripped
@@ -179054,6 +179085,8 @@ MonoBehaviour:
   onUsed:
     m_PersistentCalls:
       m_Calls: []
+  useFlagInsteadOfItem: 0
+  requiredFlag: 
   flagsToSet:
   - window_unlocked
   flagsToClear: []

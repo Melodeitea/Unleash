@@ -13601,6 +13601,17 @@ Transform:
   - {fileID: 2024695449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &447919122 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6019989946216822591, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 1741050383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!43 &461858075
 Mesh:
   m_ObjectHideFlags: 0
@@ -14639,6 +14650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pauseMenuUI: {fileID: 69012814}
   firstSelected: {fileID: 69012813}
+  bindingsPanel: {fileID: 1741050388}
+  masterVolumeSlider: {fileID: 447919122}
   mainMenuSceneName: MainMenu
 --- !u!4 &511465496
 Transform:
@@ -47692,6 +47705,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 511465495}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenControlsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 696148314419992170, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_Name
       value: ---------Canvas--------------
@@ -47784,6 +47813,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -20.63379
       objectReference: {fileID: 0}
+    - target: {fileID: 8333306078965311205, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_Name
+      value: volume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -47821,6 +47854,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d5bdb2bbe2ea845b15615d6324fe31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
+--- !u!1 &1741050388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100693019198599004, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 1741050383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1741050389 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7720167877061368473, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
@@ -176775,6 +176813,8 @@ MonoBehaviour:
   onUsed:
     m_PersistentCalls:
       m_Calls: []
+  useFlagInsteadOfItem: 0
+  requiredFlag: 
   flagsToSet:
   - window_unlocked
   flagsToClear: []
