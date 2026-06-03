@@ -3,59 +3,55 @@ using UnityEngine.Events;
 
 public class DialogueTrigger : MonoBehaviour, IInteractable
 {
-	[SerializeField] private string prompt = "Talk";
-	[SerializeField] private DialogueSequence sequence;
+    [SerializeField] private string prompt = "Talk";
+    [SerializeField] private DialogueSequence sequence;
 
-	[Header("Flag Gate")]
-	[SerializeField] private bool requireFlag = false;
-	[SerializeField] private string requiredFlag = "flashlight_on";
-	[SerializeField] private string lockedPrompt = "";
+    [Header("Flag Gate")]
+    [SerializeField] private bool requireFlag = false;
+    [SerializeField] private string requiredFlag = "flashlight_on";
+    [SerializeField] private string lockedPrompt = "";
 
-	[Header("Events")]
-	[SerializeField] private UnityEvent onSequenceComplete;
+    [Header("Events")]
+    [SerializeField] private UnityEvent onSequenceComplete;
 
-	// 🔥 cache so we don't spam checks every frame in UI systems
-	private bool isConsumed => sequence != null && sequence.triggerOnce && sequence.hasPlayed;
+    private bool _isPlaying = false;
 
-	public void Interact(Player player)
+    // ── IInteractable ─────────────────────────────────────────────
+
+    public string GetPrompt()
+    {
+        if (_isPlaying) return string.Empty;
+        if (!IsFlagSatisfied()) return lockedPrompt;
+        return prompt;
+    }
+
+    public void Interact(Player player)
+    {
+        if (_isPlaying) return;
+        if (!IsFlagSatisfied()) return;
+
+        _isPlaying = true;
+        DialogueManager.Instance.PlaySequence(sequence, OnComplete);
+    }
+
+    // ── Internals ─────────────────────────────────────────────────
+
+    private void OnComplete()
+{
+    StartCoroutine(ResetNextFrame());
+    onSequenceComplete?.Invoke();
+}
+
+	private System.Collections.IEnumerator ResetNextFrame()
 	{
-		// ❌ Block forever if already used (triggerOnce)
-		if (isConsumed) return;
-
-		if (!IsFlagSatisfied()) return;
-
-		if (sequence != null)
-			DialogueManager.Instance.PlaySequence(sequence, OnComplete);
+		yield return null;
+		_isPlaying = false;
 	}
 
-	public string GetPrompt()
-	{
-		// ❌ DO NOT show prompt if already consumed
-		if (isConsumed)
-			return string.Empty;
-
-		if (!IsFlagSatisfied())
-			return lockedPrompt;
-
-		return prompt;
-	}
-
-	private bool IsFlagSatisfied()
-	{
-		if (!requireFlag) return true;
-		if (GameFlags.Instance == null) return false;
-
-		return GameFlags.Instance.GetFlag(requiredFlag);
-	}
-
-	private void OnComplete()
-	{
-		onSequenceComplete?.Invoke();
-
-		// Optional: hard disable object after completion
-		if (isConsumed)
-		{
-			gameObject.SetActive(false);
-		}
-	}
+    private bool IsFlagSatisfied()
+    {
+        if (!requireFlag) return true;
+        if (GameFlags.Instance == null) return false;
+        return GameFlags.Instance.GetFlag(requiredFlag);
+    }
 }
