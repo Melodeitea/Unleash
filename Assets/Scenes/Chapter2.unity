@@ -7581,6 +7581,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2073325717}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenControlsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 96785663418185946, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 162714979284070036, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 387726001790690012, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
@@ -7673,6 +7693,10 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5686084204985086086, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5781181515690113352, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
@@ -7708,6 +7732,22 @@ PrefabInstance:
     - target: {fileID: 7583150703490638132, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638023326572547707, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638023326572547707, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638023326572547707, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638023326572547707, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8014296944751788512, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
       propertyPath: m_PlayOnAwake
@@ -11611,6 +11651,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 695c2a2d5ef97ee4f985d72bbe3cca31, type: 3}
+--- !u!114 &421110207 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6019989946216822591, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 286606739}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!1 &421110208 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100693019198599004, guid: b97a6a0166eab7443be74039ebb8f1cb, type: 3}
+  m_PrefabInstance: {fileID: 286606739}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &422685269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c03f933c52ef5244e9e4f6d939021060, type: 3}
@@ -58131,6 +58187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pauseMenuUI: {fileID: 286606748}
   firstSelected: {fileID: 286606742}
+  bindingsPanel: {fileID: 421110208}
+  masterVolumeSlider: {fileID: 421110207}
   mainMenuSceneName: MainMenu
 --- !u!4 &2073325718
 Transform:
