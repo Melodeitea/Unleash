@@ -2379,6 +2379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 5.37, y: 1.3, z: 30.5}
     eulerAngles: {x: -15, y: -11.8, z: 0}
     fieldOfView: 65
@@ -5545,6 +5546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 3.7, y: 6.56, z: 26}
     eulerAngles: {x: 45.9, y: 0, z: 0}
     fieldOfView: 80
@@ -7991,6 +7993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 5.44, y: 1.33, z: 26.4}
     eulerAngles: {x: -15, y: 90, z: 0}
     fieldOfView: 75
@@ -9339,6 +9342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: -6.54, y: 6.57, z: 38}
     eulerAngles: {x: 35, y: 122, z: 0}
     fieldOfView: 50
@@ -11948,6 +11952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 16.7, y: 6.22, z: 36.5}
     eulerAngles: {x: 25, y: -90, z: 0}
     fieldOfView: 65
@@ -14642,6 +14647,135 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &540863994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540863996}
+  - component: {fileID: 540863995}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &540863995
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540863994}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: f95479702fcf1874dad581afb329ab33, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &540863996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540863994}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1771794339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &543392139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14787,6 +14921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 3.7, y: 6.56, z: 26}
     eulerAngles: {x: 45.9, y: 0, z: 0}
     fieldOfView: 80
@@ -15419,6 +15554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 3.7, y: 6.56, z: 26}
     eulerAngles: {x: 45.9, y: 0, z: 0}
     fieldOfView: 80
@@ -16333,6 +16469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: -6.55, y: 4.34, z: 26.1}
     eulerAngles: {x: -25, y: 49.24, z: 0}
     fieldOfView: 80
@@ -21273,6 +21410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: -0.91, y: 6.19, z: 37.1}
     eulerAngles: {x: 25, y: 180, z: 0}
     fieldOfView: 65
@@ -21727,6 +21865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 4.05, y: 1.33, z: 26.4}
     eulerAngles: {x: -15, y: -90, z: 0}
     fieldOfView: 75
@@ -21852,6 +21991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 7.84, y: 6.27, z: 48}
     eulerAngles: {x: 25, y: -90, z: 0}
     fieldOfView: 65
@@ -24983,6 +25123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: -6.11, y: 4.4, z: 39.6}
     eulerAngles: {x: -25, y: 49.24, z: 0}
     fieldOfView: 80
@@ -28722,6 +28863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 1.73, y: 2.3, z: 28}
     eulerAngles: {x: -15, y: 90, z: 0}
     fieldOfView: 60
@@ -31742,6 +31884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 7.21, y: 6.06, z: 39.7}
     eulerAngles: {x: 25, y: -43.3, z: 0}
     fieldOfView: 80
@@ -32972,6 +33115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 5.12, y: 3.49, z: 22.4}
     eulerAngles: {x: 45, y: 0, z: 0}
     fieldOfView: 75
@@ -33175,6 +33319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 4.45, y: 3.78, z: 13}
     eulerAngles: {x: 45, y: 5.76, z: 0}
     fieldOfView: 70
@@ -36851,6 +36996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 10.52, y: 5.9, z: 35}
     eulerAngles: {x: 25, y: 180, z: 0}
     fieldOfView: 65
@@ -39238,6 +39384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 3.7, y: 6.56, z: 26}
     eulerAngles: {x: 45.9, y: 0, z: 0}
     fieldOfView: 80
@@ -40303,6 +40450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 8.35, y: 2.3, z: 28.2}
     eulerAngles: {x: -15, y: -90, z: 0}
     fieldOfView: 60
@@ -40951,6 +41099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 10.77, y: 5.42, z: 20.5}
     eulerAngles: {x: -25, y: 49.24, z: 0}
     fieldOfView: 65
@@ -42579,6 +42728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: -0.3, y: 3.99, z: 20.4}
     eulerAngles: {x: -25, y: -51.33, z: 0}
     fieldOfView: 80
@@ -44832,6 +44982,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7769746874468329794, guid: 958059a59b457b248bd21c4ec8d3415f, type: 3}
   m_PrefabInstance: {fileID: 1590003396}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1594560007
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_Name
+      value: table_2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.642
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4945116
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30.908998
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa197d56d29a97445a89f8e1b6403c56, type: 3}
 --- !u!43 &1603977816
 Mesh:
   m_ObjectHideFlags: 0
@@ -46014,6 +46221,59 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c03f933c52ef5244e9e4f6d939021060, type: 3}
+--- !u!1 &1654410853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1654410854}
+  - component: {fileID: 1654410855}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1654410854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654410853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.258, y: 0, z: 0.339}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1771794339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1654410855
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654410853}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1663371780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49426,7 +49686,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2080398190}
     - targetCorrespondingSourceObject: {fileID: 4830277634168568441, guid: 798bcda9ee06a2740830422aa569a5d2, type: 3}
-      insertIndex: 9
+      insertIndex: -1
       addedObject: {fileID: 1272977142}
     - targetCorrespondingSourceObject: {fileID: 4830277634168568441, guid: 798bcda9ee06a2740830422aa569a5d2, type: 3}
       insertIndex: -1
@@ -51042,6 +51302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: -6.11, y: 4.4, z: 39.6}
     eulerAngles: {x: -25, y: 49.24, z: 0}
     fieldOfView: 80
@@ -51477,6 +51738,98 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1001 &1771794337
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.5467057
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.167
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30.51029
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8783059
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.47809914
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 57.123
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6125377157684126347, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      propertyPath: m_Name
+      value: SM_Gramophone (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 540863996}
+    - targetCorrespondingSourceObject: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1654410854}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6125377157684126347, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1771794340}
+  m_SourcePrefab: {fileID: 100100000, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+--- !u!1 &1771794338 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6125377157684126347, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+  m_PrefabInstance: {fileID: 1771794337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1771794339 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1503844757079232779, guid: a49206e40dd072d47b1844bb2d713e07, type: 3}
+  m_PrefabInstance: {fileID: 1771794337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1771794340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771794338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34546660e52bff2479046c20483f281d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gramophone
+  audioSource: {fileID: 540863995}
+  playPrompt: Play record
+  stopPrompt: Stop record
+  playingFlag: 
 --- !u!43 &1774530956
 Mesh:
   m_ObjectHideFlags: 0
@@ -55477,6 +55830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 9.13, y: 5.8, z: 39.5}
     eulerAngles: {x: 25, y: 41.3, z: 0}
     fieldOfView: 75
@@ -55602,6 +55956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTriggerVolume
   zoneData:
+    priority: 0
     position: {x: 5.16, y: 1.3, z: 17}
     eulerAngles: {x: -15, y: 0, z: 0}
     fieldOfView: 65
@@ -63499,3 +63854,5 @@ SceneRoots:
   - {fileID: 1624654627}
   - {fileID: 32831951}
   - {fileID: 879376401}
+  - {fileID: 1594560007}
+  - {fileID: 1771794337}
