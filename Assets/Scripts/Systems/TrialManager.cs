@@ -5,133 +5,199 @@ using UnityEngine.Events;
 
 public class TrialManager : MonoBehaviour
 {
-    public static TrialManager Instance { get; private set; }
+	public static TrialManager Instance { get; private set; }
 
-    [System.Serializable]
-    public class Accusation
-    {
-        public string label;                          // editor label e.g. "The Ledger"
-        [Header("Dialogue")]
-        public DialogueSequence accusationSequence;   // workers accuse
-        public DialogueSequence correctSequence;      // Roxanne presents evidence
-        public DialogueSequence wrongSequence;        // Roxanne responds emotionally
-        [Header("Evidence")]
-        public ItemData correctItem;                  // the item that answers this accusation
-        [HideInInspector] public bool answeredCorrectly;
-    }
+	[System.Serializable]
+	public class EvidenceVariant
+	{
+		[Tooltip("Flag that proves this accusation.")]
+		public string flag;
 
-    [Header("Accusations")]
-    [SerializeField] private Accusation[] accusations;
+		[Tooltip("Dialogue played if this flag exists.")]
+		public DialogueSequence successSequence;
+	}
 
-    [Header("Outcome")]
-    [SerializeField] private string trialFlagID = "trial_5_1";
-    [SerializeField] private UnityEvent onTrialComplete;   // fires regardless of outcome
-    [SerializeField] private UnityEvent onAllCorrect;
-    [SerializeField] private UnityEvent onAnyWrong;
+	[System.Serializable]
+	public class Accusation
+	{
+		public string label;
 
-    [Header("UI")]
-    [SerializeField] private TrialItemSelector itemSelector;
+		[Header("Accusation")]
+		public DialogueSequence accusationSequence;
 
-    private int _currentIndex = 0;
-    private bool _running = false;
+		[Header("Valid Evidence Flags")]
+		public List<EvidenceVariant> validEvidence = new();
 
-    public bool TrialComplete { get; private set; }
-    public bool AllCorrect { get; private set; }
+		[Header("Failure")]
+		public DialogueSequence wrongSequence;
 
-    // ── Lifecycle ─────────────────────────────────────────────────
+		[HideInInspector]
+		public bool answeredCorrectly;
 
-    private void Awake()
-    {
-        if (Instance != null) { Destroy(gameObject); return; }
-        Instance = this;
-    }
+		[HideInInspector]
+		public string matchedFlag;
+	}
 
-    // ── Public entry point ────────────────────────────────────────
+	[Header("Accusations")]
+	[SerializeField] private Accusation[] accusations;
 
-    public void StartTrial()
-    {
-        if (_running || TrialComplete) return;
-        _running = true;
-        _currentIndex = 0;
-        StartCoroutine(RunTrial());
-    }
+	[Header("Outcome")]
+	[SerializeField] private string trialFlagID = "trial_5_1";
 
-    // ── Trial loop ────────────────────────────────────────────────
+	[SerializeField] private UnityEvent onTrialComplete;
+	[SerializeField] private UnityEvent onAllCorrect;
+	[SerializeField] private UnityEvent onAnyWrong;
 
-    private IEnumerator RunTrial()
-    {
-        foreach (var accusation in accusations)
-        {
-            // 1. Play accusation dialogue
-            bool dialogueDone = false;
-            DialogueManager.Instance.PlaySequence(accusation.accusationSequence, () => dialogueDone = true);
-            yield return new WaitUntil(() => dialogueDone);
+	private bool _running;
 
-            // 2. Open item selection UI
-            ItemData chosen = null;
-            bool selectionDone = false;
+	public bool TrialComplete { get; private set; }
+	public bool AllCorrect { get; private set; }
 
-            itemSelector.Open(
-                accusation.label,
-                InventoryManager.Instance.items,
-                (item) => { chosen = item; selectionDone = true; }
-            );
+	private void Awake()
+	{
+		if (Instance != null && Instance != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
 
-            yield return new WaitUntil(() => selectionDone);
+		Instance = this;
+	}
 
-            // 3. Evaluate
-            bool correct = chosen != null
-                           && accusation.correctItem != null
-                           && chosen.itemID == accusation.correctItem.itemID;
+	public void StartTrial()
+	{
+		if (_running || TrialComplete)
+			return;
 
-            accusation.answeredCorrectly = correct;
+		_running = true;
 
-            // 4. Play response dialogue
-            bool responseDone = false;
-            DialogueSequence responseSeq = correct
-                ? accusation.correctSequence
-                : accusation.wrongSequence;
+		foreach (var accusation in accusations)
+		{
+			accusation.answeredCorrectly = false;
+			accusation.matchedFlag = "";
+		}
 
-            if (responseSeq != null)
-            {
-                DialogueManager.Instance.PlaySequence(responseSeq, () => responseDone = true);
-                yield return new WaitUntil(() => responseDone);
-            }
-        }
+		StartCoroutine(RunTrial());
+	}
 
-        EndTrial();
-    }
+	private IEnumerator RunTrial()
+	{
+		foreach (var accusation in accusations)
+		{
+			// Play accusation
+			bool accusationDone = false;
 
-    // ── Outcome ───────────────────────────────────────────────────
+			if (accusation.accusationSequence != null)
+			{
+				DialogueManager.Instance.PlaySequence(
+					accusation.accusationSequence,
+					() => accusationDone = true);
 
-    private void EndTrial()
-    {
-        _running = false;
-        TrialComplete = true;
+				yield return new WaitUntil(() => accusationDone);
+			}
 
-        AllCorrect = true;
-        foreach (var a in accusations)
-            if (!a.answeredCorrectly) { AllCorrect = false; break; }
+			// Check flags
+			EvidenceVariant matchedEvidence = null;
 
-        // Write flags
-        GameFlags.Instance?.SetFlag(trialFlagID + "_complete");
-        if (AllCorrect)
-            GameFlags.Instance?.SetFlag(trialFlagID + "_all_correct");
+			foreach (var evidence in accusation.validEvidence)
+			{
+				if (string.IsNullOrWhiteSpace(evidence.flag))
+					continue;
 
-        onTrialComplete?.Invoke();
-        if (AllCorrect) onAllCorrect?.Invoke();
-        else onAnyWrong?.Invoke();
+				if (GameFlags.Instance != null &&
+					GameFlags.Instance.GetFlag(evidence.flag))
+				{
+					matchedEvidence = evidence;
+					accusation.matchedFlag = evidence.flag;
+					break;
+				}
+			}
 
-        Debug.Log($"[Trial] Complete. All correct: {AllCorrect}  " +
-                  $"({CorrectCount()}/{accusations.Length})");
-    }
+			accusation.answeredCorrectly = matchedEvidence != null;
 
-    public int CorrectCount()
-    {
-        int n = 0;
-        foreach (var a in accusations) if (a.answeredCorrectly) n++;
-        return n;
-    }
+			// Play result dialogue
+			DialogueSequence resultSequence =
+				matchedEvidence != null
+				? matchedEvidence.successSequence
+				: accusation.wrongSequence;
 
-    public bool WasCorrect(int index) => accusations[index].answeredCorrectly;
+			if (resultSequence != null)
+			{
+				bool resultDone = false;
+
+				DialogueManager.Instance.PlaySequence(
+					resultSequence,
+					() => resultDone = true);
+
+				yield return new WaitUntil(() => resultDone);
+			}
+		}
+
+		EndTrial();
+	}
+
+	private void EndTrial()
+	{
+		_running = false;
+		TrialComplete = true;
+
+		AllCorrect = true;
+
+		foreach (var accusation in accusations)
+		{
+			if (!accusation.answeredCorrectly)
+			{
+				AllCorrect = false;
+				break;
+			}
+		}
+
+		if (GameFlags.Instance != null)
+		{
+			GameFlags.Instance.SetFlag(trialFlagID + "_complete");
+
+			if (AllCorrect)
+				GameFlags.Instance.SetFlag(trialFlagID + "_all_correct");
+		}
+
+		onTrialComplete?.Invoke();
+
+		if (AllCorrect)
+			onAllCorrect?.Invoke();
+		else
+			onAnyWrong?.Invoke();
+
+		Debug.Log(
+			$"[Trial] Complete. All correct: {AllCorrect} " +
+			$"({CorrectCount()}/{accusations.Length})");
+	}
+
+	public int CorrectCount()
+	{
+		int count = 0;
+
+		foreach (var accusation in accusations)
+		{
+			if (accusation.answeredCorrectly)
+				count++;
+		}
+
+		return count;
+	}
+
+	public bool WasCorrect(int index)
+	{
+		if (index < 0 || index >= accusations.Length)
+			return false;
+
+		return accusations[index].answeredCorrectly;
+	}
+
+	public string GetMatchedFlag(int index)
+	{
+		if (index < 0 || index >= accusations.Length)
+			return "";
+
+		return accusations[index].matchedFlag;
+	}
 }

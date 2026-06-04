@@ -44,7 +44,6 @@ public class WiBSavePoint : MonoBehaviour, IInteractable
 	private void SaveAll(Player player)
 	{
 		SaveSystem.SavePlayer(player);
-		GameFlags.Instance.SaveFlags();
 		Debug.Log("[WiBSavePoint] Game saved.");
 	}
 

@@ -5,18 +5,10 @@ public class GameFlags : MonoBehaviour
 {
 	public static GameFlags Instance { get; private set; }
 
-	[SerializeField] private List<string> activeFlags = new();
+	[SerializeField]
+	private List<string> activeFlags = new();
 
-	private HashSet<string> flagSet = new();
-
-	private const string SAVE_KEY = "game_flags";
-
-	// ------------------------
-	// COMMON FLAGS (define here to avoid typos)
-	// ------------------------
-	public const string FINGERPRINT_CONFIRMED = "fingerprint_confirmed";
-	public const string TIMELINE_ASSEMBLED = "timeline_assembled";
-	public const string CONTRACT_UNLOCKED = "contract_unlocked";
+	private readonly HashSet<string> flagSet = new();
 
 	private void Awake()
 	{
@@ -29,17 +21,17 @@ public class GameFlags : MonoBehaviour
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
 
-		// Sync HashSet with serialized list
-		flagSet = new HashSet<string>(activeFlags);
+		SyncRuntime();
 	}
 
 	// ------------------------
-	// CORE METHODS
+	// CORE
 	// ------------------------
 
 	public void SetFlag(string key)
 	{
-		if (string.IsNullOrEmpty(key)) return;
+		if (string.IsNullOrWhiteSpace(key))
+			return;
 
 		if (flagSet.Add(key))
 		{
@@ -50,13 +42,19 @@ public class GameFlags : MonoBehaviour
 
 	public bool GetFlag(string key)
 	{
-		if (string.IsNullOrEmpty(key)) return false;
+		if (string.IsNullOrWhiteSpace(key))
+			return false;
 
 		return flagSet.Contains(key);
 	}
 
+	public bool HasFlag(string key) => GetFlag(key);
+
 	public void ClearFlag(string key)
 	{
+		if (string.IsNullOrWhiteSpace(key))
+			return;
+
 		if (flagSet.Remove(key))
 		{
 			activeFlags.Remove(key);
@@ -65,57 +63,52 @@ public class GameFlags : MonoBehaviour
 	}
 
 	// ------------------------
-	// SAVE / LOAD
+	// SAVE INTEGRATION ONLY
 	// ------------------------
 
-	public void SaveFlags()
-	{
-		string data = string.Join(",", activeFlags);
-		PlayerPrefs.SetString(SAVE_KEY, data);
-		PlayerPrefs.Save();
-
-		Debug.Log("[GameFlags] Saved.");
-	}
-
-	public void LoadFlags()
+	public void LoadFromSave(List<string> flags)
 	{
 		activeFlags.Clear();
 		flagSet.Clear();
 
-		string data = PlayerPrefs.GetString(SAVE_KEY, "");
-
-		if (string.IsNullOrEmpty(data))
+		if (flags == null)
 			return;
 
-		string[] flags = data.Split(',');
-
-		foreach (string f in flags)
+		foreach (var f in flags)
 		{
-			if (!string.IsNullOrWhiteSpace(f))
-			{
-				activeFlags.Add(f);
-				flagSet.Add(f);
-			}
+			if (string.IsNullOrWhiteSpace(f))
+				continue;
+
+			activeFlags.Add(f);
+			flagSet.Add(f);
 		}
 
-		Debug.Log("[GameFlags] Loaded.");
+		Debug.Log($"[GameFlags] Loaded {activeFlags.Count} flags from save");
+	}
+
+	public List<string> ExportFlags()
+	{
+		return new List<string>(activeFlags);
 	}
 
 	// ------------------------
-	// DEBUG
+	// INTERNAL
 	// ------------------------
+
+	private void SyncRuntime()
+	{
+		flagSet.Clear();
+
+		foreach (var f in activeFlags)
+		{
+			if (!string.IsNullOrWhiteSpace(f))
+				flagSet.Add(f);
+		}
+	}
 
 	public void ClearAll()
 	{
 		activeFlags.Clear();
 		flagSet.Clear();
-		PlayerPrefs.DeleteKey(SAVE_KEY);
-
-		Debug.Log("[GameFlags] All flags cleared.");
-	}
-
-	public List<string> GetAllFlags()
-	{
-		return new List<string>(activeFlags);
 	}
 }

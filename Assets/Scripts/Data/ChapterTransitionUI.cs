@@ -83,12 +83,16 @@ public class ChapterTransitionUI : MonoBehaviour
 
 		ChapterManager.Instance.AdvanceChapter();
 
-		var player = FindObjectOfType<Player>();
-		if (player != null) SaveSystem.SavePlayer(player);
+		var player = FindFirstObjectByType<Player>();
+		if (player != null)
+			SaveSystem.SavePlayer(player);
 
-		GameFlags.Instance.SaveFlags();
+		// ❌ REMOVED:
+		// GameFlags.Instance.SaveFlags();
 
-		SceneManager.LoadScene(ChapterManager.Instance.CurrentChapter.nextSceneName);
+		SceneManager.LoadScene(
+			ChapterManager.Instance.CurrentChapter.nextSceneName
+		);
 	}
 
 	// ─────────────────────────────
@@ -100,7 +104,7 @@ public class ChapterTransitionUI : MonoBehaviour
 	}
 
 	// ─────────────────────────────
-	// INTRO SEQUENCE (AUTO ON EVERY SCENE LOAD)
+	// INTRO SEQUENCE
 	// ─────────────────────────────
 	private IEnumerator IntroRoutine()
 	{
@@ -112,11 +116,9 @@ public class ChapterTransitionUI : MonoBehaviour
 			yield break;
 		}
 
-		// Enable full transition UI
 		if (transitionRoot != null)
 			transitionRoot.SetActive(true);
 
-		// 🔓 unlock cursor during intro
 		SetGameplayCursor(false);
 
 		chapterNumberText.text = $"Chapter {chapter.chapterNumber}";
@@ -137,7 +139,6 @@ public class ChapterTransitionUI : MonoBehaviour
 
 		yield return Fade(1f, 0f);
 
-		// 🔥 Disable ALL transition visuals after fade finishes
 		if (transitionRoot != null)
 		{
 			foreach (Transform child in transitionRoot.transform)
@@ -146,7 +147,6 @@ public class ChapterTransitionUI : MonoBehaviour
 			}
 		}
 
-		// 🔒 lock cursor when gameplay starts
 		SetGameplayCursor(true);
 
 		isTransitioning = false;
@@ -171,16 +171,11 @@ public class ChapterTransitionUI : MonoBehaviour
 
 	private void SetGameplayCursor(bool gameplay)
 	{
-		if (gameplay)
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-		}
-		else
-		{
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-		}
+		Cursor.lockState = gameplay
+			? CursorLockMode.Locked
+			: CursorLockMode.None;
+
+		Cursor.visible = !gameplay;
 	}
 
 	private void SetAlpha(float a)
