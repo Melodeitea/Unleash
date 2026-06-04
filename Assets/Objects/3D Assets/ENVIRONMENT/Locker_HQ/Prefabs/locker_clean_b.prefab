@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 765177544910943490}
   - component: {fileID: 5651581357068130354}
   - component: {fileID: 9116469968430342741}
-  - component: {fileID: 2596147315612141312}
   m_Layer: 0
   m_Name: locker_clean_b
   m_TagString: Untagged
@@ -64,6 +63,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -85,9 +86,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &9116469968430342741
 MeshCollider:
@@ -111,26 +114,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5611915151288881882, guid: fe3bb76ba0ff54c43b625e3a4ad45497, type: 3}
---- !u!205 &2596147315612141312
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5309696713160829734}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0.9176729, z: 0.0052535236}
-  m_Size: 1.8353457
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.017375307
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 5651581357068130354}
-    - renderer: {fileID: 4373534286138616255}
-  m_Enabled: 1
 --- !u!1 &6653891924948648614
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +175,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -213,7 +198,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
