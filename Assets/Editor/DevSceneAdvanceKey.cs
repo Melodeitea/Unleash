@@ -3,59 +3,64 @@ using UnityEngine.SceneManagement;
 
 public class DevSceneAdvanceKey : MonoBehaviour
 {
-    [Header("Input")]
-    [SerializeField] private KeyCode advanceKey = KeyCode.F12;
-    [SerializeField] private bool requireShift = true;
+	[Header("Input")]
+	[SerializeField] private KeyCode advanceKey = KeyCode.F12;
+	[SerializeField] private bool requireShift = true;
 
-    [Header("Safety")]
-    [SerializeField] private bool onlyInDevelopmentBuild = true;
+	[Header("Build Access")]
+	[SerializeField] private bool allowInReleaseBuild = false;
+	[SerializeField] private bool onlyInDevelopmentBuild = true;
 
-    private void Update()
-    {
-        if (onlyInDevelopmentBuild && !Debug.isDebugBuild)
-            return;
+	private void Update()
+	{
+		// ❌ Block if paused
+		if (PauseMenu.IsPaused)
+			return;
 
-        if (requireShift && !Input.GetKey(KeyCode.LeftShift))
-            return;
+		// ❌ Build restriction logic fixed
+		if (onlyInDevelopmentBuild)
+		{
+			if (!Debug.isDebugBuild && !allowInReleaseBuild)
+				return;
+		}
 
-        if (Input.GetKeyDown(advanceKey))
-        {
-            AdvanceScene();
-        }
-    }
+		// Shift requirement
+		if (requireShift && !Input.GetKey(KeyCode.LeftShift))
+			return;
 
-    private void AdvanceScene()
-    {
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        int totalScenes = SceneManager.sceneCountInBuildSettings;
+		if (Input.GetKeyDown(advanceKey))
+		{
+			AdvanceScene();
+		}
+	}
 
-        // Try Chapter system first (preferred)
-        if (ChapterManager.Instance != null)
-        {
-            var next = ChapterManager.Instance.CurrentChapter;
+	private void AdvanceScene()
+	{
+		int currentIndex = SceneManager.GetActiveScene().buildIndex;
+		int totalScenes = SceneManager.sceneCountInBuildSettings;
 
-            if (next != null && !string.IsNullOrEmpty(next.nextSceneName))
-            {
-                Debug.Log("[DEV] Advancing via ChapterManager: " + next.nextSceneName);
-                SceneManager.LoadScene(next.nextSceneName);
-                return;
-            }
-        }
+		// Try Chapter system first
+		if (ChapterManager.Instance != null)
+		{
+			var chapter = ChapterManager.Instance.CurrentChapter;
 
-        // Fallback: build index order
-        int nextIndex = currentIndex + 1;
+			if (chapter != null && !string.IsNullOrEmpty(chapter.nextSceneName))
+			{
+				Debug.Log("[DEV] Chapter advance → " + chapter.nextSceneName);
+				SceneManager.LoadScene(chapter.nextSceneName);
+				return;
+			}
+		}
 
-        if (nextIndex >= totalScenes)
-        {
-            Debug.LogWarning("[DEV] Already at last scene in build order.");
-            return;
-        }
+		int nextIndex = currentIndex + 1;
 
-        string scenePath = SceneUtility.GetScenePathByBuildIndex(nextIndex);
-        string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+		if (nextIndex >= totalScenes)
+		{
+			Debug.LogWarning("[DEV] Last scene reached.");
+			return;
+		}
 
-        Debug.Log("[DEV] Advancing via Build Index → " + sceneName);
-
-        SceneManager.LoadScene(nextIndex);
-    }
+		Debug.Log("[DEV] Build index advance → " + nextIndex);
+		SceneManager.LoadScene(nextIndex);
+	}
 }

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+	public static bool IsPaused { get; private set; }
+
 	[Header("UI")]
 	public GameObject pauseMenuUI;
 	public GameObject firstSelected;
@@ -21,7 +23,7 @@ public class PauseMenu : MonoBehaviour
 	public string mainMenuSceneName = "MainMenu";
 
 	private bool _isPaused;
-	private readonly List<Component> _componentsToToggle = new();
+	private readonly List<Behaviour> _componentsToToggle = new();
 
 	private void Awake()
 	{
@@ -31,7 +33,6 @@ public class PauseMenu : MonoBehaviour
 		if (bindingsPanel)
 			bindingsPanel.SetActive(false);
 
-		// Load saved volume
 		float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
 		AudioListener.volume = savedVolume;
 
@@ -41,7 +42,6 @@ public class PauseMenu : MonoBehaviour
 			masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
 		}
 
-		// Try to find common player control components
 		var player = GameObject.FindWithTag("Player");
 
 		if (player != null)
@@ -50,9 +50,6 @@ public class PauseMenu : MonoBehaviour
 			AddIfFound(player, "StarterAssets.FirstPersonController");
 			AddIfFound(player, "StarterAssetsInputs");
 			AddIfFound(player, "CharacterController");
-
-			// Add custom controller names here if needed:
-			// AddIfFound(player, "YourCustomPlayerController");
 		}
 	}
 
@@ -78,6 +75,7 @@ public class PauseMenu : MonoBehaviour
 	private void Pause()
 	{
 		_isPaused = true;
+		IsPaused = true;
 
 		Time.timeScale = 0f;
 
@@ -89,7 +87,8 @@ public class PauseMenu : MonoBehaviour
 
 		SetComponentsEnabled(false);
 
-		if (firstSelected != null && EventSystem.current != null)
+		// Force clean UI selection (IMPORTANT for builds)
+		if (EventSystem.current != null)
 		{
 			EventSystem.current.SetSelectedGameObject(null);
 			EventSystem.current.SetSelectedGameObject(firstSelected);
@@ -99,6 +98,7 @@ public class PauseMenu : MonoBehaviour
 	public void Resume()
 	{
 		_isPaused = false;
+		IsPaused = false;
 
 		Time.timeScale = 1f;
 
@@ -117,10 +117,6 @@ public class PauseMenu : MonoBehaviour
 			EventSystem.current.SetSelectedGameObject(null);
 	}
 
-	// ─────────────────────────────
-	// CONTROLS PANEL
-	// ─────────────────────────────
-
 	public void OpenControlsPanel()
 	{
 		if (bindingsPanel)
@@ -133,10 +129,6 @@ public class PauseMenu : MonoBehaviour
 			bindingsPanel.SetActive(false);
 	}
 
-	// ─────────────────────────────
-	// AUDIO
-	// ─────────────────────────────
-
 	public void SetMasterVolume(float volume)
 	{
 		AudioListener.volume = volume;
@@ -144,10 +136,6 @@ public class PauseMenu : MonoBehaviour
 		PlayerPrefs.SetFloat("MasterVolume", volume);
 		PlayerPrefs.Save();
 	}
-
-	// ─────────────────────────────
-	// MENU BUTTONS
-	// ─────────────────────────────
 
 	public void OpenMainMenu()
 	{
@@ -162,13 +150,9 @@ public class PauseMenu : MonoBehaviour
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #else
-		Application.Quit();
+        Application.Quit();
 #endif
 	}
-
-	// ─────────────────────────────
-	// HELPERS
-	// ─────────────────────────────
 
 	private void AddIfFound(GameObject root, string typeName)
 	{
@@ -176,14 +160,13 @@ public class PauseMenu : MonoBehaviour
 
 		foreach (var c in comps)
 		{
-			if (c == null)
-				continue;
+			if (c == null) continue;
 
 			if (c.GetType().FullName == typeName ||
 				c.GetType().Name == typeName)
 			{
-				if (!_componentsToToggle.Contains(c))
-					_componentsToToggle.Add(c);
+				if (c is Behaviour b && !_componentsToToggle.Contains(b))
+					_componentsToToggle.Add(b);
 			}
 		}
 	}
@@ -192,25 +175,9 @@ public class PauseMenu : MonoBehaviour
 	{
 		foreach (var comp in _componentsToToggle)
 		{
-			if (comp == null)
-				continue;
+			if (comp == null) continue;
 
-			if (comp is Behaviour behaviour)
-			{
-				behaviour.enabled = enabled;
-				continue;
-			}
-
-			var prop = comp.GetType().GetProperty(
-				"enabled",
-				BindingFlags.Public | BindingFlags.Instance);
-
-			if (prop != null &&
-				prop.PropertyType == typeof(bool) &&
-				prop.CanWrite)
-			{
-				prop.SetValue(comp, enabled);
-			}
+			comp.enabled = enabled;
 		}
 	}
 }
