@@ -13,11 +13,11 @@ public class DevSceneAdvanceKey : MonoBehaviour
 
 	private void Update()
 	{
-		// ❌ Block if paused
+		
 		if (PauseMenu.IsPaused)
 			return;
 
-		// ❌ Build restriction logic fixed
+		
 		if (onlyInDevelopmentBuild)
 		{
 			if (!Debug.isDebugBuild && !allowInReleaseBuild)
